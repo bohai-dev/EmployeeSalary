@@ -78,7 +78,10 @@
   
     <!-- 映射资源文件 -->
     <mappers>
-       
+       <mapper resource="mybatis/mapper/SysUserMapper.xml"/>
+       <mapper resource="mybatis/mapper/StaffSalaryMapper.xml"/>
+       <mapper resource="mybatis/mapper/StaffInfoMapper.xml"/>
+       <mapper resource="mybatis/mapper/DepartmentMapper.xml"/>
     </mappers>
 
 

@@ -13,9 +13,9 @@
   <context id="MysqlTables" targetRuntime="MyBatis3">
     <!-- oracle -->
     <jdbcConnection driverClass="oracle.jdbc.driver.OracleDriver"
-        connectionURL="jdbc:oracle:thin:@192.168.16.102:1521:xe"
-        userId="sjzx"
-        password="sjzx">
+        connectionURL="jdbc:oracle:thin:@192.168.16.46:1521:xe"
+        userId="yggz"
+        password="yggz">
     </jdbcConnection>
 
     <javaTypeResolver >
@@ -246,7 +246,7 @@
     </table>
     -->
     
-    <table schema="" tableName="USERS" domainObjectName="User"
+    <table schema="" tableName="DEPARTMENT" domainObjectName="Department"
         enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false"
         enableUpdateByExample="false" selectByExampleQueryId="false">
     </table>

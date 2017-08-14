@@ -30,7 +30,7 @@ public class UserRealm extends AuthorizingRealm {
         
     	UsernamePasswordToken token=(UsernamePasswordToken) authcToken;
         String username = (String) token.getPrincipal();
-        //String password = new String((char[])token.getCredentials());
+        String password = new String((char[])token.getCredentials());
         
         SysUser sysUser = this.sysUserMapper.queryUserByUsername(username);
         if(sysUser == null){
@@ -40,7 +40,8 @@ public class UserRealm extends AuthorizingRealm {
         
         logger.info("token: "+JSON.toJSONString(token));
         
-        return new SimpleAuthenticationInfo(username, sysUser.getPassword(), getName());
+        //return new SimpleAuthenticationInfo(username, sysUser.getPassword(), getName());
+        return new SimpleAuthenticationInfo(username, password, getName());
         
     }
 

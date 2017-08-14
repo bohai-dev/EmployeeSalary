@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Sign in to bohai </title>
+<title>欢迎登陆 </title>
     <link href="resources/css/login.css" rel="stylesheet">
     <!-- jquery -->
     <script type="text/javascript" src="resources/jquery/jquery-3.1.1.min.js"></script>
@@ -22,11 +22,7 @@
         <input type="text" id="inputUsername" name="username" class="form-control" placeholder="Username" required autofocus>
         <label for="inputPassword" class="sr-only">Password</label>
         <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
-        <div class="checkbox">
-          <label>
-            <input type="checkbox" value="remember-me"> Remember me
-          </label>
-        </div>
+        
         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
       </form>
 

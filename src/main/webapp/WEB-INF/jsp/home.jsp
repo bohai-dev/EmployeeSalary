@@ -15,7 +15,7 @@
     <link href="resources/favicon.ico" rel="shortcut icon"/>
     <script type="text/javascript" src="resources/tree/bootstrap-treeview.min.js"></script>
     
-    <script type="text/javascript" src="resources/js/index.js"></script>
+    <script type="text/javascript" src="resources/js/home.js"></script>
 </head>
 <body>
 

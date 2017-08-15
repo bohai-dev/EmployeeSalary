@@ -53,6 +53,7 @@ public interface StaffInfoMapper {
     
     /**
      * 标记员工离职
+     * 
      * */
     int signOffStaff(StaffInfo record);
     

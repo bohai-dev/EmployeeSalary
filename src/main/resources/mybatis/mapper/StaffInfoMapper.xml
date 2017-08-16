@@ -18,6 +18,7 @@
     <result column="EMAIL" property="email" jdbcType="VARCHAR" />
     <result column="REMARK" property="remark" jdbcType="VARCHAR" />
     <result column="DEPARTMENT_ID" property="departmentId" jdbcType="VARCHAR" />
+     <result column="DEP_NAME" property="departmentName" jdbcType="VARCHAR" />
     <result column="IS_LEAVE" property="isLeave" jdbcType="VARCHAR" />
     <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
     <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
@@ -277,4 +278,11 @@
       IS_PROBATION = #{isProbation,jdbcType=VARCHAR},
     where STAFF_NUMBER = #{staffNumber,jdbcType=VARCHAR}
   </update>
+  <select id="queryStaffInfos" parameterType="java.util.Map" resultMap="BaseResultMap">
+    SELECT 
+    <include refid="Base_Column_List" />
+    ,b.DEP_NAME
+   	FROM STAFF_INFO a LEFT JOIN DEPARTMENT b ON a.DEPARTMENT_ID=b.DEP_NUMBER
+  </select>
+  
 </mapper>

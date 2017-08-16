@@ -1,6 +1,9 @@
 package com.bohai.employeeSalary.dao;
 
+import java.util.List;
+
 import com.bohai.employeeSalary.entity.StaffInfo;
+import com.sun.xml.internal.xsom.impl.scd.Iterators.Map;
 
 public interface StaffInfoMapper {
     /**
@@ -61,4 +64,9 @@ public interface StaffInfoMapper {
      * 试用期员工转正
      * */
     int signOnProbation(StaffInfo record);
+    
+    /**
+     * 查询所有信息
+     * */
+    List<StaffInfo> queryStaffInfos(Map<String,Object> map);
 }

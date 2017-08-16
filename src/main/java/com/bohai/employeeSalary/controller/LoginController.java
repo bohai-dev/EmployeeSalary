@@ -24,6 +24,7 @@ public class LoginController {
     public String tologin(){
         return "redirect:login.jsp";
     }
+	
 	 @RequestMapping(value={"/", "toHome"})
 	    public String toHome(){
 	    	return "home";

@@ -10,6 +10,7 @@ import com.bohai.employeeSalary.controller.exception.BohaiException;
 import com.bohai.employeeSalary.dao.StaffSalaryMapper;
 import com.bohai.employeeSalary.entity.StaffSalary;
 import com.bohai.employeeSalary.service.FileUploadService;
+import com.bohai.employeeSalary.util.CommonUtils;
 
 import jxl.Sheet;
 import jxl.Workbook;
@@ -69,6 +70,8 @@ public class SalaryUploadServiceImpl implements FileUploadService {
 					staffSalary.setPersonalTotal(salarySheet.getCell(18,i).getContents());
 					staffSalary.setCompanyTotal(salarySheet.getCell(19,i).getContents());
 					staffSalary.setPaymentTotal(salarySheet.getCell(20,i).getContents());
+					
+					staffSalary.setCreateTime(CommonUtils.getTime());
 					
 					
 					

@@ -15,6 +15,10 @@ import com.bohai.employeeSalary.controller.exception.BohaiException;
 import com.bohai.employeeSalary.dao.StaffInfoMapper;
 import com.bohai.employeeSalary.entity.StaffInfo;
 import com.bohai.employeeSalary.service.StaffInfoService;
+import com.bohai.employeeSalary.vo.QueryStaffInfoParamVO;
+import com.bohai.employeeSalary.vo.TableJsonResponse;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 
 
 
@@ -57,6 +61,18 @@ public class StaffInfoController {
 		List<StaffInfo> list = this.staffInfoService.queryStaffInfoPagination(null);
 		
 		return list;
+	}
+	
+	@RequestMapping(value="queryByCondition")
+	@ResponseBody
+	public TableJsonResponse<StaffInfo> queryByCondition(@RequestBody(required = true) QueryStaffInfoParamVO paramVO){
+		PageHelper.startPage(paramVO.getPageNumber(),paramVO.getPageSize());
+		List<StaffInfo> list=this.staffInfoMapper.selectByCondition(paramVO);
+		Page<StaffInfo> page=(Page)list;
+		TableJsonResponse<StaffInfo> response=new TableJsonResponse<StaffInfo>();
+		response.setTotal(page.getTotal());
+		response.setRows(list);
+		return response;
 	}
 	
 	

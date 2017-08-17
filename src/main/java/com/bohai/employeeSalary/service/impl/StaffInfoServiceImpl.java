@@ -1,4 +1,4 @@
-package com.bohai.employeeSalary.service.Impl;
+package com.bohai.employeeSalary.service.impl;
 
 import java.util.List;
 

@@ -85,8 +85,141 @@
 	            }
 	        });
 	    });
+	    
+	    $("#queryForm").keypress(function(e){
+            var eCode = e.keyCode ? e.keyCode : e.which ? e.which : e.charCode;
+            if (eCode == 13){
+                //自己写判断函数
+                queryByCondition();
+            }
+        });
     });
     
+   
+    //按条件查询
+    function  queryByCondition(){
+    	$('#staffInfoTable').bootstrapTable(
+    		'refresh',{url:"queryByCondition",
+    					query:{
+    						departmentId:$('#depName').val(),
+    						staffNumber:$('#staffNumber').val(),
+    						name:$('#name').val(),
+    						isProbation:$('#isProbation').val(),
+    						isLeave:$('#isLeave').val()
+    					}
+    				}
+    		);
+    }
+    
+    function probationFormatter(vaule,row,index){
+    	var result=row.isProbation;
+    	if(result=="0"){
+    		result="正式员工";
+    	}else if(result=="1"){
+    		result="试用期员工";
+    	}else{
+    		result="其他";
+    	}
+    	return result;
+    }
+    
+    function changeCoefficeient(){
+    	if($('#isProbation').val()=="0"){
+    	$('#coefficeient').val("1.0");
+    	}else if($('#isProbation').val()=="1"){
+    		$('#coefficeient').val("0.8");
+    	}else{
+    		$('#coefficeient').val("请输入自定义系数");
+    	}
+    	
+    }
+    
+    function operationFormatter(value,row,index) {
+        var html = '<button type="button" id="cog'+row.staffNumber+'" class="btn btn-default btn-sm" title="修改">'
+                     + '<i class="glyphicon glyphicon-cog"></i>'
+                 + '</button> &nbsp;'
+                 
+                 + '<button type="button" id="trash'+row.staffNumber+'" class="btn btn-default btn-sm" title="删除">'
+                     + '<i class="glyphicon glyphicon-trash"></i>'
+                 + '</button>';
+       //添加修改事件       
+         $("#staffInfoTable").off("click","#cog"+row.staffNumber);
+         $("#staffInfoTable").on("click","#cog"+row.staffNumber,row,function(event){
+             config(row);
+         });
+         
+       //添加删除事件，进行逻辑删除
+         $("#staffInfoTable").off("click","#trash"+row.staffNumber);
+         $("#staffInfoTable").on("click","#trash"+row.staffNumber,row,function(event){
+             trash(row);
+         });
+         
+         return html;
+    }
+    
+    
+    /* 修改任务模态框 */
+    function config(row){
+        
+        $("#marketerNo1").val(row.marketerNo);
+        $("#marketerName1").val(row.marketerName);
+        //设置bootstrap-select的值
+        $('#deptName1').selectpicker('val', row.depCode);
+        $('#status1').selectpicker('val', row.status);
+        $('#certType1').selectpicker('val', row.certType);
+        //人员分区
+        //$("#divisionOptions1").val(row.personnelDivision);
+        
+        if(row.personnelDivision == "0"){
+        	$("#divisionOptions0").attr("checked","checked");
+        }else if (row.personnelDivision == "1") {
+        	$("#divisionOptions1").attr("checked","checked");
+		}
+        
+        $("#entryDate1").val(row.entryDate);
+        $("#leaveDate1").val(row.leaveDate);
+        //$("#birthday1").val(row.birthday);
+        $("#rebateRate1").val(row.allocationProportion);
+        $("#certNo1").val(row.certNo);
+        $("#telephone1").val(row.telephone);
+        $("#address1").val(row.address);
+        $("#email1").val(row.email);
+        $("#remark1").val(row.remark);
+        
+        $("#editModal").modal('show');
+    }
+    
+    /* 删除营销人员 */
+    function trash(row){
+        if(confirm("删除营销人员："+row.marketerName+"("+row.marketerNo+")后将不可撤销,确定吗？")){
+            var param = {marketerNo:row.marketerNo};
+            $.ajax({
+                type: "post",
+                url: "removeCrmMarketer",
+                //dataType: 'json',
+                contentType: "application/json;charset=UTF-8",
+                data: JSON.stringify(param),
+                success: function (date, status){
+                    alert("删除成功");
+                    $("#marketerTable").bootstrapTable('refresh');
+                }
+            });
+        }
+    }
+    
+    
+    function checkData(){
+    	if(($('#staffNumber').val()=="")||($('#name').val()=="")
+    			||($('#idNumber').val()=="")||($('#depName').val()=="")
+    			||($('#positionSalary').val()=="")||($('#workYears').val()=="")
+    			||($('#isProbation').val()=="")||($('#coefficeient').val()=="")
+    	){
+    		alert("标★为必填项，请重新填写!");
+    	}else{
+    		saveStaffInfo();
+    	}
+    		
+    }
     
     
     function saveStaffInfo(){
@@ -95,11 +228,12 @@
         		name:$('#name').val(),
         		idNumber:$('#idNumber').val(),
         		departmentId:$('#depName').val(),
-        		positionSalary:$('positionSalary').val(),
+        		positionSalary:$('#positionSalary').val(),
         		workYears:$('#workYears').val(),
         		probationDateStart:$('#probationDateStart').val(),
         		formalDateStart:$('#formalDateStart').val(),
         		isProbation:$('#isProbation').val(),
+        		coefficeient:$('#coefficeient').val(),
                 email:$('#email').val(),
                 remark:$('#remark').val()
                 }
@@ -134,6 +268,12 @@
 			}
 		});
 	}
+    
+  //导出excel
+    function exportCustomer(){
+        $('#queryForm').submit();
+    }
+    
     </script>
 </head>
 <body>
@@ -170,6 +310,65 @@
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h1 class="sub-header"><a href="toStaffInfo" style="text-decoration: none;">员工信息管理</a></h1>
 
+      <div class="row placeholders">
+            
+            <!-- 查询条件表单 -->
+                      <form id="queryForm" method="post" action="exportCustomer" enctype="application/json;charset=UTF-8" class="form-horizontal" style="margin-top: 30px">
+                          <div class="form-group">  
+                                <label for="depName" class="col-sm-2 col-md-1 control-label">归属部门</label>
+                                <div class="col-sm-10 col-md-2">
+                                  <select class="selectpicker form-control" id="depName" data-live-Search="true">
+                                    </select>
+                                </div>
+
+                                <label for="staffNumber" class="col-sm-2 col-md-1 control-label">员工编号</label>
+                                <div class="col-sm-10 col-md-2">
+                                  <input type="text" class="form-control" id="staffNumber" name="investorName">
+                                </div>
+                                <label for="name" class="col-sm-2 col-md-1 control-label">员工姓名</label>
+                                <div class="col-sm-10 col-md-2">
+                                  <input type="text" class="form-control" id="name" name="investorName">
+                                </div>
+                                
+                          </div>
+                          <div class="form-group">
+                                <label for="isProbation" class="col-sm-2 col-md-1 control-label">员工类型</label>
+                                <div class="col-sm-10 col-md-2">
+                                  <select class="selectpicker form-control" id="isProbation">
+                      	   	 			<option value=""> </option>
+                          				<option value="0">正式员工</option>
+                          				<option value="1">试用期员工</option>
+                          				<option value="2">其他类型</option>
+                      				</select>
+                                </div>
+                                
+                                <label for="isLeave" class="col-sm-2 col-md-1 control-label">员工状态</label>
+                                <div class="col-sm-10 col-md-2">
+                                 <select class="selectpicker form-control" id="isLeave">
+                      	   	 			<option value=""> </option>
+                          				<option value="0">在职</option>
+                          				<option value="1">离职</option>
+                      				</select>
+                                </div>
+                                
+                          </div>
+                          
+                          <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10 col-md-2 col-md-offset-4 ">
+                              <input class="btn btn-default col-xs-7" type="button" value="查询" onclick="queryByCondition()">
+                            </div>
+                            <div class=" col-sm-10 col-md-2 ">
+                              <input class="btn btn-default col-xs-7" type="button" value="导出" onclick="exportCustomer()">
+                            </div>
+                          </div>
+                      </form>
+                      <!-- 查询条件表单结束 -->
+          </div>
+
+
+
+
+			<h2 class="sub-header">客户基本信息</h2>
            <div class="table-responsive">
             <div id="toolbar" class="btn-group">
                 <button type="button" class="btn btn-default" data-toggle="modal" data-target="#addModal" title="创建任务">
@@ -200,7 +399,7 @@
                     <th data-field="departmentName" data-align="center">所属部门</th>
                     <th data-field="positionSalary" data-align="center" >岗位工资</th>
                     <th data-field="workYears" data-align="center" >司龄</th>
-                  <!--  <th data-field="establishDate" data-align="center" >个人所得税</th>-->  
+                    <th data-field="isProbation" data-align="center" data-formatter="probationFormatter">员工类型</th>  
                     <th data-field="" data-formatter="operationFormatter">操作</th>
                 </tr>
                 </thead>
@@ -238,12 +437,18 @@
                     <div class="col-sm-8">
                       <input type="text" class="form-control" id="staffNumber" placeholder="">
                     </div>
+                      <div>
+                    		<p style="padding-top: 5px;">★</p>
+                    </div>
                   </div>
                   
                   <div class="form-group">
                     <label for="name" class="col-sm-3 control-label">员工姓名</label>
                     <div class="col-sm-8">
                             <input type="text" class="form-control" id="name" placeholder="">
+                    </div>
+                      <div>
+                    		<p style="padding-top: 5px;">★</p>
                     </div>
                   </div>
                   
@@ -262,6 +467,9 @@
                     <div class="col-sm-8">
                       <input type="text" class="form-control" id="idNumber" placeholder="">
                     </div>
+                      <div>
+                    		<p style="padding-top: 5px;">★</p>
+                    </div>
                   </div>
                 
                   <div class="form-group">
@@ -275,12 +483,18 @@
                           <option value="4">E部</option> --> 
                       </select>
                     </div>
+                      <div>
+                    		<p style="padding-top: 5px;">★</p>
+                    </div>
                   </div>
                   
                   <div class="form-group">
                     <label for="positionSalary" class="col-sm-3 control-label">岗位工资</label>
                     <div class="col-sm-8">
-                      <input type="text" class="form-control" id="positionSalary" placeholder="">
+                      <input type="text" class="form-control" id="positionSalary" placeholder="">         
+                    </div>
+                    <div>
+                    		<p style="padding-top: 5px;">★</p>
                     </div>
                   </div>
                   
@@ -288,6 +502,9 @@
                     <label for="workYears" class="col-sm-3 control-label">司龄</label>
                     <div class="col-sm-8">
                       <input type="text" class="form-control" id="workYears" placeholder="">
+                    </div>
+                      <div>
+                    		<p style="padding-top: 5px;">★</p>
                     </div>
                   </div>
                   
@@ -308,15 +525,29 @@
                   <div class="form-group">
                     <label for="isProbation" class="col-sm-3 control-label">员工属性</label>
                     <div class="col-sm-8">
-                     <select class="selectpicker form-control" id="isProbation" >
+                     <select class="selectpicker form-control" id="isProbation" onchange="changeCoefficeient()">
+                          <option value=""> </option>
                           <option value="0">正式员工</option>
                           <option value="1">试用期员工</option>
+                          <option value="2">其他类型</option>
                       </select>
+                    </div>
+                      <div>
+                    		<p style="padding-top: 5px;">★</p>
+                    </div>
+                  </div>
+                 
+                  <div class="form-group">
+                    <label for="coefficeient" class="col-sm-3 control-label">工资系数</label>
+                    <div class="col-sm-8">
+                       <input type="text" class="form-control" id="coefficeient"  placeholder="">          
+                    </div>
+                      <div>
+                    		<p style="padding-top: 5px;">★</p>
                     </div>
                   </div>
                   <hr>
-                  
-                  
+ 
                   <div class="form-group">
                     <label for="email" class="col-sm-3 control-label">电子邮箱</label>
                     <div class="col-sm-8">
@@ -330,12 +561,12 @@
                     <div class="col-sm-8">
                       <textarea class="form-control" rows="3" id="remark"></textarea>
                     </div>
-                  </div>
+                  </div>            
                 </form>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-            <button type="button" class="btn btn-primary" onclick="saveStaffInfo()">保存</button>
+            <button type="button" class="btn btn-primary" onclick="checkData()">保存</button>
           </div>
         </div>
       </div>

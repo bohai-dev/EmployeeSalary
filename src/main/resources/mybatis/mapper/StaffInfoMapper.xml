@@ -23,6 +23,7 @@
     <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
     <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
     <result column="IS_PROBATION" property="isProbation" jdbcType="VARCHAR" />
+    <result column="COEFFICEIENT" property="coefficeient" jdbcType="VARCHAR"/>
   </resultMap>
   <sql id="Base_Column_List" >
     <!--
@@ -32,7 +33,7 @@
     -->
     STAFF_NUMBER, PROBATION_DATE_START, FORMAL_DATE_START, LEAVE_DATE, NAME, ID_NUMBER, 
     POSITION_SALARY, WORK_YEARS, EMAIL, REMARK, DEPARTMENT_ID, IS_LEAVE, CREATE_TIME, 
-    UPDATE_TIME, IS_PROBATION
+    UPDATE_TIME, IS_PROBATION , COEFFICEIENT
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     <!--
@@ -65,13 +66,13 @@
       ID_NUMBER, POSITION_SALARY, WORK_YEARS, 
       EMAIL, REMARK, DEPARTMENT_ID, 
       IS_LEAVE, CREATE_TIME, UPDATE_TIME, 
-      IS_PROBATION)
+      IS_PROBATION,COEFFICEIENT)
     values (#{staffNumber,jdbcType=VARCHAR}, #{probationDateStart,jdbcType=TIMESTAMP}, 
       #{formalDateStart,jdbcType=TIMESTAMP}, #{leaveDate,jdbcType=TIMESTAMP}, #{name,jdbcType=VARCHAR}, 
       #{idNumber,jdbcType=VARCHAR}, #{positionSalary,jdbcType=VARCHAR}, #{workYears,jdbcType=VARCHAR}, 
       #{email,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{departmentId,jdbcType=VARCHAR}, 
       #{isLeave,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
-      #{isProbation,jdbcType=VARCHAR})
+      #{isProbation,jdbcType=VARCHAR},#{coefficeient,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.bohai.employeeSalary.entity.StaffInfo" >
     <!--
@@ -282,7 +283,30 @@
     SELECT 
     <include refid="Base_Column_List" />
     ,b.DEP_NAME
-   	FROM STAFF_INFO a LEFT JOIN DEPARTMENT b ON a.DEPARTMENT_ID=b.DEP_NUMBER
+   	FROM STAFF_INFO a LEFT JOIN DEPARTMENT b ON a.DEPARTMENT_ID=b.DEP_NUMBER  ORDER BY a.STAFF_NUMBER
   </select>
   
+ <select id="selectByCondition" parameterType="com.bohai.employeeSalary.vo.QueryStaffInfoParamVO" resultMap="BaseResultMap">
+  	SELECT 
+    <include refid="Base_Column_List" />
+    ,b.DEP_NAME 
+  FROM STAFF_INFO a LEFT JOIN DEPARTMENT b ON a.DEPARTMENT_ID=b.DEP_NUMBER 
+  <where>
+  	<if test="departmentId !=null and departmentId !=''">
+  		a.DEPARTMENT_ID=#{departmentId}
+  	</if>
+  	<if test="staffNumber !=null and staffNumber !=''">
+  		a.STAFF_NUMBER=#{staffNumber}
+  	</if>
+  	<if test="name !=null and name !=''">
+  		a.NAME=#{name}
+  	</if>
+  	<if test="isProbation !=null and isProbation !=''">
+  		a.IS_PROBATION=#{isProbation}
+  	</if>
+  	<if test="isLeave !=null and isLeave !=''">
+  		a.IS_LEAVE=#{isLeave}
+  	</if>
+  	</where>
+ </select>
 </mapper>

@@ -54,18 +54,7 @@ public interface StaffInfoMapper {
      * @mbggenerated Tue Aug 15 13:38:03 CST 2017
      */
     int updateByPrimaryKey(StaffInfo record);
-    
-    /**
-     * 标记员工离职
-     * 
-     * */
-    int signOffStaff(StaffInfo record);
-    
-    /**
-     * 试用期员工转正
-     * */
-    int signOnProbation(StaffInfo record);
-    
+
     /**
      * 查询所有信息
      * */
@@ -75,4 +64,6 @@ public interface StaffInfoMapper {
      * 按条件查询
      * */
 	List<StaffInfo> selectByCondition(QueryStaffInfoParamVO paramVO);
+
+
 }

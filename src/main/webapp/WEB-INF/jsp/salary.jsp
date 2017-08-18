@@ -74,13 +74,13 @@
 
            <div class="row placeholders">
             <div class="col-sm-12 col-md-6">
-                <label class="control-label">请选择文件上传</label>
+                <label class="control-label">请选择社保公积金表上传</label>
                  <input id="finput" type="file" class="file" multiple >  
                     <script type="text/javascript">
                     $("#finput").fileinput({
                         language: 'zh',
                         uploadAsync: true,
-                        uploadUrl: "fileUpload", //异步上传地址
+                        uploadUrl: "salaryFileUpload", //异步上传地址
                         maxFileCount: 10,//最大上传文件数限制
                         showCaption: true,//是否显示标题
                         showUpload: true,//是否显示上传按钮

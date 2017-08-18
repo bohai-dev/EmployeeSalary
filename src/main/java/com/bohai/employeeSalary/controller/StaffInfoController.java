@@ -65,14 +65,9 @@ public class StaffInfoController {
 	
 	@RequestMapping(value="queryByCondition")
 	@ResponseBody
-	public TableJsonResponse<StaffInfo> queryByCondition(@RequestBody(required = true) QueryStaffInfoParamVO paramVO){
-		PageHelper.startPage(paramVO.getPageNumber(),paramVO.getPageSize());
+	public List<StaffInfo> queryByCondition(@RequestBody(required = true) QueryStaffInfoParamVO paramVO){
 		List<StaffInfo> list=this.staffInfoMapper.selectByCondition(paramVO);
-		Page<StaffInfo> page=(Page)list;
-		TableJsonResponse<StaffInfo> response=new TableJsonResponse<StaffInfo>();
-		response.setTotal(page.getTotal());
-		response.setRows(list);
-		return response;
+		return list;
 	}
 	
 	

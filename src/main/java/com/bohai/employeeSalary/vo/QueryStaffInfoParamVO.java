@@ -7,7 +7,7 @@ package com.bohai.employeeSalary.vo;
  * */
 public class QueryStaffInfoParamVO extends PaginationParamVO{
 
-	private String depName;
+	private String departmentId;
 	
 	private String staffNumber;
 	
@@ -17,12 +17,14 @@ public class QueryStaffInfoParamVO extends PaginationParamVO{
 	
 	private String isLeave;
 
-	public String getDepName() {
-		return depName;
+	
+
+	public String getDepartmentId() {
+		return departmentId;
 	}
 
-	public void setDepName(String depName) {
-		this.depName = depName;
+	public void setDepartmentId(String departmentId) {
+		this.departmentId = departmentId;
 	}
 
 	public String getStaffNumber() {

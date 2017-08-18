@@ -283,7 +283,8 @@
     SELECT 
     <include refid="Base_Column_List" />
     ,b.DEP_NAME
-   	FROM STAFF_INFO a LEFT JOIN DEPARTMENT b ON a.DEPARTMENT_ID=b.DEP_NUMBER  ORDER BY a.STAFF_NUMBER
+   	FROM STAFF_INFO a LEFT JOIN DEPARTMENT b ON a.DEPARTMENT_ID=b.DEP_NUMBER WHERE IS_LEAVE='0' 
+   	ORDER BY a.STAFF_NUMBER
   </select>
   
  <select id="selectByCondition" parameterType="com.bohai.employeeSalary.vo.QueryStaffInfoParamVO" resultMap="BaseResultMap">
@@ -293,20 +294,21 @@
   FROM STAFF_INFO a LEFT JOIN DEPARTMENT b ON a.DEPARTMENT_ID=b.DEP_NUMBER 
   <where>
   	<if test="departmentId !=null and departmentId !=''">
-  		a.DEPARTMENT_ID=#{departmentId}
+  		a.DEPARTMENT_ID=#{departmentId} 
   	</if>
   	<if test="staffNumber !=null and staffNumber !=''">
-  		a.STAFF_NUMBER=#{staffNumber}
+  		AND a.STAFF_NUMBER=#{staffNumber} 
   	</if>
   	<if test="name !=null and name !=''">
-  		a.NAME=#{name}
+  		AND a.NAME=#{name}   
   	</if>
   	<if test="isProbation !=null and isProbation !=''">
-  		a.IS_PROBATION=#{isProbation}
+  		AND a.IS_PROBATION=#{isProbation}   
   	</if>
   	<if test="isLeave !=null and isLeave !=''">
-  		a.IS_LEAVE=#{isLeave}
+  		AND a.IS_LEAVE=#{isLeave} 
   	</if>
   	</where>
+  	ORDER BY a.STAFF_NUMBER
  </select>
 </mapper>

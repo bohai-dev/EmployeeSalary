@@ -1,5 +1,7 @@
 package com.bohai.employeeSalary.dao;
 
+import java.util.List;
+
 import com.bohai.employeeSalary.entity.Department;
 
 public interface DepartmentMapper {
@@ -50,4 +52,6 @@ public interface DepartmentMapper {
      * @mbggenerated Tue Aug 15 14:12:42 CST 2017
      */
     int updateByPrimaryKey(Department record);
+
+	List<Department> queryDepartments();
 }

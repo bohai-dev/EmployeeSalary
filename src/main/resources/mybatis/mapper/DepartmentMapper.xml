@@ -119,4 +119,9 @@
       BRANCH_NUMBER = #{branchNumber,jdbcType=VARCHAR}
     where DEP_NUMBER = #{depNumber,jdbcType=VARCHAR}
   </update>
+   <select id="queryDepartments" resultMap="BaseResultMap" parameterType="com.bohai.employeeSalary.entity.Department">
+    select 
+        <include refid="Base_Column_List" />
+    from DEPARTMENT
+  </select>
 </mapper>

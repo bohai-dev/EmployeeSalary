@@ -63,11 +63,25 @@ public class StaffInfoController {
 		return list;
 	}
 	
+	/**
+	 * 按条件查询
+	 * */
 	@RequestMapping(value="queryByCondition")
 	@ResponseBody
 	public List<StaffInfo> queryByCondition(@RequestBody(required = true) QueryStaffInfoParamVO paramVO){
 		List<StaffInfo> list=this.staffInfoMapper.selectByCondition(paramVO);
 		return list;
+	}
+	
+	/**
+	 * 更新用户信息
+	 * */
+	@RequestMapping(value="updateStaffInfo")
+	@ResponseBody
+	public void updateStaffInfo(@RequestBody(required=true) StaffInfo paramVO){
+		long date=Calendar.getInstance().getTimeInMillis();
+		paramVO.setUpdateTime(new Date(date));
+		this.staffInfoMapper.updateByPrimaryKey(paramVO);
 	}
 	
 	

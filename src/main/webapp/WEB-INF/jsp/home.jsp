@@ -310,6 +310,9 @@
                     <div class="col-sm-8">
                       <input type="text" class="form-control" id="email1" placeholder="">
                     </div>
+                     <div>
+                    		<p style="padding-top: 5px;">★</p>
+                    </div>
                   </div>
                   
                
@@ -473,6 +476,9 @@
                     <label for="email2" class="col-sm-3 control-label">电子邮箱</label>
                     <div class="col-sm-8">
                       <input type="text" class="form-control" id="email2" placeholder="">
+                    </div>
+                     <div>
+                    		<p style="padding-top: 5px;">★</p>
                     </div>
                   </div>
                   

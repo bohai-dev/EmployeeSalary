@@ -207,6 +207,7 @@ $(function(){
   			||($('#idNumber1').val()=="")||($('#depName1').val()=="")
   			||($('#positionSalary1').val()=="")||($('#workYears1').val()=="")
   			||($('#isProbation1').val()=="")||($('#coefficeient1').val()=="")
+  			||($('#email1').val()=="")
   	){
   		alert("标★为必填项，请重新填写!");
   	}else{
@@ -228,6 +229,7 @@ $(function(){
   	if(($('#name2').val()=="")||($('#depName2').val()=="")
   			||($('#positionSalary2').val()=="")||($('#workYears2').val()=="")
   			||($('#isProbation2').val()=="")||($('#coefficeient2').val()=="")
+  			||($('#email2').val()=="")
   	){
   		alert("标★为必填项，请重新填写!");
   	}else{

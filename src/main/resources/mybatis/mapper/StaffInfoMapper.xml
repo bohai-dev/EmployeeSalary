@@ -24,6 +24,7 @@
     <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
     <result column="IS_PROBATION" property="isProbation" jdbcType="VARCHAR" />
     <result column="COEFFICEIENT" property="coefficeient" jdbcType="VARCHAR"/>
+    <result column="SKILL_SALARY" property="skillSalary" jdbcType="VARCHAR"/>
   </resultMap>
   <sql id="Base_Column_List" >
     <!--
@@ -33,7 +34,7 @@
     -->
     STAFF_NUMBER, PROBATION_DATE_START, FORMAL_DATE_START, LEAVE_DATE, NAME, ID_NUMBER, 
     POSITION_SALARY, WORK_YEARS, EMAIL, REMARK, DEPARTMENT_ID, IS_LEAVE, CREATE_TIME, 
-    UPDATE_TIME, IS_PROBATION , COEFFICEIENT
+    UPDATE_TIME, IS_PROBATION , COEFFICEIENT ,SKILL_SALARY
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     <!--
@@ -66,13 +67,13 @@
       ID_NUMBER, POSITION_SALARY, WORK_YEARS, 
       EMAIL, REMARK, DEPARTMENT_ID, 
       IS_LEAVE, CREATE_TIME, UPDATE_TIME, 
-      IS_PROBATION,COEFFICEIENT)
+      IS_PROBATION,COEFFICEIENT,SKILL_SALARY)
     values (#{staffNumber,jdbcType=VARCHAR}, #{probationDateStart,jdbcType=TIMESTAMP}, 
       #{formalDateStart,jdbcType=TIMESTAMP}, #{leaveDate,jdbcType=TIMESTAMP}, #{name,jdbcType=VARCHAR}, 
       #{idNumber,jdbcType=VARCHAR}, #{positionSalary,jdbcType=VARCHAR}, #{workYears,jdbcType=VARCHAR}, 
       #{email,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{departmentId,jdbcType=VARCHAR}, 
       #{isLeave,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
-      #{isProbation,jdbcType=VARCHAR},#{coefficeient,jdbcType=VARCHAR})
+      #{isProbation,jdbcType=VARCHAR},#{coefficeient,jdbcType=VARCHAR},#{skillSalary,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.bohai.employeeSalary.entity.StaffInfo" >
     <!--
@@ -250,7 +251,8 @@
       CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
       UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
       IS_PROBATION = #{isProbation,jdbcType=VARCHAR},
-      COEFFICEIENT =#{coefficeient,jdbcType=VARCHAR}
+      COEFFICEIENT =#{coefficeient,jdbcType=VARCHAR},
+      SKILL_SALARY =#{skillSalary,jdbcType=VARCHAR}
     where STAFF_NUMBER = #{staffNumber,jdbcType=VARCHAR}
   </update>
   

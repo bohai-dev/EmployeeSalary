@@ -158,6 +158,7 @@
                     <th data-field="name" data-align="center" >员工姓名</th>
                     <th data-field="departmentName" data-align="center">所属部门</th>
                     <th data-field="positionSalary" data-align="center" >岗位工资</th>
+                    <th data-field="skillSalary" data-align="center">技能工资</th>
                     <th data-field="workYears" data-align="center" >司龄</th>
                     <th data-field="isProbation" data-align="center" data-formatter="probationFormatter">员工类型</th>
                     <th data-field="isLeave" data-align="center" data-formatter="LeaveFormatter">员工状态</th>
@@ -231,6 +232,8 @@
                     </div>
                   </div>
                   
+                  <hr>
+                  
                   <div class="form-group">
                     <label for="positionSalary1" class="col-sm-3 control-label">岗位工资</label>
                     <div class="col-sm-8">
@@ -239,6 +242,13 @@
                     <div>
                     		<p style="padding-top: 5px;">★</p>
                     </div>
+                  </div>
+                  
+                  <div class="form-group">
+                    <label for="skillSalary1" class="col-sm-3 control-label">技能工资</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" id="skillSalary1" placeholder="">         
+                    </div> 
                   </div>
                   
                    <div class="form-group">
@@ -250,6 +260,8 @@
                     		<p style="padding-top: 5px;">★</p>
                     </div>
                   </div>
+                  
+                  <hr>
                   
                   <div class="form-group">
                     <label for="probationDateStart1" class="col-sm-3 control-label">试用期起始日期</label>
@@ -264,6 +276,8 @@
                         <input type="text" class="form-control" id="formalDateStart1" placeholder="">
                     </div>
                   </div>
+                  
+                  <hr>
                   
                   <div class="form-group">
                     <label for="isProbation1" class="col-sm-3 control-label">员工属性</label>
@@ -364,6 +378,8 @@
                     </div>
                   </div>
                   
+                  <hr>
+                  
                   <div class="form-group">
                     <label for="positionSalary2" class="col-sm-3 control-label">岗位工资</label>
                     <div class="col-sm-8">
@@ -371,6 +387,13 @@
                     </div>
                     <div>
                     		<p style="padding-top: 5px;">★</p>
+                    </div>
+                  </div>
+                  
+                  <div class="form-group">
+                    <label for="skillSalary2" class="col-sm-3 control-label">技能工资</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" id="skillSalary2" placeholder="">         
                     </div>
                   </div>
                   
@@ -383,6 +406,8 @@
                     		<p style="padding-top: 5px;">★</p>
                     </div>
                   </div>
+                  
+                  <hr>
                   
                   <div class="form-group">
                     <label for="probationDateStart2" class="col-sm-3 control-label">试用期起始日期</label>
@@ -397,6 +422,8 @@
                         <input type="text" class="form-control" id="formalDateStart2" placeholder="">
                     </div>
                   </div>
+                  
+                  <hr>
                   
                   <div class="form-group">
                     <label for="isProbation2" class="col-sm-3 control-label">员工属性</label>

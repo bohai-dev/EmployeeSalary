@@ -183,6 +183,7 @@ $(function(){
 		$('#name2').val(row.name);
 		$('#depName2').selectpicker('val',row.departmentId);
 		$('#positionSalary2').val(row.positionSalary);
+		$('#skillSalary2').val(row.skillSalary);
 		$('#workYears2').val(row.workYears);
 		$('#probationDateStart2').val(row.probationDateStart);
 		$('#formalDateStart2').val(row.formalDateStart);
@@ -263,6 +264,7 @@ $(function(){
       		name:$('#name1').val(),
       		departmentId:$('#depName1').val(),
       		positionSalary:$('#positionSalary1').val(),
+      		skillSalary:$('#skillSalary1').val(),
       		workYears:$('#workYears1').val(),
       		probationDateStart:$('#probationDateStart1').val(),
       		formalDateStart:$('#formalDateStart1').val(),
@@ -290,6 +292,7 @@ $(function(){
        		name:$('#name2').val(),      		
        		departmentId:$('#depName2').val(),
        		positionSalary:$('#positionSalary2').val(),
+       		skillSalary:$('#skillSalary2').val(),
        		workYears:$('#workYears2').val(),
        		probationDateStart:$('#probationDateStart2').val(),
        		formalDateStart:$('#formalDateStart2').val(),
@@ -322,6 +325,7 @@ $(function(){
       		name:$('#name').val(),
       		departmentId:$('#departmentId').val(),
       		positionSalary:$('positionSalary').val(),
+      		skillSalary:$('skillSalary').val(),
       		workYears:$('#workYears').val(),
       		isProbation:$('#isProbation').val(),
               email:$('#email').val(),

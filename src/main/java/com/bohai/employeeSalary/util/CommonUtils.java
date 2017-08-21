@@ -16,5 +16,16 @@ public  class CommonUtils {
 		return dateString;
 		
 	}
+	
+	/**
+	 * 返回字符串中的数字
+	 * @param number 要提取数字的字符串
+	 * @return 数字
+	 */
+	 public static String filterNumber(String number)
+	    {
+	        number = number.replaceAll("[^(0-9)]", "");
+	        return number;
+	    }
 
 }

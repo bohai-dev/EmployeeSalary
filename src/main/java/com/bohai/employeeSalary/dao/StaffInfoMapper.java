@@ -1,10 +1,11 @@
 package com.bohai.employeeSalary.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import com.bohai.employeeSalary.entity.StaffInfo;
 import com.bohai.employeeSalary.vo.QueryStaffInfoParamVO;
-import com.sun.xml.internal.xsom.impl.scd.Iterators.Map;
+
 
 public interface StaffInfoMapper {
     /**

@@ -24,6 +24,7 @@ import com.bohai.employeeSalary.util.CommonUtils;
 @Service("commissionUploadService")
 public class CommissionUploadServiceImpl implements FileUploadService{
 	
+	
 	static Logger logger = Logger.getLogger(CommissionUploadServiceImpl.class);
 	
 	@Autowired StaffSalaryService salaryService;

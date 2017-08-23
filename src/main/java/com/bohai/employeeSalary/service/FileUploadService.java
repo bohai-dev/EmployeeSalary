@@ -15,6 +15,7 @@ public interface FileUploadService {
 	/**
 	 * 上传文件
 	 * @param file
+	 * @return 
 	 */
-	public void upload(MultipartFile file,Object... objects) throws BohaiException;
+	public String upload(MultipartFile file,Object... objects) throws BohaiException;
 }

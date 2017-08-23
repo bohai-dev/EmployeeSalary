@@ -1,7 +1,12 @@
 package com.bohai.employeeSalary.util;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+
+import com.mysql.fabric.xmlrpc.base.Array;
 
 public  class CommonUtils {
 	
@@ -27,5 +32,33 @@ public  class CommonUtils {
 	        number = number.replaceAll("[^(0-9)]", "");
 	        return number;
 	    }
+	 
+	 
+	 /**
+	  * 得到一个double类型数组中的最大值
+	  * @param list
+	  * @return
+	  */
+	 public static double getMax(ArrayList<Double> list) {
+		 double max=list.get(0);
+		 for(int i=1;i<list.size();i++) {
+			 if(list.get(i)>max) {
+				 max=list.get(i);
+			 }
+		 }
+		 
+		 return max;
+		 
+	 }
+	 /**
+	  * 对一个double数字进行四舍五入，并保留两位小数
+	  * @return
+	  */
+	 public static double getRound(double d) {
+			 
+			BigDecimal  b=new BigDecimal(d);  
+			double num =b.setScale(2,RoundingMode.UP).doubleValue();  
+		    return num;
+	 }
 
 }

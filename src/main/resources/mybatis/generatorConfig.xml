@@ -9,7 +9,7 @@
   <!-- <classPathEntry location="D:\develop\apache-maven-3.3.9\mvnRepo\mysql\mysql-connector-java\5.1.38\mysql-connector-java-5.1.38.jar" /> -->
   
   <!-- oracle -->  
-  <classPathEntry location="C:\Users\cxy\git\EmployeeSalary\src\ojdbc6.jar" />
+  <classPathEntry location="D:\BHQH_CY\bohai-dataCenter\ojdbc6.jar" />
   <context id="MysqlTables" targetRuntime="MyBatis3">
     <!-- oracle -->
     <jdbcConnection driverClass="oracle.jdbc.driver.OracleDriver"
@@ -246,7 +246,7 @@
     </table>
     -->
     
-    <table schema="" tableName="STAFF_SALARY" domainObjectName="StaffSalary"
+    <table schema="" tableName="DEPARTMENT" domainObjectName="Department"
         enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false"
         enableUpdateByExample="false" selectByExampleQueryId="false">
     </table>

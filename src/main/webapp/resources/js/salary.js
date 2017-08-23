@@ -43,6 +43,7 @@ $(function(){
             
             
           
+
   });
 
 function queryParams(params){
@@ -165,3 +166,4 @@ function calculateSalary(){
 	$("#selectModal").modal('show');
 	
 }
+

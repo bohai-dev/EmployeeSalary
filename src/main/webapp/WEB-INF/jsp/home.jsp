@@ -33,7 +33,7 @@
     <!-- datepicker -->
     <script src="resources/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
     <script src="resources/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js"></script>
-    
+   
     <script type="text/javascript" src="resources/js/home.js"></script>
 </head>
 <body>

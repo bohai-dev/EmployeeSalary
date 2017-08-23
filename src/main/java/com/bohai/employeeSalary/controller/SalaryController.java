@@ -44,10 +44,10 @@ public class SalaryController {
 		return response;
 	}
 	
-	/*@RequestMapping(value="querySalary")
+	@RequestMapping(value="updateSalary")
 	@ResponseBody
-	public List<StaffInfo> querySalary(@RequestBody(required = true) QueryStaffInfoParamVO paramVO){
-		List<StaffInfo> list=this.querySalaryByParams(null);
-		return list;
-	}*/
+	public int updateSalary(@RequestBody(required = true) StaffSalary staffSalary){
+		int count=StaffSalaryMapper.updateByStaffNumAndDate(staffSalary);
+		return count;
+	}
 }

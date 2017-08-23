@@ -595,7 +595,9 @@
   
    )d on a.STAFF_NUMBER=d.STAFF_NUM 
   <where>
-     
+    <if test="staffName !=null and staffName !=''">
+  	    d.NAME=#{staffName} 
+  	</if>
   	<if test="staffNum !=null and staffNum !=''">
   	    a.STAFF_NUMBER=#{staffNum} 
   	</if>

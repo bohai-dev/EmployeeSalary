@@ -141,7 +141,7 @@ $(function(){
   	$('#coefficeient1').val("1.0");
   	}else if($('#isProbation1').val()=="1"){
   		$('#coefficeient1').val("0.8");
-  	}else{
+  	}else if($('#coefficeient2').val()=="2"){
   		$('#coefficeient1').val("请输入自定义系数");
   	}
   	
@@ -152,7 +152,7 @@ $(function(){
   	$('#coefficeient2').val("1.0");
   	}else if($('#isProbation2').val()=="1"){
   		$('#coefficeient2').val("0.8");
-  	}else{
+  	}else if($('#coefficeient2').val()=="2"){
   		$('#coefficeient2').val("请输入自定义系数");
   	}
   	

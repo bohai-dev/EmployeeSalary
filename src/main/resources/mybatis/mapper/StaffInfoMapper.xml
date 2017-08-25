@@ -288,4 +288,17 @@
   	</where>
   	ORDER BY a.STAFF_NUMBER
  </select>
+ 
+ <select id="selectByDepartment" parameterType="java.lang.String" resultMap="BaseResultMap">
+  	SELECT 
+    <include refid="Base_Column_List" />
+    ,b.DEP_NAME 
+  FROM STAFF_INFO a LEFT JOIN DEPARTMENT b ON a.DEPARTMENT_ID=b.DEP_NUMBER 
+  <where>
+  	<if test="departmentId !=null and departmentId !=''">
+  		a.DEPARTMENT_ID=#{departmentId} 
+  	</if>
+  	</where>
+  	ORDER BY a.STAFF_NUMBER
+ </select>
 </mapper>

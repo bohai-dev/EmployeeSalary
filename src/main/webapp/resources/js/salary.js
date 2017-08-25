@@ -144,6 +144,36 @@ function detail(row){
     $("#editModal").modal('show');
 }
 
+
+
+/**
+ * 邮件发送模态框
+ * @author Cy
+ * */
+
+function sendMailFormatter(value,row,index) {
+	var html = '<button type="button" id="cog'+index+'" class="btn btn-default btn-sm" title="设置">'
+	+ '<i class="glyphicon glyphicon-cog"></i>'
+	+ '</button>';
+
+$("#salaryTable").off("click", "#cog" + index);
+$("#salaryTable").on("click", "#cog" + index, row, function(event) {
+sendMail(row);
+});
+
+return html;
+}
+
+/**
+ * 发送邮件
+ * @author Cy
+ * */
+function sendMail(row){
+	
+	$('#sendMailModel').modal('show');
+}
+
+
 /*查询事件*/
 function querySalary(){
 	
@@ -166,6 +196,7 @@ function calculateSalary(){
 	$("#selectModal").modal('show');
 	
 }
+<<<<<<< HEAD
 //确定计算工资
 function updateSalary(){
 	
@@ -179,4 +210,5 @@ function updateSalary(){
 		}
 	});	
 }
+
 

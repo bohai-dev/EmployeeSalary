@@ -66,5 +66,10 @@ public interface StaffInfoMapper {
      * */
 	List<StaffInfo> selectByCondition(QueryStaffInfoParamVO paramVO);
 
+	/**
+	 * 按部门查询
+	 * */
+	List<StaffInfo> selectByDepartment(String depNumber);
+
 
 }

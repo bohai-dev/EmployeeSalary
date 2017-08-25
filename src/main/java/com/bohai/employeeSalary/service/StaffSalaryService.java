@@ -3,17 +3,27 @@ package com.bohai.employeeSalary.service;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+
+
+import com.bohai.employeeSalary.dao.DepartmentMapper;
+import com.bohai.employeeSalary.dao.StaffInfoMapper;
 import com.bohai.employeeSalary.dao.StaffSalaryMapper;
+import com.bohai.employeeSalary.entity.Department;
+import com.bohai.employeeSalary.entity.StaffInfo;
 import com.bohai.employeeSalary.entity.StaffSalary;
 import com.bohai.employeeSalary.service.impl.SalaryUploadServiceImpl;
 import com.bohai.employeeSalary.util.CommonUtils;
 import com.bohai.employeeSalary.vo.QueryStaffSalaryParamVO;
+import com.bohai.employeeSalary.vo.TreeView;
 
 
 
@@ -28,6 +38,10 @@ public class StaffSalaryService {
 	
 	@Autowired
 	StaffSalaryMapper   staffSalaryMapper;
+	@Autowired
+	DepartmentMapper departmentMapper;
+	@Autowired
+	StaffInfoMapper staffInfoMapper;
 	
 	public String saveOrUpdate(StaffSalary staffSalary) {
 	 String staffNum=staffSalary.getStaffNumber();
@@ -102,5 +116,31 @@ public class StaffSalaryService {
 		
 		return actualSalary;
 	}
+	
+//	public List<TreeView<Map<String,List<StaffInfo>>>> queryDepStaffInfos(String depName,Long parentDepNumber) {
+//		
+//		List<TreeView<Map<String,List<StaffInfo>>>> treeList=null;
+//		
+//		//所有部门
+//		List<Department> depList=this.departmentMapper.queryDepartments();
+//		
+//		for(Department dep:depList){
+//			Map<String,Object> map=new HashMap<String,Object>();
+//			map.put(dep.getDepName(), dep);
+//			List<StaffInfo> infoList=this.staffInfoMapper.selectByDepartment(dep.getDepNumber());
+//			for(StaffInfo info:infoList){
+//				
+//			}
+//			}
+////			Map<String,List<StaffInfo>> map=new HashMap<String, List<StaffInfo>>();
+////			map.put(dep.getDepName(), infoList);
+//			
+//			
+//		}
+//		
+//		
+//		
+//		return null;
+//	}
 
 }

@@ -195,7 +195,7 @@
 					</div>
 					<div class="col-sm-10 col-md-2 ">
 						<input class="btn btn-default col-xs-7" type="button" value="发送邮件"
-							onclick="queryMediator()">
+							onclick="sendMail()">
 					</div>
 				</form>
 			</div>
@@ -233,6 +233,7 @@
 							data-formatter="operationFormatter">其他扣款</th>
 						<th data-field="actualSalary" data-align="center"
 							data-formatter="salaryFormatter">实发工资</th>
+						<th data-field="" data-formatter="sendMailFormatter">操作</th>
 					</tr>
 				</thead>
 			</table>
@@ -349,6 +350,33 @@
 			
 		</div>
 	</div>
+	
+	        <!-- 新建邮件发送模态框 -->
+    <div class="modal fade" id="sendMailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title" id="myModalLabel">邮件信息</h4>
+          </div>
+          <div class="modal-body">
+	          <div class="form-group">
+	            <button type="button" class="btn btn-success" id="btn-check-all">Check All</button>  
+	            <button type="button" class="btn btn-danger" id="btn-uncheck-all">Uncheck All</button>  
+                <input type="hidden" id="Name" />
+              </div>
+                
+              <div id="receiverTree" class="form-group"></div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            <button type="button" class="btn btn-primary" onclick="updateUsersPermissions();">保存</button>
+          </div>
+        </div>
+      </div>
+    </div>
+	
+	
 	<footer class="footer">
 	<div class="container">
 		<p class="text-muted">Place sticky footer content here.</p>

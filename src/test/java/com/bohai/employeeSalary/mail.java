@@ -13,7 +13,7 @@ import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 
 import com.bohai.employeeSalary.util.MailUtil;
 
-@ContextConfiguration(locations = "classpath:applicationContext.xml")
+@ContextConfiguration(locations = "classpath:applicationContextTest.xml")
 public class mail extends AbstractJUnit4SpringContextTests{
 
 	private static final Logger log=Logger.getLogger(mail.class);
@@ -23,7 +23,7 @@ public class mail extends AbstractJUnit4SpringContextTests{
 	
 	@Test
 	public void sendSingleTest() throws MessagingException{
-		mailUtil.send("18302168091@163.com", "test1", "test");
+		mailUtil.send("498203560@sb.com.cn", "test1", "test");
 		System.err.println("成功");
 	}
 	

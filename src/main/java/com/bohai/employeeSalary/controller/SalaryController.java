@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.bohai.employeeSalary.dao.StaffSalaryMapper;
 import com.bohai.employeeSalary.entity.StaffInfo;
 import com.bohai.employeeSalary.entity.StaffSalary;
+import com.bohai.employeeSalary.service.StaffSalaryService;
 import com.bohai.employeeSalary.vo.QueryStaffInfoParamVO;
 import com.bohai.employeeSalary.vo.QueryStaffSalaryParamVO;
 import com.bohai.employeeSalary.vo.TableJsonResponse;
@@ -21,6 +22,9 @@ public class SalaryController {
 	
 	@Autowired
 	private StaffSalaryMapper StaffSalaryMapper;
+	
+	@Autowired
+	private StaffSalaryService salaryService;
 	
 	@RequestMapping(value="toSalary")
     public String toSalary(){
@@ -44,10 +48,17 @@ public class SalaryController {
 		return response;
 	}
 	
-	@RequestMapping(value="updateSalary")
+	/**
+	 * 计算工资
+	 * @param staffSalary
+	 * @return
+	 */
+	@RequestMapping(value="calculateSalary")
 	@ResponseBody
-	public int updateSalary(@RequestBody(required = true) StaffSalary staffSalary){
-		int count=StaffSalaryMapper.updateByStaffNumAndDate(staffSalary);
+	public int calculateSalary(@RequestBody(required = true) String depNum,String countDate){
+		int count=salaryService.updateSalary(depNum, countDate);
+		
 		return count;
+
 	}
 }

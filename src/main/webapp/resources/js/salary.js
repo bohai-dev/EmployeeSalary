@@ -166,4 +166,17 @@ function calculateSalary(){
 	$("#selectModal").modal('show');
 	
 }
+//确定计算工资
+function updateSalary(){
+	
+	$("#salaryTable").bootstrapTable('refresh', {
+		url : "calculateSalary",	
+		query : {
+			 depNum:$('#selectDepName').val(),
+			 countDate:$('#selectMonth').val()	    	
+	      
+
+		}
+	});	
+}
 

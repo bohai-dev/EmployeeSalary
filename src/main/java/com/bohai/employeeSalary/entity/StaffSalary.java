@@ -2,6 +2,8 @@ package com.bohai.employeeSalary.entity;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class StaffSalary {
 
     private String staffNumber;
@@ -121,7 +123,7 @@ public class StaffSalary {
     private String skillSalary;
     
     
-    
+    @JsonFormat(pattern="yyyy-MM-dd ",timezone="GMT+8")
     public Date getProbationDateStart() {
 		return probationDateStart;
 	}
@@ -130,14 +132,16 @@ public class StaffSalary {
 		this.probationDateStart = probationDateStart;
 	}
 
-	public Date getFormalDateStart() {
+	@JsonFormat(pattern="yyyy-MM-dd",timezone="GMT+8")
+    public Date getFormalDateStart() {
 		return formalDateStart;
 	}
 
 	public void setFormalDateStart(Date formalDateStart) {
 		this.formalDateStart = formalDateStart;
 	}
-
+	
+	@JsonFormat(pattern="yyyy-MM-dd",timezone="GMT+8")
 	public Date getLeaveDate() {
 		return leaveDate;
 	}

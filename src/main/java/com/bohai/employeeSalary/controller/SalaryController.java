@@ -30,7 +30,6 @@ import com.bohai.employeeSalary.util.MailUtil;
 import com.bohai.employeeSalary.vo.QueryStaffInfoParamVO;
 import com.bohai.employeeSalary.vo.QueryStaffSalaryParamVO;
 import com.bohai.employeeSalary.vo.TableJsonResponse;
-import com.bohai.employeeSalary.vo.TreeView;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 
@@ -41,11 +40,13 @@ public class SalaryController {
 	
 	@Autowired
 	private StaffSalaryMapper StaffSalaryMapper;
-	@Autowired
-	private StaffSalaryService staffSalaryService;
 	
 	@Autowired
 	private MailUtil mailUtil;
+
+	@Autowired
+	private StaffSalaryService salaryService;
+
 	
 	@RequestMapping(value="toSalary")
     public String toSalary(){
@@ -69,11 +70,26 @@ public class SalaryController {
 		return response;
 	}
 	
+	
 	@RequestMapping(value="updateSalary")
 	@ResponseBody
 	public int updateSalary(@RequestBody(required = true) StaffSalary staffSalary){
 		int count=StaffSalaryMapper.updateByStaffNumAndDate(staffSalary);
 		return count;
+	}
+	
+	/**
+	 * 计算工资
+	 * @param staffSalary
+	 * @return
+	 */
+	@RequestMapping(value="calculateSalary")
+	@ResponseBody
+	public int calculateSalary(@RequestBody(required = true)QueryStaffSalaryParamVO paramVo){
+		int count=salaryService.updateSalary(paramVo);
+		
+		return count;
+
 	}
 
 	/**
@@ -143,6 +159,7 @@ public class SalaryController {
         throw new BohaiException("", "下载信息失败");
         }
 	
+
 	} 
 
 }

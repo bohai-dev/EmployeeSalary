@@ -44,7 +44,7 @@ public class MailUtil {
 		helper.setSubject(subject);//设置主题
 		helper.setText(content);//设置文本内容
 //		helper.addAttachment("a.txt", new File("D:/a.txt"));
-//		helper.addAttachment(attachmentFilename, inputStreamSource);
+		helper.addAttachment(FileName, inputStreamSource);
 		mailSender.send(message);
 	}
 	

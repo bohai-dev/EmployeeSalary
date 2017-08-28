@@ -115,6 +115,7 @@ function updateSalary(){
 	            data: JSON.stringify(param),
 	            success: function (data,status) {
 	                $('#editModal').modal('hide');
+	                
 	                $('#salaryTable').bootstrapTable('refresh');
 	            }
 	       });
@@ -197,3 +198,27 @@ function calculateSalary(){
 	$("#selectModal").modal('show');
 	
 }
+
+
+//确定计算工资 
+function compSalary(){
+//	console.log($('#selectDepName').val());
+//	console.log($('#selectMonth').val());
+
+	var param={
+			 depNum:$('#selectDepName').val(),
+			 payDate:$('#selectMonth').val()	 
+	}
+	  $.ajax({
+          url: 'calculateSalary',
+          type: 'post',
+          contentType: "application/json;charset=UTF-8",
+          data: JSON.stringify(param),
+          success: function (data,status) {
+              $('#selectModal').modal('hide');
+              $('#salaryTable').bootstrapTable('refresh');
+          }
+     });
+}
+
+

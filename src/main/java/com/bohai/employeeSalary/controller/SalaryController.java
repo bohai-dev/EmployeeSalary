@@ -24,8 +24,7 @@ public class SalaryController {
 	
 	@Autowired
 	private StaffSalaryMapper StaffSalaryMapper;
-	@Autowired
-	private StaffSalaryService staffSalaryService;
+	
 	
 	@Autowired
 	private StaffSalaryService salaryService;
@@ -52,6 +51,14 @@ public class SalaryController {
 		return response;
 	}
 	
+	
+	@RequestMapping(value="updateSalary")
+	@ResponseBody
+	public int updateSalary(@RequestBody(required = true) StaffSalary staffSalary){
+		int count=StaffSalaryMapper.updateByStaffNumAndDate(staffSalary);
+		return count;
+	}
+	
 	/**
 	 * 计算工资
 	 * @param staffSalary
@@ -59,19 +66,13 @@ public class SalaryController {
 	 */
 	@RequestMapping(value="calculateSalary")
 	@ResponseBody
-	public int calculateSalary(@RequestBody(required = true) String depNum,String countDate){
-		int count=salaryService.updateSalary(depNum, countDate);
+	public int calculateSalary(@RequestBody(required = true)QueryStaffSalaryParamVO paramVo){
+		int count=salaryService.updateSalary(paramVo);
 		
 		return count;
 
 	}
 
 	
-//	@RequestMapping(value="queryDepStaffInfos")
-//	@ResponseBody
-//	public List<TreeView<StaffInfo>> queryDepStaffInfos(@RequestBody Department Dep){
-//		
-//		return this.staffSalaryService.queryDepStaffInfos(Dep.getDepName(),null);
-//		
-//	}
+
 }

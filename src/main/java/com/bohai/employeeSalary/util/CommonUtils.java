@@ -2,9 +2,12 @@ package com.bohai.employeeSalary.util;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 
 import com.mysql.fabric.xmlrpc.base.Array;
 
@@ -60,5 +63,28 @@ public  class CommonUtils {
 			double num =b.setScale(2,RoundingMode.UP).doubleValue();  
 		    return num;
 	 }
-
+	 
+	 /**
+	  * 返回Date类型的年月，形如yyyy-MM 2017-08
+	  * @param date
+	  * @return
+	  */
+      public static String getYearMonth(Date date) {
+    	  DateFormat format = new SimpleDateFormat("yyyy-MM");
+      	  String formalDate=format.format(date); 
+      	  return formalDate;
+    	  
+      } 
+      
+      /**
+ 	  * 返回Date类型的年月，形如yyyy-MM 2017-08-01
+ 	  * @param date
+ 	  * @return
+ 	  */
+       public static String getYearMonthDay(Date date) {
+     	  DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+       	  String formalDate=format.format(date); 
+       	  return formalDate;
+     	  
+       } 
 }

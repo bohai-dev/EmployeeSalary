@@ -164,7 +164,7 @@ public class StaffInfo {
      *
      * @mbggenerated Tue Aug 15 13:38:03 CST 2017
      */
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+    @JsonFormat(pattern="yyyy-MM-dd",timezone="GMT+8")
     public Date getProbationDateStart() {
         return probationDateStart;
     }
@@ -189,7 +189,7 @@ public class StaffInfo {
      *
      * @mbggenerated Tue Aug 15 13:38:03 CST 2017
      */
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+    @JsonFormat(pattern="yyyy-MM-dd",timezone="GMT+8")
     public Date getFormalDateStart() {
         return formalDateStart;
     }
@@ -214,7 +214,7 @@ public class StaffInfo {
      *
      * @mbggenerated Tue Aug 15 13:38:03 CST 2017
      */
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+    @JsonFormat(pattern="yyyy-MM-dd",timezone="GMT+8")
     public Date getLeaveDate() {
         return leaveDate;
     }
@@ -440,7 +440,7 @@ public class StaffInfo {
      *
      * @mbggenerated Tue Aug 15 13:38:03 CST 2017
      */
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+    @JsonFormat(pattern="yyyy-MM-dd",timezone="GMT+8")
     public Date getCreateTime() {
         return createTime;
     }

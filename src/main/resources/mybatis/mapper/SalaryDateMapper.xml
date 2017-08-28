@@ -97,7 +97,8 @@
     </trim>
   </insert>
   <select id="countWorkDays" resultType="java.lang.Integer" parameterType="java.lang.String" >
-      select count(*) from SALARY_DATE where TYEAR=#{0} AND TMONTH=#{1} AND TDAY>=#{3} AND TYPE=1
-       
+      select count(*) from SALARY_DATE where TYEAR=#{0} AND TMONTH=#{1}   AND TYPE=1
+      AND TDAY<![CDATA[ >= ]]>#{2} AND TDAY<![CDATA[ <= ]]>#{3}       
   </select>
+  
 </mapper>

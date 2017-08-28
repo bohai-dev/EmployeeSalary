@@ -343,7 +343,7 @@
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
 					<button type="button" class="btn btn-primary"
-						onclick="updateSalary()">确定</button>
+						onclick="compSalary()">确定</button>
 				</div>
 			</div>
 

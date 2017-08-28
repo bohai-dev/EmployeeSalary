@@ -9,6 +9,7 @@ import javax.mail.MessagingException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import org.springframework.core.io.InputStreamSource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -31,7 +32,7 @@ public class MailUtil {
 	 * @param content 	 内容
 	 * @throws MessagingException 
 	 * */
-	public void send(String recipient,String subject,String content) throws MessagingException{
+	public void send(String recipient,String subject,String content,String FileName,InputStreamSource inputStreamSource) throws MessagingException{
 		
 		MimeMessage message=this.mailSender.createMimeMessage();
 		mailSender.setUsername("18302168091@163.com");
@@ -42,7 +43,8 @@ public class MailUtil {
 		helper.setSentDate(new Date());
 		helper.setSubject(subject);//设置主题
 		helper.setText(content);//设置文本内容
-		helper.addAttachment("a.txt", new File("D:/a.txt"));
+//		helper.addAttachment("a.txt", new File("D:/a.txt"));
+//		helper.addAttachment(attachmentFilename, inputStreamSource);
 		mailSender.send(message);
 	}
 	

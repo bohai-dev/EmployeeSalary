@@ -23,7 +23,7 @@ public class mail extends AbstractJUnit4SpringContextTests{
 	
 	@Test
 	public void sendSingleTest() throws MessagingException{
-		mailUtil.send("498203560@sb.com.cn", "test1", "test");
+//		mailUtil.send("498203560@sb.com.cn", "test1", "test");
 		System.err.println("成功");
 	}
 	

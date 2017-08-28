@@ -128,51 +128,52 @@ function salaryFormatter(value,row,index) {
 	}
     
     var html = value+'&nbsp;&nbsp;<button type="button" id="cog'+index+'" class="btn btn-link btn-sm">查看详情'
+                             + '</button>'
+                             +'&nbsp;&nbsp;<button type="button" id="mail'+index+'" class="btn btn-link btn-sm">发送工资条'
                              + '</button>';
             
     //添加查看事件
      $("#salaryTable").off("click","#cog"+index);
      $("#salaryTable").on("click","#cog"+index,row,function(event){
            detail(row);
-        });       
+        });
+     $("#salaryTable").off("click","#mail"+index);
+     $("#salaryTable").on("click","#mail"+index,row,function(event){
+           send(row);
+        });
     return html;
 }
 
 /* 修改模态框 */
 function detail(row){
     
-    $("#editModal").modal('show');
+    $("#deailModal").modal('show');
 }
-
 
 
 /**
- * 邮件发送模态框
- * @author Cy
+ * 发送工资条
  * */
+function send(row){
+	console.log(row);
+	if (confirm("给用户：" + row.name + "发送工资条,确定吗？")) {
+		var param = {
+			staffNum : row.staffNumber,
+			payDate:row.payDate
+		};
+		$.ajax({
+			type : "post",
+			url : "sendMail",
+			//dataType: 'json',
+			contentType : "application/json;charset=UTF-8",
+			data : JSON.stringify(param),
+			success : function(date, status) {
+				alert("发送成功");
+			}
+		});
+	}
 
-function sendMailFormatter(value,row,index) {
-	var html = '<button type="button" id="cog'+index+'" class="btn btn-default btn-sm" title="设置">'
-	+ '<i class="glyphicon glyphicon-cog"></i>'
-	+ '</button>';
-
-$("#salaryTable").off("click", "#cog" + index);
-$("#salaryTable").on("click", "#cog" + index, row, function(event) {
-sendMail(row);
-});
-
-return html;
 }
-
-/**
- * 发送邮件
- * @author Cy
- * */
-function sendMail(row){
-	
-	$('#sendMailModel').modal('show');
-}
-
 
 /*查询事件*/
 function querySalary(){
@@ -196,5 +197,3 @@ function calculateSalary(){
 	$("#selectModal").modal('show');
 	
 }
-
-

@@ -233,7 +233,6 @@
 							data-formatter="operationFormatter">其他扣款</th>
 						<th data-field="actualSalary" data-align="center"
 							data-formatter="salaryFormatter">实发工资</th>
-						<th data-field="" data-formatter="sendMailFormatter">操作</th>
 					</tr>
 				</thead>
 			</table>
@@ -351,31 +350,142 @@
 		</div>
 	</div>
 	
-	        <!-- 新建邮件发送模态框 -->
-    <div class="modal fade" id="sendMailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	
+	        <!-- 查看详情模态框 -->
+    <div class="modal fade" id="deailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-            <h4 class="modal-title" id="myModalLabel">邮件信息</h4>
+            <h4 class="modal-title" id="myModalLabel">工资信息</h4>
           </div>
           <div class="modal-body">
-	          <div class="form-group">
-	            <button type="button" class="btn btn-success" id="btn-check-all">Check All</button>  
-	            <button type="button" class="btn btn-danger" id="btn-uncheck-all">Uncheck All</button>  
-                <input type="hidden" id="Name" />
-              </div>
-                
-              <div id="receiverTree" class="form-group"></div>
+              <form class="form-horizontal" role="form">
+                  
+                  <div class="form-group">
+                    <label for="staffNumber2" class="col-sm-3 control-label">员工编号</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" id="staffNumber2" placeholder=""  disabled>
+                    </div>       
+                  </div>
+                  
+                  <div class="form-group">
+                    <label for="name2" class="col-sm-3 control-label">员工姓名</label>
+                    <div class="col-sm-8">
+                            <input type="text" class="form-control" id="name2" placeholder="">
+                    </div> 
+                  </div>
+
+                  <hr>
+                  
+                  <div class="form-group">
+                    <label for="positionSalary2" class="col-sm-3 control-label">岗位工资</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" id="positionSalary2" placeholder="">         
+                    </div>
+                  </div>
+                  
+                  <div class="form-group">
+                    <label for="skillSalary2" class="col-sm-3 control-label">技能工资</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" id="skillSalary2" placeholder="">         
+                    </div>
+                  </div>
+                  
+                  <div class="form-group">
+                    <label for="achiementSalary2" class="col-sm-3 control-label">绩效工资</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" id="achiementSalary2" placeholder="">         
+                    </div>
+                  </div>
+                  
+                  
+                   <div class="form-group">
+                    <label for="workYears2" class="col-sm-3 control-label">司龄工资</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" id="workYears2" placeholder="">
+                    </div>
+                  </div>
+               
+                  <hr>
+                  
+                  <div class="form-group">
+                    <label for="warmSubsidy2" class="col-sm-3 control-label">取暖补贴</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" id="warmSubsidy2" placeholder="">         
+                    </div>
+                  </div> 
+                  <div class="form-group">
+                    <label for="housePersonalTotal2" class="col-sm-3 control-label">住房公积金</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" id="housePersonalTotal2" placeholder="">         
+                    </div>
+                  </div> 
+                  <div class="form-group">
+                    <label for="pensionPersonal2" class="col-sm-3 control-label">养老保险</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" id="pensionPersonal2" placeholder="">         
+                    </div>
+                  </div> 
+                  <div class="form-group">
+                    <label for="unemploymentPersonal2" class="col-sm-3 control-label">失业保险</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" id="unemploymentPersonal2" placeholder="">         
+                    </div>
+                  </div> 
+                  <div class="form-group">
+                    <label for="medicalPersonal2" class="col-sm-3 control-label">医疗保险</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" id="medicalPersonal2" placeholder="">         
+                    </div>
+                  </div> 
+                  
+                  
+                   <div class="form-group">
+                    <label for="actualSalary2" class="col-sm-3 control-label">实发工资</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" id="actualSalary2" placeholder="">         
+                    </div>
+                  </div> 
+                </form>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-            <button type="button" class="btn btn-primary" onclick="updateUsersPermissions();">保存</button>
+            <button type="button" class="btn btn-primary" onclick="send()">发送</button>
           </div>
         </div>
       </div>
     </div>
 	
+	<!-- 发送工资条   -->
+	<div class="modal fade" id="sendMailModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel2">发送工资条邮件</h4>
+				</div>	
+					
+				<div class="modal-body">
+						<form class="form-horizontal" role="form">
+							<div class="form-group">
+								<h3>确认发送工资条？</h3>							
+							</div>
+						</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+					<button type="button" class="btn btn-primary"
+						onclick="sendMail()">确定</button>
+				</div>
+			</div>
+
+			
+		</div>
+	</div>
 	
 	<footer class="footer">
 	<div class="container">

@@ -116,31 +116,5 @@ public class StaffSalaryService {
 		
 		return actualSalary;
 	}
-	
-//	public List<TreeView<Map<String,List<StaffInfo>>>> queryDepStaffInfos(String depName,Long parentDepNumber) {
-//		
-//		List<TreeView<Map<String,List<StaffInfo>>>> treeList=null;
-//		
-//		//所有部门
-//		List<Department> depList=this.departmentMapper.queryDepartments();
-//		
-//		for(Department dep:depList){
-//			Map<String,Object> map=new HashMap<String,Object>();
-//			map.put(dep.getDepName(), dep);
-//			List<StaffInfo> infoList=this.staffInfoMapper.selectByDepartment(dep.getDepNumber());
-//			for(StaffInfo info:infoList){
-//				
-//			}
-//			}
-////			Map<String,List<StaffInfo>> map=new HashMap<String, List<StaffInfo>>();
-////			map.put(dep.getDepName(), infoList);
-//			
-//			
-//		}
-//		
-//		
-//		
-//		return null;
-//	}
 
 }

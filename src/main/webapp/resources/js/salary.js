@@ -145,10 +145,23 @@ function salaryFormatter(value,row,index) {
     return html;
 }
 
-/* 修改模态框 */
+/* 查看详情模态框 */
 function detail(row){
-    
-    $("#deailModal").modal('show');
+	$('#staffNumber2').val(row.staffNumber);
+	$('#name2').val(row.name);
+	$('#depName2').val(row.depName);
+	$('#positionSalary2').val(row.positionSalary);
+	$('#skillSalary2').val(row.skillSalary);
+	$('#achiementSalary2').val(row.achiementSalary);
+	$('#workYears2').val(row.workYears);
+	$('#warmSubsidy2').val(row.warmSubsidy);
+	$('#housePersonalTotal2').val(row.housePersonal);
+	$('#pensionPersonal2').val(row.pensionPersonal);
+	$('#unemploymentPersonal2').val(row.unemploymentPersonal);
+	$('#medicalPersonal2').val(row.medicalPersonal);
+	$('#actualSalary2').val(row.actualSalary);
+	
+	$("#deailModal").modal('show');
 }
 
 

@@ -415,30 +415,36 @@
                   <div class="form-group">
                     <label for="name2" class="col-sm-3 control-label">员工姓名</label>
                     <div class="col-sm-8">
-                            <input type="text" class="form-control" id="name2" placeholder="">
+                            <input type="text" class="form-control" id="name2" placeholder="" disabled>
                     </div> 
                   </div>
 
+				<div class="form-group">
+                    <label for="depName2" class="col-sm-3 control-label">员工姓名</label>
+                    <div class="col-sm-8">
+                            <input type="text" class="form-control" id="depName2" placeholder="" disabled>
+                    </div> 
+                  </div>
                   <hr>
                   
                   <div class="form-group">
                     <label for="positionSalary2" class="col-sm-3 control-label">岗位工资</label>
                     <div class="col-sm-8">
-                      <input type="text" class="form-control" id="positionSalary2" placeholder="">         
+                      <input type="text" class="form-control" id="positionSalary2" placeholder="" disabled>         
                     </div>
                   </div>
                   
                   <div class="form-group">
                     <label for="skillSalary2" class="col-sm-3 control-label">技能工资</label>
                     <div class="col-sm-8">
-                      <input type="text" class="form-control" id="skillSalary2" placeholder="">         
+                      <input type="text" class="form-control" id="skillSalary2" placeholder="" disabled>         
                     </div>
                   </div>
                   
                   <div class="form-group">
                     <label for="achiementSalary2" class="col-sm-3 control-label">绩效工资</label>
                     <div class="col-sm-8">
-                      <input type="text" class="form-control" id="achiementSalary2" placeholder="">         
+                      <input type="text" class="form-control" id="achiementSalary2" placeholder="" disabled>         
                     </div>
                   </div>
                   
@@ -446,7 +452,7 @@
                    <div class="form-group">
                     <label for="workYears2" class="col-sm-3 control-label">司龄工资</label>
                     <div class="col-sm-8">
-                      <input type="text" class="form-control" id="workYears2" placeholder="">
+                      <input type="text" class="form-control" id="workYears2" placeholder="" disabled>
                     </div>
                   </div>
                
@@ -455,31 +461,31 @@
                   <div class="form-group">
                     <label for="warmSubsidy2" class="col-sm-3 control-label">取暖补贴</label>
                     <div class="col-sm-8">
-                      <input type="text" class="form-control" id="warmSubsidy2" placeholder="">         
+                      <input type="text" class="form-control" id="warmSubsidy2" placeholder="" disabled>         
                     </div>
                   </div> 
                   <div class="form-group">
                     <label for="housePersonalTotal2" class="col-sm-3 control-label">住房公积金</label>
                     <div class="col-sm-8">
-                      <input type="text" class="form-control" id="housePersonalTotal2" placeholder="">         
+                      <input type="text" class="form-control" id="housePersonalTotal2" placeholder="" disabled>         
                     </div>
                   </div> 
                   <div class="form-group">
                     <label for="pensionPersonal2" class="col-sm-3 control-label">养老保险</label>
                     <div class="col-sm-8">
-                      <input type="text" class="form-control" id="pensionPersonal2" placeholder="">         
+                      <input type="text" class="form-control" id="pensionPersonal2" placeholder="" disabled>         
                     </div>
                   </div> 
                   <div class="form-group">
                     <label for="unemploymentPersonal2" class="col-sm-3 control-label">失业保险</label>
                     <div class="col-sm-8">
-                      <input type="text" class="form-control" id="unemploymentPersonal2" placeholder="">         
+                      <input type="text" class="form-control" id="unemploymentPersonal2" placeholder="" disabled>         
                     </div>
                   </div> 
                   <div class="form-group">
                     <label for="medicalPersonal2" class="col-sm-3 control-label">医疗保险</label>
                     <div class="col-sm-8">
-                      <input type="text" class="form-control" id="medicalPersonal2" placeholder="">         
+                      <input type="text" class="form-control" id="medicalPersonal2" placeholder="" disabled>         
                     </div>
                   </div> 
                   
@@ -487,7 +493,7 @@
                    <div class="form-group">
                     <label for="actualSalary2" class="col-sm-3 control-label">实发工资</label>
                     <div class="col-sm-8">
-                      <input type="text" class="form-control" id="actualSalary2" placeholder="">         
+                      <input type="text" class="form-control" id="actualSalary2" placeholder="" disabled>         
                     </div>
                   </div> 
                 </form>

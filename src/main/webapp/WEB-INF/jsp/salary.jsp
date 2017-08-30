@@ -191,7 +191,7 @@
 
 					<div class="col-sm-10 col-md-2  ">
 						<input class="btn btn-default  col-xs-8" type="button"
-							value="导出工资明细表" onclick="queryMediator()">
+							value="导出工资明细表" onclick="exportSalary()">
 					</div>
 					<div class="col-sm-10 col-md-2 ">
 						<input class="btn btn-default col-xs-7" type="button"
@@ -229,9 +229,9 @@
 						<th data-field="personalTotal" data-align="center">个人社保缴费合计</th>
 						<th data-field="housePersonalTotal" data-align="center">个人公积金缴费合计</th>
 						<!-- <th data-field="establishDate" data-align="center" >个人所得税</th> -->
-						<th data-field="salaryOther" data-align="center"
-							data-formatter="operationFormatter">其他扣款</th>
-						<th data-field="actualSalary" data-align="center"
+						<th data-field="salaryOther" data-align="right"
+							data-formatter="operationFormatter">其他款项</th>
+						<th data-field="actualSalary" data-align="right"
 							data-formatter="salaryFormatter">实发工资</th>
 					</tr>
 				</thead>
@@ -246,7 +246,7 @@
 
 
 	</div>
-	<!-- 修改营业部信息 -->
+	<!-- 修改其他款项 -->
 	<div class="modal fade" id="editModal" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
@@ -255,7 +255,8 @@
 					<button type="button" class="close" data-dismiss="modal">
 						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
 					</button>
-					<h4 class="modal-title" id="myModalLabel1">修改其他扣款</h4>
+					<h4 class="modal-title" id="myModalLabel1">修改其他款项</h4>
+					<h5 class="modal-title">(正数表示增加款项，负数表示扣款)</h5>
 				</div>	
 				<div class="modal-body">
 						<form class="form-horizontal" role="form">
@@ -306,7 +307,7 @@
 		</div>
 	</div>
 
-    <!-- 月份和部门模态框 -->
+    <!-- 计算工资月份和部门模态框 -->
 	<div class="modal fade" id="selectModal" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
@@ -315,7 +316,7 @@
 					<button type="button" class="close" data-dismiss="modal">
 						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
 					</button>
-					<h4 class="modal-title" id="myModalLabel2">请选择</h4>
+					<h4 class="modal-title" id="myModalLabel2">请选择要计算的部门和月份</h4>
 				</div>	
 					
 				<div class="modal-body">
@@ -349,7 +350,49 @@
 			
 		</div>
 	</div>
-	
+<!-- 	 <!-- 导出工资 月份和部门模态框 -->
+	<div class="modal fade" id="exportModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel3">请选择要导出的部门和月份</h4>
+				</div>	
+					
+				<div class="modal-body">
+						<form class="form-horizontal" role="form">
+							<div class="form-group">
+								<label for="exportMonth" class="col-sm-3 control-label">月份</label>
+								<div class="col-sm-8 col-md-4">
+						             <input type="text" class="form-control month" id="exportMonth">
+					             </div>
+							</div>
+							<div class="form-group">
+								<label for="exportDepName" class="col-sm-3 control-label">部门</label>
+								<div class="col-sm-8 col-md-4">
+									<select class="selectpicker form-control " id="exportDepName"
+										data-live-Search="true" >
+
+									</select>
+								</div>
+							</div>
+
+
+						</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+					<button type="button" class="btn btn-primary"
+						onclick="exportDetail()">确定</button>
+				</div>
+			</div>
+
+			
+		</div>
+	</div>// -->
 	
 	        <!-- 查看详情模态框 -->
     <div class="modal fade" id="deailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

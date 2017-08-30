@@ -1,13 +1,14 @@
 package com.bohai.employeeSalary.controller;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
 
 import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -23,6 +24,7 @@ import com.bohai.employeeSalary.controller.exception.BohaiException;
 import com.bohai.employeeSalary.dao.StaffSalaryMapper;
 import com.bohai.employeeSalary.entity.StaffSalary;
 import com.bohai.employeeSalary.service.StaffSalaryService;
+import com.bohai.employeeSalary.service.exportSalaryService;
 import com.bohai.employeeSalary.util.MailUtil;
 import com.bohai.employeeSalary.vo.QueryStaffSalaryParamVO;
 import com.bohai.employeeSalary.vo.TableJsonResponse;
@@ -38,11 +40,18 @@ public class SalaryController{
 	@Autowired
 	private StaffSalaryMapper StaffSalaryMapper;
 	
+
 	@Autowired
 	private StaffSalaryService salaryService;
 
+
+	@Autowired
+	private exportSalaryService exportService;
+
+
 	@Autowired
 	private MailUtil mailUtil;
+
 	
 	@RequestMapping(value="toSalary")
     public String toSalary(){
@@ -70,7 +79,12 @@ public class SalaryController{
 	@RequestMapping(value="updateSalary")
 	@ResponseBody
 	public int updateSalary(@RequestBody(required = true) StaffSalary staffSalary){
-		int count=StaffSalaryMapper.updateByStaffNumAndDate(staffSalary);
+		int count=StaffSalaryMapper.updateByStaffNumAndDate(staffSalary);  //更新其他款项
+		
+		QueryStaffSalaryParamVO paramVo=new QueryStaffSalaryParamVO();
+		paramVo.setStaffNum(staffSalary.getStaffNumber());
+		paramVo.setPayDate(staffSalary.getPayDate());
+		salaryService.updateSalary(paramVo);
 		return count;
 	}
 	
@@ -87,6 +101,27 @@ public class SalaryController{
 		return count;
 
 	}
+	
+	/**
+	 * 导出报表
+	 * @param 
+	 * @return
+	 */
+	@RequestMapping(value="exportSalary")
+	@ResponseBody
+	public int exportSalary(@RequestBody(required = true)QueryStaffSalaryParamVO paramVo,HttpServletRequest request, HttpServletResponse response){
+		int count=0;
+		try {
+			count = exportService.exportSalary(paramVo,response);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return count;
+
+	}
+
 
 	/**
 	 * 单发送邮件

@@ -32,7 +32,7 @@ public class mail extends AbstractJUnit4SpringContextTests{
 		List<String> recipients=new ArrayList<String>();
 		recipients.add("18302168091@163.com");
 		recipients.add("498203560@qq.com");
-		mailUtil.send(recipients, "test2", "test2");
+//		mailUtil.send(recipients, "test2", "test2");
 		System.err.println("成功");
 	}
 }

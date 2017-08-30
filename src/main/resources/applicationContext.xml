@@ -14,13 +14,36 @@
      
   
   
-    <!-- 启用springMVC注解 -->
+  <!-- 启用springMVC注解 -->
     <context:annotation-config />
     
     <context:component-scan base-package="com.bohai.employeeSalary"/>
     
-    <context:property-placeholder location="classpath:jdbc.properties"/>
-    
+    <context:property-placeholder location="classpath:jdbc.properties,classpath:mail.properties" />
+ 
+   <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">    
+        <property name="host" value="${mail.host}" />   
+        <property name="username" value="${mail.username}" />    
+        <property name="password" value="${mail.password}" />    
+        <property name="defaultEncoding" value="UTF-8"></property>    
+        <property name="javaMailProperties">    
+            <props>    
+                <prop key="mail.smtp.auth">${mail.smtp.auth}</prop>    
+                <prop key="mail.smtp.timeout">${mail.smtp.timeout}</prop>    
+                <prop key="mail.smtp.port">${mail.smtp.port}</prop>    
+            </props>    
+        </property>    
+    </bean> 
+    <bean id="simpleMailMessage" class="org.springframework.mail.SimpleMailMessage">  
+        <property name="from" value="${mail.username}" />  
+    </bean>  
+   
+    <bean id="mailUtil" class="com.bohai.employeeSalary.util.MailUtil">  
+        <property name="mailSender" ref="mailSender"></property>  
+        <property name="simpleMailMessage" ref="simpleMailMessage"></property>  
+    </bean>    
+  
+  
     
     <import resource="spring/spring-bean.xml"/>
     <import resource="spring/spring-shiro-web.xml"/>

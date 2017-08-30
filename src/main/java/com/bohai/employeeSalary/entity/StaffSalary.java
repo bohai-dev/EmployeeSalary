@@ -120,8 +120,14 @@ public class StaffSalary {
     private String isProbation;
 
     private String coefficeient;
+   
     private String skillSalary;
     
+    private String incomeTax;
+    
+    private String grossSalary;
+    
+    private String taxBase;
     
     @JsonFormat(pattern="yyyy-MM-dd ",timezone="GMT+8")
     public Date getProbationDateStart() {
@@ -589,4 +595,29 @@ public class StaffSalary {
     public void setHouseToatal(String houseToatal) {
         this.houseToatal = houseToatal == null ? null : houseToatal.trim();
     }
+
+	public String getIncomeTax() {
+		return incomeTax;
+	}
+
+	public void setIncomeTax(String incomeTax) {
+		this.incomeTax = incomeTax;
+	}
+
+	public String getGrossSalary() {
+		return grossSalary;
+	}
+
+	public void setGrossSalary(String grossSalary) {
+		this.grossSalary = grossSalary;
+	}
+
+	public String getTaxBase() {
+		return taxBase;
+	}
+
+	public void setTaxBase(String taxBase) {
+		this.taxBase = taxBase;
+	}
+      
 }

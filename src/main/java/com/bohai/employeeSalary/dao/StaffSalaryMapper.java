@@ -15,7 +15,7 @@ public interface StaffSalaryMapper {
     int insertSelective(StaffSalary record);
     
 
-    Long selectByStaffNumAndDate(String staffNum,String date); 
+    Long selectByStaffNumAndDate(StaffSalary staffSalary); 
     
     int updateByStaffNumAndDate(StaffSalary staffSalary);
     

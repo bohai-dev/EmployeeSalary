@@ -153,7 +153,8 @@ function detail(row){
 
 
 /**
- * 发送工资条
+ * 单发送工资条
+ * @author CY
  * */
 function send(row){
 	console.log(row);
@@ -176,6 +177,40 @@ function send(row){
 
 }
 
+/**
+ * 群发送工资条
+ * @author CY
+ * */
+function openSendMails(){
+	console.log("aaaaaa");
+	$("#sendMailsModal").modal('show');
+}
+
+/**
+ * 群发送工资条
+ * @author CY
+ * */
+function sendMails(){
+	if (confirm("给所有用户发送"+$('#selectSalaryMonth').val()+"月份工资条,确定吗？  发送成功后会弹出发送状态框")) {
+		$("#sendMailsModal").modal('hide');
+	var param={
+			 payDate:$('#selectSalaryMonth').val()	 
+	};
+	$.ajax({
+		type : "post",
+		url : "sendMails",
+		//dataType: 'json',
+		contentType : "application/json;charset=UTF-8",
+		data : JSON.stringify(param),
+		success : function(date, status) {
+			alert("发送成功");
+		},
+		error:function(date,status){
+			alert("发送失败，请重试");
+		}
+	});
+}
+}
 /*查询事件*/
 function querySalary(){
 	

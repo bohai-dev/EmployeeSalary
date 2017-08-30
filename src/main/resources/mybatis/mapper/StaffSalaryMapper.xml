@@ -48,6 +48,9 @@
     <result column="HOUSE_PERSONAL_TOTAL" jdbcType="VARCHAR" property="housePersonalTotal" />
     <result column="HOUSE_COMPANY_TOTAL" jdbcType="VARCHAR" property="houseCompanyTotal" />
     <result column="HOUSE_TOATAL" jdbcType="VARCHAR" property="houseToatal" />
+    <result column="INCOME_TAX" jdbcType="VARCHAR" property="incomeTax"/>
+    <result column="GROSS_SALARY" jdbcType="VARCHAR" property="grossSalary"/>
+    <result column="TAX_BASE" jdbcType="VARCHAR" property="taxBase"/>
     
     <!-- 员工信息表和部门表的字段 -->
      <result column="PROBATION_DATE_START" jdbcType="TIMESTAMP" property="probationDateStart" />
@@ -77,7 +80,8 @@
     BIRTH_COMPAY_PERCENT, ACTUAL_SALARY, PERSONAL_TOTAL, COMPANY_TOTAL, PAYMENT_TOTAL, 
     HOUSE_BASE_PERSONAL, HOUSE_BASE_COMPANY, HOUSE_SUPPLY_PERSONAL, HOUSE_SUPPLY_COMPANY, 
     HOUSE_BASE_PERSONAL_PERCENT, HOUSE_BASE_COMPANY_PERCENT, HOUSE_SUPPLY_PERSONAL_PERCENT, 
-    HOUSE_SUPPLY_COMPANY_PERCENT, HOUSE_PERSONAL_TOTAL, HOUSE_COMPANY_TOTAL, HOUSE_TOATAL
+    HOUSE_SUPPLY_COMPANY_PERCENT, HOUSE_PERSONAL_TOTAL, HOUSE_COMPANY_TOTAL, HOUSE_TOATAL,INCOME_TAX,
+    GROSS_SALARY,TAX_BASE
   </sql>
   <sql id="StaffInfo_Column_List" >
     <!--
@@ -576,8 +580,14 @@
     select count(*)
    
     from  STAFF_SALARY
-    where STAFF_NUMBER = #{0,jdbcType=VARCHAR}
-    and PAY_DATE = #{1,jdbcType=VARCHAR}
+    <where>
+        <if test="staffNumber != null and staffNumber !=''">
+            STAFF_NUMBER = #{staffNumber,jdbcType=VARCHAR}
+        </if>
+        <if test="payDate != null and payDate != ''">
+            and PAY_DATE = #{payDate,jdbcType=VARCHAR}
+        </if>
+    </where>
   </select>
   
   <select id="queryStaffInfos" parameterType="java.util.Map" resultMap="BaseResultMap">

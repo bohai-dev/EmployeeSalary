@@ -194,8 +194,8 @@
 							value="导出工资明细表" onclick="exportSalary()">
 					</div>
 					<div class="col-sm-10 col-md-2 ">
-						<input class="btn btn-default col-xs-7" type="button" value="发送邮件"
-							onclick="sendMail()">
+						<input class="btn btn-default col-xs-7" type="button"
+							value="发送邮件"	onclick="openSendMails()">
 					</div>
 				</form>
 			</div>
@@ -494,14 +494,13 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-            <button type="button" class="btn btn-primary" onclick="send()">发送</button>
           </div>
         </div>
       </div>
     </div>
 	
-	<!-- 发送工资条   -->
-	<div class="modal fade" id="sendMailModal" tabindex="-1" role="dialog"
+	<!-- 群发工资日期选择模态框   -->
+	<div class="modal fade" id="sendMailsModal" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -509,20 +508,23 @@
 					<button type="button" class="close" data-dismiss="modal">
 						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
 					</button>
-					<h4 class="modal-title" id="myModalLabel2">发送工资条邮件</h4>
+					<h4 class="modal-title" id="myModalLabel2">请选择</h4>
 				</div>	
 					
 				<div class="modal-body">
 						<form class="form-horizontal" role="form">
 							<div class="form-group">
-								<h3>确认发送工资条？</h3>							
+								<label for="selectSalaryMonth" class="col-sm-3 control-label">发送工资月份</label>
+								<div class="col-sm-8 col-md-4">
+						             <input type="text" class="form-control month" id="selectSalaryMonth">
+					             </div>
 							</div>
 						</form>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
 					<button type="button" class="btn btn-primary"
-						onclick="sendMail()">确定</button>
+						onclick="sendMails()">发送</button>
 				</div>
 			</div>
 
@@ -530,6 +532,9 @@
 		</div>
 	</div>
 	
+
+
+
 	<footer class="footer">
 	<div class="container">
 		<p class="text-muted">Place sticky footer content here.</p>

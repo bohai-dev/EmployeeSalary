@@ -159,35 +159,74 @@ public class SalaryController{
 				//员工姓名
 				row2.createCell(2).setCellValue(salaryList.get(i).getName());
 				//岗位工资
+				if(salaryList.get(i).getPositionSalary()==null){
+					row2.createCell(3).setCellValue(0.00);
+				}else{
 				row2.createCell(3).setCellValue(salaryList.get(i).getPositionSalary());
+				}
 				//技能工资
+				if(salaryList.get(i).getSkillSalary()==null){
+					row2.createCell(4).setCellValue(0.00);
+				}else{
 				row2.createCell(4).setCellValue(salaryList.get(i).getSkillSalary());
+				}
 				//绩效工资
+				if(salaryList.get(i).getAchiementSalary()==null){
+					row2.createCell(5).setCellValue(0.00);
+				}else{
 				row2.createCell(5).setCellValue(salaryList.get(i).getAchiementSalary());
+				}
 				//司龄工资
+				if(salaryList.get(i).getWorkYears()==null){
+					row2.createCell(6).setCellValue(0.00);
+				}else{
 				row2.createCell(6).setCellValue(salaryList.get(i).getWorkYears());
+				}
+				
 				//应发工资
-				row2.createCell(7).setCellValue(salaryList.get(i).getIncomeTax());
+				row2.createCell(7).setCellValue(salaryList.get(i).getGrossSalary());
+				
 				//取暖补贴
+				if(salaryList.get(i).getWarmSubsidy()==null){
+					row2.createCell(8).setCellValue(0.00);
+				}else{
 				row2.createCell(8).setCellValue(salaryList.get(i).getWarmSubsidy());
+				}
 				//住房公积金
+				if(salaryList.get(i).getHousePersonalTotal()==null){
+					row2.createCell(9).setCellValue(0.00);
+				}else{}
 				row2.createCell(9).setCellValue(salaryList.get(i).getHousePersonalTotal());
 				//养老保险
+				if(salaryList.get(i).getPensionPersonal()==null){
+					row2.createCell(10).setCellValue(0.00);
+				}else{
 				row2.createCell(10).setCellValue(salaryList.get(i).getPensionPersonal());
+				}
 				//失业保险
+				if(salaryList.get(i).getUnemploymentPersonal()==null){
+					row2.createCell(11).setCellValue(0.00);
+				}else{
 				row2.createCell(11).setCellValue(salaryList.get(i).getUnemploymentPersonal());
+				}
 				//医疗保险
+				if(salaryList.get(i).getMedicalPersonal()==null){
+					row2.createCell(12).setCellValue(0.00);
+				}else{
 				row2.createCell(12).setCellValue(salaryList.get(i).getMedicalPersonal());
+				}
+				//计税基数
+				row2.createCell(13).setCellValue(salaryList.get(i).getTaxBase());
 				//个人所得税
-				row2.createCell(13).setCellValue(salaryList.get(i).getGrossSalary());
+				row2.createCell(14).setCellValue(salaryList.get(i).getIncomeTax());
 				//实发工资
-				row2.createCell(14).setCellValue(salaryList.get(i).getActualSalary());
+				row2.createCell(15).setCellValue(salaryList.get(i).getActualSalary());
 				
 			}
 		}
 		
 		
-		String FileName = new String(salaryList.get(0).getStaffNumber()+"号员工工资条信息.xls");
+		String FileName = new String(salaryList.get(0).getStaffNumber()+"号员工工资条信息.xlsx");
 		String FileUrl=new String("D:\\"+FileName);
 		OutputStream outputStream =new FileOutputStream(new File(FileUrl));
 		wb.write(outputStream);
@@ -240,32 +279,71 @@ public class SalaryController{
 						//员工姓名
 						row2.createCell(2).setCellValue(salaryList.get(i).getName());
 						//岗位工资
+						if(salaryList.get(i).getPositionSalary()==null){
+							row2.createCell(3).setCellValue(0.00);
+						}else{
 						row2.createCell(3).setCellValue(salaryList.get(i).getPositionSalary());
+						}
 						//技能工资
+						if(salaryList.get(i).getSkillSalary()==null){
+							row2.createCell(4).setCellValue(0.00);
+						}else{
 						row2.createCell(4).setCellValue(salaryList.get(i).getSkillSalary());
+						}
 						//绩效工资
+						if(salaryList.get(i).getAchiementSalary()==null){
+							row2.createCell(5).setCellValue(0.00);
+						}else{
 						row2.createCell(5).setCellValue(salaryList.get(i).getAchiementSalary());
+						}
 						//司龄工资
+						if(salaryList.get(i).getWorkYears()==null){
+							row2.createCell(6).setCellValue(0.00);
+						}else{
 						row2.createCell(6).setCellValue(salaryList.get(i).getWorkYears());
+						}
+						
 						//应发工资
-						row2.createCell(7).setCellValue(salaryList.get(i).getIncomeTax());
+						row2.createCell(7).setCellValue(salaryList.get(i).getGrossSalary());
+						
 						//取暖补贴
+						if(salaryList.get(i).getWarmSubsidy()==null){
+							row2.createCell(8).setCellValue(0.00);
+						}else{
 						row2.createCell(8).setCellValue(salaryList.get(i).getWarmSubsidy());
+						}
 						//住房公积金
+						if(salaryList.get(i).getHousePersonalTotal()==null){
+							row2.createCell(9).setCellValue(0.00);
+						}else{}
 						row2.createCell(9).setCellValue(salaryList.get(i).getHousePersonalTotal());
 						//养老保险
+						if(salaryList.get(i).getPensionPersonal()==null){
+							row2.createCell(10).setCellValue(0.00);
+						}else{
 						row2.createCell(10).setCellValue(salaryList.get(i).getPensionPersonal());
+						}
 						//失业保险
+						if(salaryList.get(i).getUnemploymentPersonal()==null){
+							row2.createCell(11).setCellValue(0.00);
+						}else{
 						row2.createCell(11).setCellValue(salaryList.get(i).getUnemploymentPersonal());
+						}
 						//医疗保险
+						if(salaryList.get(i).getMedicalPersonal()==null){
+							row2.createCell(12).setCellValue(0.00);
+						}else{
 						row2.createCell(12).setCellValue(salaryList.get(i).getMedicalPersonal());
+						}
+						//计税基数
+						row2.createCell(13).setCellValue(salaryList.get(i).getTaxBase());
 						//个人所得税
-						row2.createCell(13).setCellValue(salaryList.get(i).getGrossSalary());
+						row2.createCell(14).setCellValue(salaryList.get(i).getIncomeTax());
 						//实发工资
-						row2.createCell(14).setCellValue(salaryList.get(i).getActualSalary());
+						row2.createCell(15).setCellValue(salaryList.get(i).getActualSalary());
 						
 				
-						FileNames[i]=salaryList.get(i).getStaffNumber()+"号员工"+salaryList.get(i).getPayDate()+"工资条信息.xls";
+						FileNames[i]=salaryList.get(i).getStaffNumber()+"号员工"+salaryList.get(i).getPayDate()+"工资条信息.xlsx";
 						FileUrls[i]="D:\\"+FileNames[i];
 						OutputStream outputStream =new FileOutputStream(new File(FileUrls[i]));
 						wb.write(outputStream);

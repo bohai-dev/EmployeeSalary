@@ -152,7 +152,7 @@ public class exportSalaryService {
 	    	  row2.createCell(3).setCellValue(Optional.ofNullable(salaryList.get(j).getAchiementSalary()).orElse("0.00"));
 	    	  row2.createCell(4).setCellValue(Optional.ofNullable(salaryList.get(j).getWorkYears()).orElse("0.00"));
 	    	  row2.createCell(5).setCellValue(Optional.ofNullable(salaryList.get(j).getSkillSalary()).orElse("0.00"));
-	    	  row2.createCell(6).setCellValue(0);   //应发工资
+	    	  row2.createCell(6).setCellValue(Optional.ofNullable(salaryList.get(j).getGrossSalary()).orElse("0.00"));   //应发工资
 	    	  row2.createCell(7).setCellValue(Optional.ofNullable(salaryList.get(j).getWarmSubsidy()).orElse("0.00"));   
 	    	  row2.createCell(8).setCellValue(Optional.ofNullable(salaryList.get(j).getHousePersonalTotal()).orElse("0.00"));
 	    	  row2.createCell(9).setCellValue(Optional.ofNullable(salaryList.get(j).getPensionPersonal()).orElse("0.00"));
@@ -160,8 +160,8 @@ public class exportSalaryService {
 	    	  row2.createCell(11).setCellValue(Optional.ofNullable(salaryList.get(j).getMedicalPersonal()).orElse("0.00"));
 	    	  row2.createCell(12).setCellValue(0.00);   //补扣保险公积金,暂为0
 	    	  row2.createCell(13).setCellValue(Double.parseDouble(Optional.ofNullable(salaryList.get(j).getPersonalTotal()).orElse("0.00"))+Double.parseDouble(Optional.ofNullable((salaryList.get(j).getHousePersonalTotal())).orElse("0.00")));       //社保公积金代扣合计
-	    	  row2.createCell(14).setCellValue(0);   //计税基数  
-	    	  row2.createCell(15).setCellValue(0);   //个人所得税 
+	    	  row2.createCell(14).setCellValue(Optional.ofNullable(salaryList.get(j).getTaxBase()).orElse("0.00"));   //计税基数  
+	    	  row2.createCell(15).setCellValue(Optional.ofNullable(salaryList.get(j).getIncomeTax()).orElse("0.00"));   //个人所得税 
 	    	  row2.createCell(16).setCellValue(Optional.ofNullable(salaryList.get(j).getSalaryOther()).orElse("0.00"));   
 	    	  row2.createCell(17).setCellValue(Optional.ofNullable(salaryList.get(j).getActualSalary()).orElse("0.00"));
 	    	  row2.createCell(18).setCellValue(Optional.ofNullable(salaryList.get(j).getEmail()).orElse(""));

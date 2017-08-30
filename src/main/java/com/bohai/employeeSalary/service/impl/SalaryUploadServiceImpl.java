@@ -27,7 +27,8 @@ public class SalaryUploadServiceImpl implements FileUploadService {
 	
 
 	
-	@Autowired StaffSalaryService salaryService;
+	@Autowired 
+	StaffSalaryService salaryService;
 
 	@Override
 	public String upload(MultipartFile file, Object... objects) throws BohaiException {

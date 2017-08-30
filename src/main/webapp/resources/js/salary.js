@@ -237,8 +237,8 @@ function calculateSalary(){
 
 //确定计算工资 
 function compSalary(){
-//	console.log($('#selectDepName').val());
-//	console.log($('#selectMonth').val());
+	console.log($('#selectDepName').val());
+	console.log($('#selectMonth').val());
 
 	var param={
 			 depNum:$('#selectDepName').val(),

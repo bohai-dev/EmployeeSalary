@@ -101,8 +101,8 @@ public class SalaryController{
 	public void sendMail(@RequestBody(required = true) QueryStaffSalaryParamVO paramVO) throws BohaiException, MessagingException, IOException{
 		XSSFWorkbook wb=new XSSFWorkbook();
 		XSSFSheet salarySheet=wb.createSheet("员工工资条");
-		String[] salaryHead={"行号","员工编号","员工姓名","岗位工资","技能工资","绩效工资","司龄工资","取暖补贴","住房公积金","养老保险",
-				"失业保险","医疗保险","实发工资"};
+		String[] salaryHead={"行号","员工编号","员工姓名","岗位工资","技能工资","绩效工资","司龄工资","应发工资","取暖补贴","住房公积金","养老保险",
+				"失业保险","医疗保险","计税基数","个人所得税","实发工资"};
 		XSSFRow row=salarySheet.createRow(0);
 		
 		//初始化表头
@@ -116,7 +116,7 @@ public class SalaryController{
 			for (int i = 0; i < salaryList.size(); i++) {
 				//"员工编号","员工姓名","岗位工资","技能工资","绩效工资","司龄工资","取暖补贴","住房公积金","养老保险",
 				//"失业保险","医疗保险","实发工资"
-				XSSFRow row2=salarySheet.createRow(i+1);
+				XSSFRow row2=salarySheet.createRow(1);
 				//行号
 				row2.createCell(0).setCellValue(String.valueOf(i+1));
 				//员工编号
@@ -131,18 +131,22 @@ public class SalaryController{
 				row2.createCell(5).setCellValue(salaryList.get(i).getAchiementSalary());
 				//司龄工资
 				row2.createCell(6).setCellValue(salaryList.get(i).getWorkYears());
+				//应发工资
+				row2.createCell(7).setCellValue(salaryList.get(i).getIncomeTax());
 				//取暖补贴
-				row2.createCell(7).setCellValue(salaryList.get(i).getWarmSubsidy());
+				row2.createCell(8).setCellValue(salaryList.get(i).getWarmSubsidy());
 				//住房公积金
-				row2.createCell(8).setCellValue(salaryList.get(i).getHousePersonalTotal());
+				row2.createCell(9).setCellValue(salaryList.get(i).getHousePersonalTotal());
 				//养老保险
-				row2.createCell(9).setCellValue(salaryList.get(i).getPensionPersonal());
+				row2.createCell(10).setCellValue(salaryList.get(i).getPensionPersonal());
 				//失业保险
-				row2.createCell(10).setCellValue(salaryList.get(i).getUnemploymentPersonal());
+				row2.createCell(11).setCellValue(salaryList.get(i).getUnemploymentPersonal());
 				//医疗保险
-				row2.createCell(11).setCellValue(salaryList.get(i).getMedicalPersonal());
+				row2.createCell(12).setCellValue(salaryList.get(i).getMedicalPersonal());
+				//个人所得税
+				row2.createCell(13).setCellValue(salaryList.get(i).getGrossSalary());
 				//实发工资
-				row2.createCell(12).setCellValue(salaryList.get(i).getActualSalary());
+				row2.createCell(14).setCellValue(salaryList.get(i).getActualSalary());
 				
 			}
 		}
@@ -183,19 +187,19 @@ public class SalaryController{
 						//"失业保险","医疗保险","实发工资"
 						XSSFWorkbook wb=new XSSFWorkbook();
 						XSSFSheet salarySheet=wb.createSheet("员工工资条");
-						String[] salaryHead={"行号","员工编号","员工姓名","岗位工资","技能工资","绩效工资","司龄工资","取暖补贴","住房公积金","养老保险",
-								"失业保险","医疗保险","实发工资"};
+						String[] salaryHead={"行号","员工编号","员工姓名","岗位工资","技能工资","绩效工资","司龄工资","应发工资","取暖补贴","住房公积金","养老保险",
+								"失业保险","医疗保险","计税基数","个人所得税","实发工资"};
 						XSSFRow row=salarySheet.createRow(0);
 						
 						//初始化表头
 						for (int j = 0; j < salaryHead.length; j++) {
-							row.createCell(i).setCellValue(salaryHead[j]);
+							row.createCell(j).setCellValue(salaryHead[j]);
 							salarySheet.setColumnWidth(j, 256*15);
 						}
 						
-						XSSFRow row2=salarySheet.createRow(i+1);
+						XSSFRow row2=salarySheet.createRow(1);
 						//行号
-						row2.createCell(0).setCellValue(String.valueOf(i+1));
+						row2.createCell(0).setCellValue(String.valueOf(1));
 						//员工编号
 						row2.createCell(1).setCellValue(salaryList.get(i).getStaffNumber());
 						//员工姓名
@@ -208,18 +212,23 @@ public class SalaryController{
 						row2.createCell(5).setCellValue(salaryList.get(i).getAchiementSalary());
 						//司龄工资
 						row2.createCell(6).setCellValue(salaryList.get(i).getWorkYears());
+						//应发工资
+						row2.createCell(7).setCellValue(salaryList.get(i).getIncomeTax());
 						//取暖补贴
-						row2.createCell(7).setCellValue(salaryList.get(i).getWarmSubsidy());
+						row2.createCell(8).setCellValue(salaryList.get(i).getWarmSubsidy());
 						//住房公积金
-						row2.createCell(8).setCellValue(salaryList.get(i).getHousePersonalTotal());
+						row2.createCell(9).setCellValue(salaryList.get(i).getHousePersonalTotal());
 						//养老保险
-						row2.createCell(9).setCellValue(salaryList.get(i).getPensionPersonal());
+						row2.createCell(10).setCellValue(salaryList.get(i).getPensionPersonal());
 						//失业保险
-						row2.createCell(10).setCellValue(salaryList.get(i).getUnemploymentPersonal());
+						row2.createCell(11).setCellValue(salaryList.get(i).getUnemploymentPersonal());
 						//医疗保险
-						row2.createCell(11).setCellValue(salaryList.get(i).getMedicalPersonal());
+						row2.createCell(12).setCellValue(salaryList.get(i).getMedicalPersonal());
+						//个人所得税
+						row2.createCell(13).setCellValue(salaryList.get(i).getGrossSalary());
 						//实发工资
-						row2.createCell(12).setCellValue(salaryList.get(i).getActualSalary());
+						row2.createCell(14).setCellValue(salaryList.get(i).getActualSalary());
+						
 				
 						FileNames[i]=salaryList.get(i).getStaffNumber()+"号员工"+salaryList.get(i).getPayDate()+"工资条信息.xls";
 						FileUrls[i]="D:\\"+FileNames[i];

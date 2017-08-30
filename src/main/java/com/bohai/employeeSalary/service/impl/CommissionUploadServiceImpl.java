@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -81,6 +83,11 @@ public class CommissionUploadServiceImpl implements FileUploadService{
             for(int i=2; i<commisonSheet.getLastRowNum(); i++) {
                 
                 if (commisonSheet.getRow(i) != null) {
+                    
+                    //设置单元格类型
+                    commisonSheet.getRow(i).getCell(marketerNameIndex).setCellType(CellType.STRING);
+                    commisonSheet.getRow(i).getCell(marketerProfitIndex).setCellType(CellType.STRING);
+                    commisonSheet.getRow(i).getCell(marketerNoIndex).setCellType(CellType.STRING);
                     
                     if (StringUtils.isNotEmpty(commisonSheet.getRow(i).getCell(marketerNameIndex).getStringCellValue())) {
                         //获取员工姓名

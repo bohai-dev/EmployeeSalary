@@ -11,6 +11,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
+import org.apache.poi.hssf.usermodel.HSSFBorderFormatting;
+import org.apache.poi.hssf.util.HSSFColor;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -135,7 +140,24 @@ public class SalaryController{
 	@ResponseBody
 	public void sendMail(@RequestBody(required = true) QueryStaffSalaryParamVO paramVO) throws BohaiException, MessagingException, IOException{
 		XSSFWorkbook wb=new XSSFWorkbook();
-		XSSFSheet salarySheet=wb.createSheet("员工工资条");
+		
+		XSSFCellStyle style = wb.createCellStyle();
+	      XSSFFont font = wb.createFont(); 
+	      font.setBold(true);//粗体显示    
+	      style.setAlignment(HorizontalAlignment.CENTER);
+	      style.setFont(font);
+	      //设置上下左右四个边框宽度
+          style.setBorderTop(HSSFBorderFormatting.BORDER_THIN);
+          style.setBorderBottom(HSSFBorderFormatting.BORDER_THIN);
+          style.setBorderLeft(HSSFBorderFormatting.BORDER_THIN);
+          style.setBorderRight(HSSFBorderFormatting.BORDER_THIN);
+          //设置上下左右四个边框颜色
+          style.setTopBorderColor(HSSFColor.BLACK.index);
+          style.setBottomBorderColor(HSSFColor.BLACK.index);
+          style.setLeftBorderColor(HSSFColor.BLACK.index);
+          style.setRightBorderColor(HSSFColor.BLACK.index);
+          
+	      XSSFSheet salarySheet=wb.createSheet("员工工资条");
 		String[] salaryHead={"行号","员工编号","员工姓名","岗位工资","技能工资","绩效工资","司龄工资","应发工资","取暖补贴","住房公积金","养老保险",
 				"失业保险","医疗保险","计税基数","个人所得税","实发工资"};
 		XSSFRow row=salarySheet.createRow(0);
@@ -144,7 +166,23 @@ public class SalaryController{
 		for (int i = 0; i < salaryHead.length; i++) {
 			row.createCell(i).setCellValue(salaryHead[i]);
 			salarySheet.setColumnWidth(i, 256*15);
+			row.getCell(i).setCellStyle(style);
 		}
+		
+		XSSFCellStyle style1 = wb.createCellStyle();
+	      style1.setAlignment(HorizontalAlignment.CENTER);
+	      //设置上下左右四个边框宽度
+        style1.setBorderTop(HSSFBorderFormatting.BORDER_THIN);
+        style1.setBorderBottom(HSSFBorderFormatting.BORDER_THIN);
+        style1.setBorderLeft(HSSFBorderFormatting.BORDER_THIN);
+        style1.setBorderRight(HSSFBorderFormatting.BORDER_THIN);
+        //设置上下左右四个边框颜色
+        style1.setTopBorderColor(HSSFColor.BLACK.index);
+        style1.setBottomBorderColor(HSSFColor.BLACK.index);
+        style1.setLeftBorderColor(HSSFColor.BLACK.index);
+        style1.setRightBorderColor(HSSFColor.BLACK.index);
+		
+	
 		//根据用户编号和时间查询数据
 		List<StaffSalary> salaryList=StaffSalaryMapper.queryStaffSalaryByParams(paramVO);
 		if(salaryList!=null&&salaryList.size()>0){
@@ -221,7 +259,10 @@ public class SalaryController{
 				row2.createCell(14).setCellValue(salaryList.get(i).getIncomeTax());
 				//实发工资
 				row2.createCell(15).setCellValue(salaryList.get(i).getActualSalary());
-				
+			
+				for(int j=0;j<16;j++){
+					row2.getCell(j).setCellStyle(style1);
+				}
 			}
 		}
 		
@@ -260,6 +301,22 @@ public class SalaryController{
 						//"员工编号","员工姓名","岗位工资","技能工资","绩效工资","司龄工资","取暖补贴","住房公积金","养老保险",
 						//"失业保险","医疗保险","实发工资"
 						XSSFWorkbook wb=new XSSFWorkbook();
+						XSSFCellStyle style = wb.createCellStyle();
+					      XSSFFont font = wb.createFont(); 
+					      font.setBold(true);//粗体显示    
+					      style.setAlignment(HorizontalAlignment.CENTER);
+					      style.setFont(font);
+					      //设置上下左右四个边框宽度
+				          style.setBorderTop(HSSFBorderFormatting.BORDER_THIN);
+				          style.setBorderBottom(HSSFBorderFormatting.BORDER_THIN);
+				          style.setBorderLeft(HSSFBorderFormatting.BORDER_THIN);
+				          style.setBorderRight(HSSFBorderFormatting.BORDER_THIN);
+				          //设置上下左右四个边框颜色
+				          style.setTopBorderColor(HSSFColor.BLACK.index);
+				          style.setBottomBorderColor(HSSFColor.BLACK.index);
+				          style.setLeftBorderColor(HSSFColor.BLACK.index);
+				          style.setRightBorderColor(HSSFColor.BLACK.index);
+						
 						XSSFSheet salarySheet=wb.createSheet("员工工资条");
 						String[] salaryHead={"行号","员工编号","员工姓名","岗位工资","技能工资","绩效工资","司龄工资","应发工资","取暖补贴","住房公积金","养老保险",
 								"失业保险","医疗保险","计税基数","个人所得税","实发工资"};
@@ -269,7 +326,22 @@ public class SalaryController{
 						for (int j = 0; j < salaryHead.length; j++) {
 							row.createCell(j).setCellValue(salaryHead[j]);
 							salarySheet.setColumnWidth(j, 256*15);
+							row.getCell(j).setCellStyle(style);
 						}
+						
+						XSSFCellStyle style1 = wb.createCellStyle();
+					      style1.setAlignment(HorizontalAlignment.CENTER);
+					      //设置上下左右四个边框宽度
+				        style1.setBorderTop(HSSFBorderFormatting.BORDER_THIN);
+				        style1.setBorderBottom(HSSFBorderFormatting.BORDER_THIN);
+				        style1.setBorderLeft(HSSFBorderFormatting.BORDER_THIN);
+				        style1.setBorderRight(HSSFBorderFormatting.BORDER_THIN);
+				        //设置上下左右四个边框颜色
+				        style1.setTopBorderColor(HSSFColor.BLACK.index);
+				        style1.setBottomBorderColor(HSSFColor.BLACK.index);
+				        style1.setLeftBorderColor(HSSFColor.BLACK.index);
+				        style1.setRightBorderColor(HSSFColor.BLACK.index);
+						
 						
 						XSSFRow row2=salarySheet.createRow(1);
 						//行号
@@ -341,6 +413,10 @@ public class SalaryController{
 						row2.createCell(14).setCellValue(salaryList.get(i).getIncomeTax());
 						//实发工资
 						row2.createCell(15).setCellValue(salaryList.get(i).getActualSalary());
+						
+						for(int k=0;k<16;k++){
+							row2.getCell(k).setCellStyle(style1);
+						}
 						
 				
 						FileNames[i]=salaryList.get(i).getStaffNumber()+"号员工"+salaryList.get(i).getPayDate()+"工资条信息.xlsx";

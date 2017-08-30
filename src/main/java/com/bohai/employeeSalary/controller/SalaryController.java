@@ -9,6 +9,9 @@ import java.io.OutputStream;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.log4j.Logger;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -26,6 +29,7 @@ import com.bohai.employeeSalary.entity.Department;
 import com.bohai.employeeSalary.entity.StaffInfo;
 import com.bohai.employeeSalary.entity.StaffSalary;
 import com.bohai.employeeSalary.service.StaffSalaryService;
+import com.bohai.employeeSalary.service.exportSalaryService;
 import com.bohai.employeeSalary.util.MailUtil;
 import com.bohai.employeeSalary.vo.QueryStaffInfoParamVO;
 import com.bohai.employeeSalary.vo.QueryStaffSalaryParamVO;
@@ -41,12 +45,14 @@ public class SalaryController {
 	@Autowired
 	private StaffSalaryMapper StaffSalaryMapper;
 	
-	@Autowired
-	private MailUtil mailUtil;
+//	@Autowired
+//	private MailUtil mailUtil;
 
 	@Autowired
 	private StaffSalaryService salaryService;
 
+	@Autowired
+	private exportSalaryService exportService;
 	
 	@RequestMapping(value="toSalary")
     public String toSalary(){
@@ -74,7 +80,12 @@ public class SalaryController {
 	@RequestMapping(value="updateSalary")
 	@ResponseBody
 	public int updateSalary(@RequestBody(required = true) StaffSalary staffSalary){
-		int count=StaffSalaryMapper.updateByStaffNumAndDate(staffSalary);
+		int count=StaffSalaryMapper.updateByStaffNumAndDate(staffSalary);  //更新其他款项
+		
+		QueryStaffSalaryParamVO paramVo=new QueryStaffSalaryParamVO();
+		paramVo.setStaffNum(staffSalary.getStaffNumber());
+		paramVo.setPayDate(staffSalary.getPayDate());
+		salaryService.updateSalary(paramVo);
 		return count;
 	}
 	
@@ -91,6 +102,27 @@ public class SalaryController {
 		return count;
 
 	}
+	
+	/**
+	 * 导出报表
+	 * @param 
+	 * @return
+	 */
+	@RequestMapping(value="exportSalary")
+	@ResponseBody
+	public int exportSalary(@RequestBody(required = true)QueryStaffSalaryParamVO paramVo,HttpServletRequest request, HttpServletResponse response){
+		int count=0;
+		try {
+			count = exportService.exportSalary(paramVo,response);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return count;
+
+	}
+
 
 	/**
 	 * 发送邮件

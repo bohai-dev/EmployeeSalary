@@ -76,7 +76,7 @@ public class StaffSalaryService {
 	}
 	
 	/*计算某员工的工资*/
-	public double calculateSalary(StaffSalary salary) {
+	public StaffSalary calculateSalary(StaffSalary salary) {
 		
 		double posSalary= Double.valueOf(Optional.ofNullable(salary.getPositionSalary()).orElse("0")) *Double.valueOf(Optional.ofNullable(salary.getCoefficeient()).orElse("0"));  //岗位工资*系数
 		double actualSalary=0;    //实发工资
@@ -192,7 +192,7 @@ public class StaffSalaryService {
 	 * @param postionSalary 岗位工资
 	 * @return  实发工资
 	 */
-	public double  computeSalary(StaffSalary salary,double postionSalary) {
+	public StaffSalary  computeSalary(StaffSalary salary,double postionSalary) {
 		//计算 应发工资=岗位工资*系数+绩效工资+司龄工资+技能工资
         
 		double shouldSalary= postionSalary				           
@@ -224,9 +224,11 @@ public class StaffSalaryService {
 		double actualSalary=shouldSalary+Optional.ofNullable(salary.getWarmSubsidy()).map(i->Double.valueOf(i)).orElse((double)0)
 				            -Optional.ofNullable(salary.getPersonalTotal()).map(i->Double.valueOf(i)).orElse((double) 0)
 			                -Optional.ofNullable(salary.getHousePersonalTotal()).map(i->Double.valueOf(i)).orElse((double) 0)-tax
-				            -Optional.ofNullable(salary.getSalaryOther()).map(i->Double.valueOf(i)).orElse((double)0);
+				            +Optional.ofNullable(salary.getSalaryOther()).map(i->Double.valueOf(i)).orElse((double)0);
 		
-		return CommonUtils.getRound(actualSalary);
-	}
-
+		salary.setActualSalary(CommonUtils.getRound(actualSalary)+"");  //设置实发工资
+		//salary.set
+		return  salary;
+	}	
+	
 }

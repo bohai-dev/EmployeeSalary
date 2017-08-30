@@ -96,7 +96,7 @@ function config(row){
 
 
 /**
- * 修改事件
+ * 修改其他款项事件
  * @returns
  */
 function updateSalary(){
@@ -202,8 +202,8 @@ function calculateSalary(){
 
 //确定计算工资 
 function compSalary(){
-//	console.log($('#selectDepName').val());
-//	console.log($('#selectMonth').val());
+	console.log($('#selectDepName').val());
+	console.log($('#selectMonth').val());
 
 	var param={
 			 depNum:$('#selectDepName').val(),
@@ -220,5 +220,31 @@ function compSalary(){
           }
      });
 }
+
+function exportSalary(){
+	$("#exportModal").modal('show');
+}
+
+function exportDetail(){
+	console.log($('#exportDepName').val());
+	console.log($('#exportMonth').val());
+
+	var param={
+			 depNum:$('#exportDepName').val(),
+			 payDate:$('#exportMonth').val()	 
+	}
+	  $.ajax({
+          url: 'exportSalary',
+          type: 'post',
+          contentType: "application/json;charset=UTF-8",
+          data: JSON.stringify(param),
+          success: function (data,status) {
+              $('#exportModal').modal('hide');
+              $('#salaryTable').bootstrapTable('refresh');
+          }
+     });
+	
+}
+
 
 

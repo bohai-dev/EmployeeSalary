@@ -125,7 +125,7 @@
                     $("#finput2").fileinput({
                         language: 'zh',
                         uploadAsync: true,
-                        uploadUrl: "salaryFileUpload", //异步上传地址
+                        uploadUrl: "CommissionFileUpload", //异步上传地址
                         maxFileCount: 10,//最大上传文件数限制
                         showCaption: true,//是否显示标题
                         showUpload: true,//是否显示上传按钮
@@ -230,9 +230,9 @@
 						<th data-field="housePersonalTotal" data-align="center">个人公积金缴费合计</th>
 						<!-- <th data-field="establishDate" data-align="center" >个人所得税</th> -->
 						<th data-field="salaryOther" data-align="right"
-							data-formatter="operationFormatter">其他款项</th>
+							data-formatter="operationFormatter">其他款项 &nbsp; &nbsp; &nbsp; &nbsp; </th>
 						<th data-field="actualSalary" data-align="right"
-							data-formatter="salaryFormatter">实发工资</th>
+							data-formatter="salaryFormatter">实发工资 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</th>
 					</tr>
 				</thead>
 			</table>

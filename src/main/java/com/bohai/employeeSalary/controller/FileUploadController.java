@@ -24,6 +24,8 @@ public class FileUploadController {
 	
 	@Autowired
 	FileUploadService salaryUploadService;
+	@Autowired
+	FileUploadService commissionUploadService;
 	
 	@RequestMapping(value="salaryFileUpload",method=RequestMethod.POST)
 	@ResponseBody
@@ -36,6 +38,29 @@ public class FileUploadController {
 			fileName = file.getOriginalFilename();
 			logger.debug(fileName);
 			String message=salaryUploadService.upload(file);
+			logger.debug(message);
+			
+		} catch (UnsupportedEncodingException e1) {
+			logger.error("格式不支持",e1);
+		}
+		Map<String,String> map = new HashMap<String,String>();
+		map.put("status", "success");
+		return map;
+	}
+	
+	
+	
+	@RequestMapping(value="CommissionFileUpload",method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, String> commissionFileUpload(@RequestParam("file_data") MultipartFile file, HttpServletRequest request) throws BohaiException {
+		logger.debug("文件上传");
+		
+		String fileName;
+		try {
+			fileName = new String(file.getOriginalFilename().getBytes("ISO-8859-1"),"UTF-8");
+			fileName = file.getOriginalFilename();
+			logger.debug(fileName);
+			String message=commissionUploadService.upload(file);
 			logger.debug(message);
 			
 		} catch (UnsupportedEncodingException e1) {

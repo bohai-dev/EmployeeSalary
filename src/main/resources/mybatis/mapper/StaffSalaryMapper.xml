@@ -576,8 +576,14 @@
     select count(*)
    
     from  STAFF_SALARY
-    where STAFF_NUMBER = #{0,jdbcType=VARCHAR}
-    and PAY_DATE = #{1,jdbcType=VARCHAR}
+    <where>
+        <if test="staffNumber != null and staffNumber !=''">
+            STAFF_NUMBER = #{staffNumber,jdbcType=VARCHAR}
+        </if>
+        <if test="payDate != null and payDate != ''">
+            and PAY_DATE = #{payDate,jdbcType=VARCHAR}
+        </if>
+    </where>
   </select>
   
   <select id="queryStaffInfos" parameterType="java.util.Map" resultMap="BaseResultMap">

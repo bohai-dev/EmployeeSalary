@@ -14,4 +14,11 @@ public interface StaffInfoService {
 	 * @return
 	 */
 	public List<StaffInfo> queryStaffInfoPagination(PaginationParamVO paramVO);
+	
+	/**
+	 * 根据员工姓名查询员工信息
+	 * @param name
+	 * @return
+	 */
+	public List<StaffInfo> queryStaffInfoByName(String name);
 }

@@ -163,7 +163,7 @@ public class exportSalaryService {
 	      row1.getCell(17).setCellStyle(style1);
 	      row1.getCell(18).setCellStyle(style1);
 	      row1.getCell(19).setCellStyle(style1);
-	      sheet.setColumnWidth(18, 256*35);
+	    
 	      
 	      Row row2 = sheet.createRow(2);      //第三行表头
 	      row2.setHeight((short) (35 * 20));  
@@ -172,9 +172,10 @@ public class exportSalaryService {
 	    		  row2.createCell(i).setCellValue(" ");
 			}else {
 				  row2.createCell(i).setCellValue(salaryHead2[i-8]);
+				  sheet.setColumnWidth(i, 256*12);  	
 			}
 	    	
-	    	  sheet.setColumnWidth(i, 256*12);  	
+	    	  
 	    	  style1.setWrapText(true);
 	    	  row2.getCell(i).setCellStyle(style1);
 	      }   
@@ -275,6 +276,9 @@ public class exportSalaryService {
 	    		  
 	    	  }
 	      }
+	      
+	     
+	      sheet.autoSizeColumn(18); 
 	      
 	        try {
 	            OutputStream output=response.getOutputStream();

@@ -157,6 +157,7 @@ public class exportSalaryService {
 	      for(int i=8;i<=16;i++) {
 	    	  row2.createCell(i).setCellValue(salaryHead2[i-8]);
 	    	  sheet.setColumnWidth(i, 256*12);  	
+	    	  style1.setWrapText(true);
 	    	  row2.getCell(i).setCellStyle(style1);
 	      }   
 	      

@@ -1,5 +1,6 @@
 package com.bohai.employeeSalary.service;
 
+import java.awt.Color;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -10,20 +11,15 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
-import org.apache.poi.hssf.usermodel.HSSFBorderFormatting;
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFFont;
-import org.apache.poi.hssf.util.HSSFColor;
-import org.apache.poi.sl.usermodel.TableCell.BorderEdge;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.ss.util.RegionUtil;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -97,6 +93,13 @@ public class exportSalaryService {
 	      XSSFFont font = wb.createFont(); 
 	      font.setBold(true);//粗体显示    
 	      font.setFontHeightInPoints((short) 16);//设置字体大小
+	      style.setFont(font);
+		  XSSFCellStyle style3 = setStyle(wb.createCellStyle());   //表格内容的样式
+	      
+		  
+		  Row row= sheet.createRow(0);  	
+		  row.setHeightInPoints(30);    //设置行的高度
+	      Cell cell_1 = row.createCell(0);  
 	      /* 
 	       * 设定合并单元格区域范围 
 	       *  firstRow  0-based 
@@ -106,61 +109,76 @@ public class exportSalaryService {
 	       */  
 	      CellRangeAddress cra=new CellRangeAddress(0, 0, 0, 19);   //合并第一行所有的列
 	      //在sheet里增加合并单元格  
-	      sheet.addMergedRegion(cra);    //第一行
-	      Row row= sheet.createRow(0);  	        
-	      Cell cell_1 = row.createCell(0);  	        
-	      cell_1.setCellValue(salaryList.get(0).getPayDate()+salaryList.get(0).getDepName()+"工资明细表");    //第一行标题  "2017年3月郑州部工资明细表"
-	      style.setAlignment(HorizontalAlignment.CENTER);
-	      style.setFont(font);
-	     
-	     // style=setStyle(style);
+	      sheet.addMergedRegion(cra);    //第一行	     标题	    
+	      setRegionBorder(1, cra, sheet);
+	      cell_1.setCellValue(salaryList.get(0).getPayDate()+salaryList.get(0).getDepName()+"工资明细表");    //第一行标题  "2017年3月郑州部工资明细表"	     
+	      style=setStyle(style);
 	      cell_1.setCellStyle(style);
 	      
-	          
-	      for(int i=0;i<=7;i++) {
-	    	  CellRangeAddress cra1=new CellRangeAddress(1, 2, i, i);  
-	    	  sheet.addMergedRegion(cra1); 
-	      }
-	      for(int j=17;j<=19;j++) {
-	    	  CellRangeAddress cra2=new CellRangeAddress(1, 2, j, j); 
-	    	  sheet.addMergedRegion(cra2); 
-	      }
-	      CellRangeAddress cra3=new CellRangeAddress(1, 1, 8, 16); 
-    	  sheet.addMergedRegion(cra3); 
-    	  
-    	  XSSFCellStyle style1 = wb.createCellStyle();
+		  XSSFCellStyle style1 = wb.createCellStyle();
 	      XSSFFont font2 = wb.createFont(); 
 	      font2.setBold(true);//粗体显示    
 	      style1.setAlignment(HorizontalAlignment.CENTER);
 	      style1.setFont(font2);
-//	      style1=setStyle(style1);
-	    
+	      style1=setStyle(style1);
 	      Row row1 = sheet.createRow(1);      //第二行表头	
+	      for(int i=0;i<8;i++) {
+	    	  Cell cell1=row1.createCell(i);
+	    	  CellRangeAddress cra1=new CellRangeAddress(1, 2, i, i);  
+	    	  sheet.addMergedRegion(cra1); 
+	    	  setRegionBorder(1,cra1,sheet);
+	    	
+	    	  cell1.setCellValue(salaryHead1[i]);   	
+	    	  cell1.setCellStyle(style1);
+	      }    
+	   /*   for(int i=0;i<=7;i++) {
+	    	  CellRangeAddress cra1=new CellRangeAddress(1, 2, i, i);  
+	    	  sheet.addMergedRegion(cra1); 
+	    	  setRegionBorder(5,cra1,sheet);
+	      }*/
+	     
+	      
+	      Cell cell2=row1.createCell(8);
+	      CellRangeAddress cra3=new CellRangeAddress(1, 1, 8, 16);     //扣款
+    	  sheet.addMergedRegion(cra3); 
+    	  setRegionBorder(1,cra3,sheet);
+    	  cell2.setCellValue(salaryHead1[8]);
+    	  cell2.setCellStyle(style1);
+    
+	    
+	/*      Row row1 = sheet.createRow(1);      //第二行表头	
 	      for(int i=0;i<=8;i++) {
 	    	  row1.createCell(i).setCellValue(salaryHead1[i]);   	
 	    	  row1.getCell(i).setCellStyle(style1);
-	      }
+	      }*/
 	      
 	      row1.createCell(17).setCellValue(salaryHead1[9]);
-	      row1.createCell(18).setCellValue(salaryHead1[10]);
-	     
-	      sheet.setColumnWidth(18, 256*25);
-			
+	      row1.createCell(18).setCellValue(salaryHead1[10]);  
 	      row1.createCell(19).setCellValue(salaryHead1[11]);
+	      for(int j=17;j<=19;j++) {
+	    	  CellRangeAddress cra2=new CellRangeAddress(1, 2, j, j); 
+	    	  sheet.addMergedRegion(cra2); 
+	    	  setRegionBorder(1,cra2,sheet);
+	      }
 	      row1.getCell(17).setCellStyle(style1);
 	      row1.getCell(18).setCellStyle(style1);
 	      row1.getCell(19).setCellStyle(style1);
-	      
+	      sheet.setColumnWidth(18, 256*35);
 	      
 	      Row row2 = sheet.createRow(2);      //第三行表头
-	      row2.setHeight((short) (40 * 20));  
-	      for(int i=8;i<=16;i++) {
-	    	  row2.createCell(i).setCellValue(salaryHead2[i-8]);
+	      row2.setHeight((short) (35 * 20));  
+	      for(int i=0;i<=19;i++) {
+	    	  if (i<8||i>16) {
+	    		  row2.createCell(i).setCellValue(" ");
+			}else {
+				  row2.createCell(i).setCellValue(salaryHead2[i-8]);
+			}
+	    	
 	    	  sheet.setColumnWidth(i, 256*12);  	
 	    	  style1.setWrapText(true);
 	    	  row2.getCell(i).setCellStyle(style1);
 	      }   
-	      
+	   
 	      double   totalPostion=0,totalAchieve=0,totalYears=0,totalSkill=0,totalShould=0,totalWarm=0,totalHouse=0,
 	    		  totalPension=0,totalUnemployment=0,totalMedical=0,totalSupplyInsurance=0,totalPersonal=0,totalTaxBase=0,totalTax=0,totalOther=0,totalActural=0;   //16
 	    		  
@@ -168,7 +186,7 @@ public class exportSalaryService {
 	      for(int j=0;j<salaryList.size();j++) {
 	    	  Row sheetRow= sheet.createRow(j+3);
 	    	  
-	    	  sheetRow.createCell(0).setCellValue(j);   //序号   Optional.ofNullable(salary.getAchiementSalary()).orElse("0")
+	    	  sheetRow.createCell(0).setCellValue(j+1);   //序号   Optional.ofNullable(salary.getAchiementSalary()).orElse("0")
 	    	  sheetRow.createCell(1).setCellValue(salaryList.get(j).getName());
 	    	  sheetRow.createCell(2).setCellValue(Optional.ofNullable(salaryList.get(j).getPositionSalary()).orElse("0.00"));
 	    	  sheetRow.createCell(3).setCellValue(Optional.ofNullable(salaryList.get(j).getAchiementSalary()).orElse("0.00"));
@@ -187,7 +205,7 @@ public class exportSalaryService {
 	    	  sheetRow.createCell(16).setCellValue(Optional.ofNullable(salaryList.get(j).getSalaryOther()).orElse("0.00"));   
 	    	  sheetRow.createCell(17).setCellValue(Optional.ofNullable(salaryList.get(j).getActualSalary()).orElse("0.00"));
 	    	  sheetRow.createCell(18).setCellValue(Optional.ofNullable(salaryList.get(j).getEmail()).orElse(""));
-	    	  sheetRow.createCell(19).setCellValue("");   //备注    	 
+	    	  sheetRow.createCell(19).setCellValue(" ");   //备注    	 
 	    	  
 	    	  totalPostion+=Optional.ofNullable(salaryList.get(j).getPositionSalary()).map(v->Double.parseDouble(v)).orElse(0.00);
 	    	  totalAchieve+=Optional.ofNullable(salaryList.get(j).getAchiementSalary()).map(v->Double.parseDouble(v)).orElse(0.00);
@@ -209,10 +227,12 @@ public class exportSalaryService {
 	    	  
 	    	  //totalPesonal=0,totalTaxBase=0,totalTax=0,totalOther=0,totalActural=0;
 	    	  
-	    	  
+	    
+	    	
 	      }
 	      Row totalRow= sheet.createRow(3+salaryList.size());   //合计行
-	      totalRow.createCell(1).setCellValue("总计");
+	      totalRow.createCell(0).setCellValue(" ");
+	      totalRow.createCell(1).setCellValue("合计");
 	      totalRow.createCell(2).setCellValue(totalPostion+"");
 	      totalRow.createCell(3).setCellValue(totalAchieve+"");
 	      totalRow.createCell(4).setCellValue(totalYears+"");
@@ -233,13 +253,28 @@ public class exportSalaryService {
 	     
 	      
 	      
-	      Row lastRow= sheet.createRow(6+salaryList.size());
+	      Row lastRow= sheet.createRow(5+salaryList.size());
 	      lastRow.createCell(0).setCellValue("总经理:");
 	      lastRow.createCell(3).setCellValue("分管领导：");
 	      lastRow.createCell(7).setCellValue("财务总监：");
 	      lastRow.createCell(10).setCellValue("财务部经理：");
 	      lastRow.createCell(13).setCellValue("营业部经理：");
 	      lastRow.createCell(16).setCellValue("制表人：");
+	      //设置内容行的边框
+	      for(int index=3;index<sheet.getLastRowNum();index++) {
+	    	  
+	    	  for(int c=0;c<=19;c++) {
+	    		  
+	    		  if (sheet.getRow(index)!=null) {
+	    			  
+	    			  if (sheet.getRow(index).getCell(c)!=null) {
+	    				  sheet.getRow(index).getCell(c).setCellStyle(style3);
+					}
+					
+				}
+	    		  
+	    	  }
+	      }
 	      
 	        try {
 	            OutputStream output=response.getOutputStream();
@@ -261,7 +296,7 @@ public class exportSalaryService {
 	
 	 
 	 //设置边框
-	public XSSFCellStyle setStyle(XSSFCellStyle style) {
+	private XSSFCellStyle setStyle(XSSFCellStyle style) {
 		  style.setAlignment(HorizontalAlignment.CENTER);
 	   
 	      style.setBorderBottom(BorderStyle.THIN);
@@ -270,26 +305,27 @@ public class exportSalaryService {
 	      style.setBorderLeft(BorderStyle.THIN);
 	      style.setBorderRight(BorderStyle.THIN);
 	      
-	      style.setTopBorderColor(HSSFColor.BLACK.index );
-	      style.setBottomBorderColor(HSSFColor.BLACK.index);
-	      style.setLeftBorderColor(HSSFColor.BLACK.index );
-	      style.setRightBorderColor(HSSFColor.BLACK.index );
+	      style.setTopBorderColor(new XSSFColor(Color.black));
+	      style.setBottomBorderColor(new XSSFColor(Color.black));
+	      style.setLeftBorderColor(new XSSFColor(Color.black));
+	      style.setRightBorderColor(new XSSFColor(Color.black));
 	      
 	      return style;
 	}
 	
+	
 	//设置合并区域的单元格边框
-	private static void setRegionBorder(int border, CellRangeAddress region, Sheet sheet){  
+	private  void setRegionBorder(int border, CellRangeAddress region, Sheet sheet){  
         RegionUtil.setBorderBottom(border,region, sheet);  
         RegionUtil.setBorderLeft(border,region, sheet);  
         RegionUtil.setBorderRight(border,region, sheet);  
         RegionUtil.setBorderTop(border,region, sheet);  
         
-        RegionUtil.setBottomBorderColor(HSSFColor.BLACK.index, region, sheet);
-        RegionUtil.setLeftBorderColor(HSSFColor.BLACK.index, region, sheet);
-        RegionUtil.setRightBorderColor(HSSFColor.BLACK.index, region, sheet);
-        RegionUtil.setTopBorderColor(HSSFColor.BLACK.index, region, sheet);
-      
+        RegionUtil.setBottomBorderColor(000, region, sheet);
+        RegionUtil.setLeftBorderColor(000, region, sheet);
+        RegionUtil.setRightBorderColor(000, region, sheet);
+        RegionUtil.setTopBorderColor(000, region, sheet);
+        
     }  
 
 }

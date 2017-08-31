@@ -108,18 +108,15 @@ public class SalaryController{
 	 * @return
 	 */
 	@RequestMapping(value="exportSalary")
-	@ResponseBody
-	public int exportSalary(@RequestBody(required = true)QueryStaffSalaryParamVO paramVo,HttpServletRequest request, HttpServletResponse response){
+	public void exportSalary(QueryStaffSalaryParamVO paramVo,HttpServletRequest request, HttpServletResponse response){
 		int count=0;
 		try {
 			count = exportService.exportSalary(paramVo,response);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (BohaiException e) {
+
+			
 		}
 		
-		return count;
-
 	}
 
 

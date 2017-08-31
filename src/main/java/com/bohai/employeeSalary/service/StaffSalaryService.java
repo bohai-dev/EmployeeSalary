@@ -2,6 +2,7 @@ package com.bohai.employeeSalary.service;
 
 import java.math.BigDecimal;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -72,7 +73,7 @@ public class StaffSalaryService {
         for(int i=0;i<salaryList.size();i++) {
         	StaffSalary salary=calculateSalary(salaryList.get(i));   //计算工资
            // salaryList.get(i).setActualSalary(salary+"");  //设置实发工资
-            count+=staffSalaryMapper.updateByStaffNumAndDate(salaryList.get(i));
+            count+=staffSalaryMapper.updateByStaffNumAndDate(salary);
             
         }
         return count;
@@ -231,9 +232,10 @@ public class StaffSalaryService {
 				            +Optional.ofNullable(salary.getSalaryOther()).map(i->Double.valueOf(i)).orElse((double)0);
 		
 		salary.setActualSalary(CommonUtils.getRound(actualSalary)+"");  //设置实发工资
-		salary.setGrossSalary(shouldSalary+"");  //设置应发工资
-		salary.setIncomeTax(tax+"");  //设置个人所得税
-		salary.setTaxBase(taxBase+"");  //设置缴费基数
+		DecimalFormat    df   = new DecimalFormat("#.00");   //取两位小数，因可能为负数，所以未四舍五入   
+		salary.setGrossSalary(df.format(shouldSalary)+"");  //设置应发工资
+		salary.setIncomeTax(df.format(tax)+"");  //设置个人所得税
+		salary.setTaxBase(df.format(taxBase)+"");  //设置缴费基数
 		return  salary;
 	}	
 	

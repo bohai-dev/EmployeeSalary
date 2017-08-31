@@ -291,6 +291,15 @@
       <if test="houseToatal != null">
         HOUSE_TOATAL = #{houseToatal,jdbcType=VARCHAR},
       </if>
+       <if test="incomeTax != null">
+        INCOME_TAX = #{incomeTax,jdbcType=VARCHAR},
+      </if>
+       <if test="grossSalary != null">
+        GROSS_SALARY = #{grossSalary,jdbcType=VARCHAR},
+      </if>
+       <if test="taxBase != null">
+        TAX_BASE = #{taxBase,jdbcType=VARCHAR},
+      </if>
     </set>
        where STAFF_NUMBER = #{staffNumber,jdbcType=VARCHAR}
        and PAY_DATE = #{payDate,jdbcType=VARCHAR}

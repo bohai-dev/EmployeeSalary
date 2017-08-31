@@ -56,8 +56,10 @@ public class CommissionUploadServiceImpl implements FileUploadService{
             int marketerProfitIndex = 0;
             
             //获取表头中的列序号
-            XSSFRow row = commisonSheet.getRow(2);
+            XSSFRow row = commisonSheet.getRow(1);
             for(int i = row.getFirstCellNum(); i < row.getLastCellNum() ; i++){
+            	
+            	row.getCell(i).setCellType(CellType.STRING);
                 String colName = row.getCell(i).getStringCellValue();
                 
                 if(StringUtils.isEmpty(colName)){

@@ -232,7 +232,7 @@
 						<th data-field="salaryOther" data-align="right"
 							data-formatter="operationFormatter">其他款项 &nbsp; &nbsp; &nbsp; &nbsp; </th>
 						<th data-field="actualSalary" data-align="right"
-							data-formatter="salaryFormatter">实发工资 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</th>
+							data-formatter="salaryFormatter">实发工资 &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</th>
 					</tr>
 				</thead>
 			</table>
@@ -363,17 +363,17 @@
 				</div>	
 					
 				<div class="modal-body">
-						<form class="form-horizontal" role="form">
+						<form class="form-horizontal" role="form" action="exportSalary" id="exportForm">
 							<div class="form-group">
 								<label for="exportMonth" class="col-sm-3 control-label">月份</label>
 								<div class="col-sm-8 col-md-4">
-						             <input type="text" class="form-control month" id="exportMonth">
+						             <input type="text" class="form-control month" name="payDate" id="payDate">
 					             </div>
 							</div>
 							<div class="form-group">
 								<label for="exportDepName" class="col-sm-3 control-label">部门</label>
 								<div class="col-sm-8 col-md-4">
-									<select class="selectpicker form-control " id="exportDepName"
+									<select class="selectpicker form-control " name="depNum" id="depNum"
 										data-live-Search="true" >
 
 									</select>

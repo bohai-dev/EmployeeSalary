@@ -261,10 +261,22 @@ function exportSalary(){
 }
 
 function exportDetail(){
-	console.log($('#exportDepName').val());
-	console.log($('#exportMonth').val());
-
-	var param={
+	//console.log($('#exportDepName').val());
+	//console.log($('#exportMonth').val());
+    if($('#payDate').val()==null||$('#payDate').val()==''){
+    	alert('请选择月份！');
+    }
+    
+    else{ 
+    	
+    	
+    	$('#exportForm').submit();
+    	$('#exportModal').modal('hide');
+    	
+    
+    };
+    
+/*	var param={
 			 depNum:$('#exportDepName').val(),
 			 payDate:$('#exportMonth').val()	 
 	}
@@ -277,7 +289,7 @@ function exportDetail(){
               $('#exportModal').modal('hide');
               $('#salaryTable').bootstrapTable('refresh');
           }
-     });
+     });*/
 	
 }
 

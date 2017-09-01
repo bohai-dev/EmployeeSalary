@@ -270,6 +270,8 @@ public class exportSalaryService {
 	    			  
 	    			  if (sheet.getRow(index).getCell(c)!=null) {
 	    				  sheet.getRow(index).getCell(c).setCellStyle(style3);
+					}else {
+						sheet.getRow(index).createCell(c).setCellStyle(style3);
 					}
 					
 				}

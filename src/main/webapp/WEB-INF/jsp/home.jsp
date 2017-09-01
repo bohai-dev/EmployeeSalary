@@ -159,7 +159,7 @@
                     <th data-field="departmentName" data-align="center">所属部门</th>
                     <th data-field="positionSalary" data-align="center" >岗位工资</th>
                     <th data-field="skillSalary" data-align="center">技能工资</th>
-                    <th data-field="workYears" data-align="center" >司龄</th>
+                    <th data-field="workYears" data-align="center" >司龄工资</th>
                     <th data-field="isProbation" data-align="center" data-formatter="probationFormatter">员工类型</th>
                     <th data-field="isLeave" data-align="center" data-formatter="LeaveFormatter">员工状态</th>
                     <th data-field="" data-formatter="operationFormatter">操作</th>
@@ -252,7 +252,7 @@
                   </div>
                   
                    <div class="form-group">
-                    <label for="workYears1" class="col-sm-3 control-label">司龄</label>
+                    <label for="workYears1" class="col-sm-3 control-label">司龄工资</label>
                     <div class="col-sm-8">
                       <input type="text" class="form-control" id="workYears1" placeholder="">
                     </div>
@@ -401,7 +401,7 @@
                   </div>
                   
                    <div class="form-group">
-                    <label for="workYears2" class="col-sm-3 control-label">司龄</label>
+                    <label for="workYears2" class="col-sm-3 control-label">司龄工资</label>
                     <div class="col-sm-8">
                       <input type="text" class="form-control" id="workYears2" placeholder="">
                     </div>

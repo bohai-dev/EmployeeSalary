@@ -1,4 +1,7 @@
 package com.bohai.employeeSalary.service.impl;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -40,6 +43,13 @@ public class SalaryUploadServiceImpl implements FileUploadService {
 			wb = new HSSFWorkbook(file.getInputStream());
 			HSSFSheet salarySheet = wb.getSheetAt(0);
 			HSSFSheet houseSheet=wb.getSheetAt(1);
+			//读取文件名			
+			String fileName=file.getOriginalFilename();
+			//获取时间
+			String regEx="[^0-9]";   
+			Pattern p = Pattern.compile(regEx);   
+			Matcher m = p.matcher(fileName);   
+			String payDate=new StringBuilder(m.replaceAll("").trim()).insert(4, "-").toString();
 			
 			String pensionPersonalPercent=Double.toString(salarySheet.getRow(5).getCell(6).getNumericCellValue());
 			String medicalPersonalPercent=Double.toString(salarySheet.getRow(5).getCell(7).getNumericCellValue());
@@ -76,8 +86,8 @@ public class SalaryUploadServiceImpl implements FileUploadService {
 							cell.setCellType(CellType.STRING);*/
 							staffSalary.setStaffNumber(salarySheet.getRow(i).getCell(2).getStringCellValue());   //员工编号					
 							staffSalary.setStaffDepartmentId(salarySheet.getRow(i).getCell(2).getStringCellValue().substring(0, 2));   //部门编号
-							String payTime=salarySheet.getRow(i).getCell(4).getStringCellValue().replace("年", "-").replace("月", "");
-							staffSalary.setPayDate(payTime);   //缴费月份
+							//String payTime=salarySheet.getRow(i).getCell(4).getStringCellValue().replace("年", "-").replace("月", "");
+							staffSalary.setPayDate(payDate);   //缴费月份
 							staffSalary.setPayBase(salarySheet.getRow(i).getCell(5).getStringCellValue());  //缴费基数
 							staffSalary.setPensionPersonal(salarySheet.getRow(i).getCell(6).getStringCellValue());
 							staffSalary.setMedicalPersonal(salarySheet.getRow(i).getCell(7).getStringCellValue());
@@ -126,8 +136,8 @@ public class SalaryUploadServiceImpl implements FileUploadService {
                 StaffSalary staffSalary=new StaffSalary(); 
                 
                 staffSalary.setStaffNumber(houseSheet.getRow(i).getCell(2).getStringCellValue());  //员工编号
-                String payTime=salarySheet.getRow(i).getCell(4).getStringCellValue().replace("年", "-").replace("月", "");
-				staffSalary.setPayDate(payTime);   //缴费月份
+               // String payTime=salarySheet.getRow(i).getCell(4).getStringCellValue().replace("年", "-").replace("月", "");
+				staffSalary.setPayDate(payDate);   //缴费月份
                 
                 staffSalary.setHouseBasePersonalPercent(housePerBasePercent);
 				staffSalary.setHouseSupplyPersonalPercent(housePerSupplyPercent);

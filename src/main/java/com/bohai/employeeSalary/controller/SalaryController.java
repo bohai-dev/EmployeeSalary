@@ -70,6 +70,7 @@ public class SalaryController{
 		
 		PageHelper.startPage(paramVO.getPageNumber(), paramVO.getPageSize());
 		List<StaffSalary> list=StaffSalaryMapper.queryStaffSalaryByParams(paramVO);
+		
 		Page<StaffSalary> page = (Page)list;
 		TableJsonResponse<StaffSalary> response = new TableJsonResponse<StaffSalary>();
 		

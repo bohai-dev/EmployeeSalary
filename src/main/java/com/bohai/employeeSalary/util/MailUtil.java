@@ -37,8 +37,8 @@ public class MailUtil {
 	public void send(String recipient,String subject,String content,String FileName,String url) throws MessagingException{
 		
 		MimeMessage message=this.mailSender.createMimeMessage();
-		mailSender.setUsername("18302168091@163.com");
-		mailSender.setPassword("cy19960119");
+//		mailSender.setUsername("18302168091@163.com");
+//		mailSender.setPassword("cy19960119");
 		MimeMessageHelper helper=new MimeMessageHelper(message,true,"utf-8");
 		helper.setFrom(this.simpleMailMessage.getFrom());//设置发送人
 		helper.setTo(recipient);//设置收件人
@@ -59,8 +59,8 @@ public class MailUtil {
 	 * */
 	public void send(String[] recipients,String[] subjects,String[] contents,String[] FileName,String[] FileUrls) throws MessagingException{
 		MimeMessage message=this.mailSender.createMimeMessage();
-		mailSender.setUsername("18302168091@163.com");
-		mailSender.setPassword("cy19960119");
+//		mailSender.setUsername("18302168091@163.com");
+//		mailSender.setPassword("cy19960119");
 		final int num=recipients.length;
 		for (int i = 0; i < num; i++) {
 			MimeMessageHelper helper=new MimeMessageHelper(message,true,"utf-8");

@@ -210,7 +210,7 @@
 				data-show-export="true" 
 				data-detail-view="false"
 				data-detail-formatter="detailFormatter" 
-				data-height="562"
+				data-height="566"
 				data-url="querySalaryByParams" 
 				data-pagination="true"
 				data-side-pagination="server" 
@@ -218,21 +218,27 @@
 				data-query-params="queryParams" 
 				data-method="post"
 				data-page-list="[5, 10, 20, 50]" 
-				data-search="true">
+				data-search="true"
+				data-show-footer="true">
 				<thead>
 					<tr>
-						<th data-field="staffNumber" data-align="center">员工编号</th>
+						<th data-field="staffNumber" data-align="center"  data-footer-formatter="合计">员工编号</th>
 						<th data-field="name" data-align="center">员工姓名</th>
 						<th data-field="depName" data-align="center">部门</th>
-						<th data-field="positionSalary" data-align="center">岗位工资</th>
-						<th data-field="achiementSalary" data-align="center">绩效工资</th>
-						<th data-field="personalTotal" data-align="center">个人社保缴费合计</th>
-						<th data-field="housePersonalTotal" data-align="center">个人公积金缴费合计</th>
-						<!-- <th data-field="establishDate" data-align="center" >个人所得税</th> -->
+						<th data-field="positionSalary" data-align="center" data-footer-formatter="tbfooter0" data-formatter="numberFormate">岗位工资</th>
+						<th data-field="achiementSalary" data-align="center" data-footer-formatter="tbfooter1" data-formatter="numberFormate">绩效工资</th>
+						<th data-field="grossSalary" data-align="center" data-footer-formatter="tbfooter2" data-formatter="numberFormate">应发工资</th>
+						<th data-field="warmSubsidy" data-align="center" data-footer-formatter="tbfooter3" data-formatter="numberFormate">取暖补贴</th>
+						<th data-field="pensionPersonal" data-align="center" data-footer-formatter="tbfooter4" data-formatter="numberFormate">养老保险</th>
+						<th data-field="unemploymentPersonal" data-align="center" data-footer-formatter="tbfooter5" data-formatter="numberFormate">失业保险</th>
+						<th data-field="medicalPersonal" data-align="center" data-footer-formatter="tbfooter6" data-formatter="numberFormate">医疗保险</th>
+						<th data-field="personalTotal" data-align="center" data-footer-formatter="tbfooter7" data-formatter="numberFormate">个人社保缴费合计</th>
+						<th data-field="housePersonalTotal" data-align="center" data-footer-formatter="tbfooter8" data-formatter="numberFormate">个人公积金缴费合计</th>
+						 <th data-field="incomeTax" data-align="center"  data-footer-formatter="tbfooter9" data-formatter="numberFormate">个人所得税</th>
 						<th data-field="salaryOther" data-align="right"
-							data-formatter="operationFormatter">其他款项 &nbsp; &nbsp; &nbsp; &nbsp; </th>
+							data-formatter="operationFormatter" data-footer-formatter="tbfooter10" >其他款项 &nbsp; &nbsp; &nbsp; &nbsp; </th>
 						<th data-field="actualSalary" data-align="right"
-							data-formatter="salaryFormatter">实发工资 &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</th>
+							data-formatter="salaryFormatter" data-footer-formatter="tbfooter11" >实发工资 &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</th>
 					</tr>
 				</thead>
 			</table>
@@ -456,6 +462,12 @@
                     </div>
                   </div>
                
+               		<div class="form-group">
+                    <label for="grossSalary2" class="col-sm-3 control-label">应发工资</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" id="grossSalary2" placeholder="" disabled>
+                    </div>
+                  </div>
                   <hr>
                   
                   <div class="form-group">
@@ -488,7 +500,18 @@
                       <input type="text" class="form-control" id="medicalPersonal2" placeholder="" disabled>         
                     </div>
                   </div> 
-                  
+                  <div class="form-group">
+                    <label for="taxBase2" class="col-sm-3 control-label">计税基数</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" id="taxBase2" placeholder="" disabled>         
+                    </div>
+                  </div> 
+                  <div class="form-group">
+                    <label for="incomeTax2" class="col-sm-3 control-label">个人所得税</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" id="incomeTax2" placeholder="" disabled>         
+                    </div>
+                  </div> 
                   
                    <div class="form-group">
                     <label for="actualSalary2" class="col-sm-3 control-label">实发工资</label>

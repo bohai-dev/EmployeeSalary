@@ -154,13 +154,15 @@ function detail(row){
 	$('#skillSalary2').val(row.skillSalary);
 	$('#achiementSalary2').val(row.achiementSalary);
 	$('#workYears2').val(row.workYears);
+	$('#grossSalary2').val(row.grossSalary);
 	$('#warmSubsidy2').val(row.warmSubsidy);
 	$('#housePersonalTotal2').val(row.housePersonal);
 	$('#pensionPersonal2').val(row.pensionPersonal);
 	$('#unemploymentPersonal2').val(row.unemploymentPersonal);
 	$('#medicalPersonal2').val(row.medicalPersonal);
 	$('#actualSalary2').val(row.actualSalary);
-	
+	$('#taxBase2').val(row.taxBase);
+	$('#incomeTax2').val(row.incomeTax);
 	$("#deailModal").modal('show');
 }
 
@@ -306,7 +308,136 @@ function exportDetail(){
 	
 }
 
+function isNull(value){
+    if(value == "" || value == undefined || value == null){
+        return true;
+    }else{
+        return false;
+    }
+} 
 
+function numberFormate(value,row,index) {
+	//console.log(value);
+	return (value+'').replace(/(\d)(?=(\d{3})+\.)/g, '$1,');//使用正则替换，每隔三个数加一个','  
+}
 
-
-
+//岗位工资合计
+function tbfooter0(data){
+    var interest = 0;
+    for(var i=0;i<data.length;i++){
+    	  if(!isNull(data[i].positionSalary))
+          interest += parseFloat(data[i].positionSalary);
+        }
+    //保留两位小数
+    return (interest.toFixed(2)+'').replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
+}
+//绩效工资合计
+function tbfooter1(data){
+    var interest = 0;
+    for(var i=0;i<data.length;i++){
+    	  if(!isNull(data[i].achiementSalary))
+          interest += parseFloat(data[i].achiementSalary);
+        }
+    //保留两位小数
+    return (interest.toFixed(2)+'').replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
+}
+//应发工资合计
+function tbfooter2(data){
+    var interest = 0;
+    for(var i=0;i<data.length;i++){
+    	  if(!isNull(data[i].grossSalary))
+          interest += parseFloat(data[i].grossSalary);
+        }
+    //保留两位小数
+    return (interest.toFixed(2)+'').replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
+}
+//取暖补贴合计
+function tbfooter3(data){
+    var interest = 0;
+    for(var i=0;i<data.length;i++){
+    	  if(!isNull(data[i].warmSubsidy))
+          interest += parseFloat(data[i].warmSubsidy);
+        }
+    //保留两位小数
+    return (interest.toFixed(2)+'').replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
+}
+//养老保险合计
+function tbfooter4(data){
+    var interest = 0;
+    for(var i=0;i<data.length;i++){
+    	  if(!isNull(data[i].pensionPersonal))
+          interest += parseFloat(data[i].pensionPersonal);
+        }
+    //保留两位小数
+    return (interest.toFixed(2)+'').replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
+}
+//失业保险合计
+function tbfooter5(data){
+    var interest = 0;
+    for(var i=0;i<data.length;i++){
+    	  if(!isNull(data[i].unemploymentPersonal))
+          interest += parseFloat(data[i].unemploymentPersonal);
+        }
+    //保留两位小数
+    return (interest.toFixed(2)+'').replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
+}
+//医疗保险合计
+function tbfooter6(data){
+    var interest = 0;
+    for(var i=0;i<data.length;i++){
+    	  if(!isNull(data[i].medicalPersonal))
+          interest += parseFloat(data[i].medicalPersonal);
+        }
+    //保留两位小数
+    return (interest.toFixed(2)+'').replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
+}
+//个人社保缴费合计
+function tbfooter7(data){
+    var interest = 0;
+    for(var i=0;i<data.length;i++){
+    	  if(!isNull(data[i].personalTotal))
+          interest += parseFloat(data[i].personalTotal);
+        }
+    //保留两位小数
+    return (interest.toFixed(2)+'').replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
+}
+//个人公积金缴费合计
+function tbfooter8(data){
+    var interest = 0;
+    for(var i=0;i<data.length;i++){
+    	  if(!isNull(data[i].housePersonalTotal))
+          interest += parseFloat(data[i].housePersonalTotal);
+        }
+    //保留两位小数
+    return (interest.toFixed(2)+'').replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
+}
+//个人所得税合计
+function tbfooter9(data){
+    var interest = 0;
+    for(var i=0;i<data.length;i++){
+    	  if(!isNull(data[i].incomeTax))
+          interest += parseFloat(data[i].incomeTax);
+        }
+    //保留两位小数
+    return (interest.toFixed(2)+'').replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
+}
+//其他款项合计
+function tbfooter10(data){
+    var interest = 0;
+    for(var i=0;i<data.length;i++){
+    	  if(!isNull(data[i].salaryOther))
+          interest += parseFloat(data[i].salaryOther);
+        }
+    //保留两位小数
+    return (interest.toFixed(2)+'').replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
+}
+//实发工资合计
+function tbfooter11(data){
+    var interest = 0;
+    for(var i=0;i<data.length;i++){
+    	  if(!isNull(data[i].actualSalary))
+          interest += parseFloat(data[i].actualSalary);
+        }
+    //保留两位小数
+    return (interest.toFixed(2)+'').replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
+}

@@ -233,9 +233,13 @@ public class StaffSalaryService {
 		
 		salary.setActualSalary(CommonUtils.getRound(actualSalary)+"");  //设置实发工资
 		DecimalFormat    df   = new DecimalFormat("#.00");   //取两位小数，因可能为负数，所以未四舍五入   
+		
 		salary.setGrossSalary(df.format(shouldSalary)+"");  //设置应发工资
 		salary.setIncomeTax(df.format(tax)+"");  //设置个人所得税
 		salary.setTaxBase(df.format(taxBase)+"");  //设置缴费基数
+		salary.setPostionsSalary(Optional.ofNullable(salary.getPositionSalary()).orElse("0.00"));    //设置岗位工资
+		salary.setSkillsSalary(Optional.ofNullable(salary.getSkillSalary()).orElse("0.00"));     //设置技能工资
+		salary.setYearsSalary(Optional.ofNullable(salary.getWorkYears()).orElse("0.00"));      //设置司龄工资
 		return  salary;
 	}	
 	

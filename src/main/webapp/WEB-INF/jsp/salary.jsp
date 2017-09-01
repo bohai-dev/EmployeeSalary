@@ -225,7 +225,7 @@
 						<th data-field="staffNumber" data-align="center"  data-footer-formatter="合计">员工编号</th>
 						<th data-field="name" data-align="center">员工姓名</th>
 						<th data-field="depName" data-align="center">部门</th>
-						<th data-field="positionSalary" data-align="center" data-footer-formatter="tbfooter0" data-formatter="numberFormate">岗位工资</th>
+						<th data-field="postionsSalary" data-align="center" data-footer-formatter="tbfooter0" data-formatter="numberFormate">岗位工资</th>
 						<th data-field="achiementSalary" data-align="center" data-footer-formatter="tbfooter1" data-formatter="numberFormate">绩效工资</th>
 						<th data-field="grossSalary" data-align="center" data-footer-formatter="tbfooter2" data-formatter="numberFormate">应发工资</th>
 						<th data-field="warmSubsidy" data-align="center" data-footer-formatter="tbfooter3" data-formatter="numberFormate">取暖补贴</th>

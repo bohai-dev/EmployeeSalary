@@ -129,7 +129,37 @@ public class StaffSalary {
     
     private String taxBase;
     
-    @JsonFormat(pattern="yyyy-MM-dd ",timezone="GMT+8")
+    private String postionsSalary;
+    
+    private String skillsSalary;
+    
+    private String yearsSalary;
+   
+    public String getPostionsSalary() {
+		return postionsSalary;
+	}
+
+	public void setPostionsSalary(String postionsSalary) {
+		this.postionsSalary = postionsSalary;
+	}
+
+	public String getSkillsSalary() {
+		return skillsSalary;
+	}
+
+	public void setSkillsSalary(String skillsSalary) {
+		this.skillsSalary = skillsSalary;
+	}
+
+	public String getYearsSalary() {
+		return yearsSalary;
+	}
+
+	public void setYearsSalary(String yearsSalary) {
+		this.yearsSalary = yearsSalary;
+	}
+
+	@JsonFormat(pattern="yyyy-MM-dd ",timezone="GMT+8")
     public Date getProbationDateStart() {
 		return probationDateStart;
 	}

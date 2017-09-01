@@ -150,13 +150,13 @@ function detail(row){
 	$('#staffNumber2').val(row.staffNumber);
 	$('#name2').val(row.name);
 	$('#depName2').val(row.depName);
-	$('#positionSalary2').val(row.positionSalary);
-	$('#skillSalary2').val(row.skillSalary);
+	$('#positionSalary2').val(row.postionsSalary);
+	$('#skillSalary2').val(row.skillsSalary);
 	$('#achiementSalary2').val(row.achiementSalary);
-	$('#workYears2').val(row.workYears);
+	$('#workYears2').val(row.yearsSalary);
 	$('#grossSalary2').val(row.grossSalary);
 	$('#warmSubsidy2').val(row.warmSubsidy);
-	$('#housePersonalTotal2').val(row.housePersonal);
+	$('#housePersonalTotal2').val(row.housePersonalTotal);
 	$('#pensionPersonal2').val(row.pensionPersonal);
 	$('#unemploymentPersonal2').val(row.unemploymentPersonal);
 	$('#medicalPersonal2').val(row.medicalPersonal);

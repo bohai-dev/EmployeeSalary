@@ -52,6 +52,11 @@
     <result column="GROSS_SALARY" jdbcType="VARCHAR" property="grossSalary"/>
     <result column="TAX_BASE" jdbcType="VARCHAR" property="taxBase"/>
     
+     <result column="POSITIONS_SALARY" jdbcType="VARCHAR" property="postionsSalary"/>
+     <result column="SKILLS_SALARY" jdbcType="VARCHAR" property="skillsSalary"/>
+     <result column="YEARS_SALARY" jdbcType="VARCHAR" property="yearsSalary"/>
+       
+    
     <!-- 员工信息表和部门表的字段 -->
      <result column="PROBATION_DATE_START" jdbcType="TIMESTAMP" property="probationDateStart" />
      <result column="FORMAL_DATE_START" jdbcType="TIMESTAMP" property="formalDateStart" />
@@ -300,6 +305,16 @@
        <if test="taxBase != null">
         TAX_BASE = #{taxBase,jdbcType=VARCHAR},
       </if>
+      
+       <if test="postionsSalary != null">
+        POSITIONS_SALARY = #{postionsSalary,jdbcType=VARCHAR},
+      </if>
+       <if test="skillsSalary != null">
+        SKILLS_SALARY = #{skillsSalary,jdbcType=VARCHAR},
+      </if>
+       <if test="yearsSalary != null">
+        YEARS_SALARY = #{yearsSalary,jdbcType=VARCHAR},
+      </if>
     </set>
        where STAFF_NUMBER = #{staffNumber,jdbcType=VARCHAR}
        and PAY_DATE = #{payDate,jdbcType=VARCHAR}
@@ -445,6 +460,17 @@
       <if test="houseToatal != null">
         HOUSE_TOATAL,
       </if>
+      
+      <if test="postionsSalary != null">
+        POSITIONS_SALARY,
+      </if>
+      <if test="skillsSalary != null">
+        SKILLS_SALARY,
+      </if>
+      <if test="yearsSalary != null">
+        YEARS_SALARY,
+      </if>
+      
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="staffNumber != null">
@@ -582,6 +608,16 @@
       <if test="houseToatal != null">
         #{houseToatal,jdbcType=VARCHAR},
       </if>
+      
+       <if test="postionsSalary != null">
+        #{postionsSalary,jdbcType=VARCHAR},
+      </if>
+       <if test="skillsSalary != null">
+        #{skillsSalary,jdbcType=VARCHAR},
+      </if>
+       <if test="yearsSalary != null">
+        #{yearsSalary,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>  
   <select id="selectByStaffNumAndDate" parameterType="com.bohai.employeeSalary.entity.StaffSalary" resultType="java.lang.Long">
@@ -599,13 +635,7 @@
     </where>
   </select>
   
-  <select id="queryStaffInfos" parameterType="java.util.Map" resultMap="BaseResultMap">
-    SELECT 
-    <include refid="Base_Column_List" />
-    ,b.DEP_NAME
-   	FROM STAFF_INFO a LEFT JOIN DEPARTMENT b ON a.DEPARTMENT_ID=b.DEP_NUMBER WHERE IS_LEAVE='0' 
-   	ORDER BY a.STAFF_NUMBER
-  </select>
+ 
   
  <select id="queryStaffSalaryByParams" parameterType="com.bohai.employeeSalary.vo.QueryStaffSalaryParamVO" resultMap="BaseResultMap">
    SELECT a.*,d.* 

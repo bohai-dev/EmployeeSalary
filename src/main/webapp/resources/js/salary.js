@@ -327,8 +327,8 @@ function numberFormate(value,row,index) {
 function tbfooter0(data){
     var interest = 0;
     for(var i=0;i<data.length;i++){
-    	  if(!isNull(data[i].positionSalary))
-          interest += parseFloat(data[i].positionSalary);
+    	  if(!isNull(data[i].postionsSalary))
+          interest += parseFloat(data[i].postionsSalary);
         }
     //保留两位小数
     return (interest.toFixed(2)+'').replace(/(\d)(?=(\d{3})+\.)/g, '$1,');

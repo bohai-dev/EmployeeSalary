@@ -318,7 +318,9 @@ function isNull(value){
 
 function numberFormate(value,row,index) {
 	//console.log(value);
-	return (value+'').replace(/(\d)(?=(\d{3})+\.)/g, '$1,');//使用正则替换，每隔三个数加一个','  
+	if(!isNull(value)){
+		return (value+'').replace(/(\d)(?=(\d{3})+\.)/g, '$1,');//使用正则替换，每隔三个数加一个','  
+	}
 }
 
 //岗位工资合计

@@ -16,8 +16,8 @@ $(function(){
     	            success: function (data) {
     	                var len = data.length;
     	                var optionString = '';
+    	                optionString += "<option value=''> </option>";
     	                 for (i = 0; i < len; i++) {
-    	                	 optionString += "<option value=''> </option>";
     	                     optionString += "<option value=\'"+ data[i].depNumber +"\'>" + data[i].depName + "</option>";
     	                 }
     	                 
@@ -278,8 +278,8 @@ function exportSalary(){
 function exportDetail(){
 	//console.log($('#exportDepName').val());
 	//console.log($('#exportMonth').val());
-    if($('#payDate').val()==null||$('#payDate').val()==''){
-    	alert('请选择月份！');
+    if($('#payDate').val()==null||$('#payDate').val()==''||isNull($('#depNum').val())){
+    	alert('请选择月份和部门！');
     }
     
     else{ 

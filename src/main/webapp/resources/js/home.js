@@ -185,12 +185,15 @@ $(function(){
 		$('#positionSalary2').val(row.positionSalary);
 		$('#skillSalary2').val(row.skillSalary);
 		$('#workYears2').val(row.workYears);
-		$('#probationDateStart2').val(row.probationDateStart);
-		$('#formalDateStart2').val(row.formalDateStart);
+		//$('#probationDateStart2').val(row.probationDateStart);
+		$("#probationDateStart2").datepicker("setDate", row.probationDateStart);
+		//$('#formalDateStart2').val(row.formalDateStart);
+		$("#formalDateStart2").datepicker("setDate", row.formalDateStart);
 		$('#isProbation2').selectpicker('val',row.isProbation)
 		$('#coefficeient2').val(row.coefficeient);
 		$('#isLeave2').selectpicker('val',row.isLeave);
-		$('#leaveDate2').selectpicker('val',row.leaveDate);
+		//$('#leaveDate2').val('val',row.leaveDate);
+		$("#leaveDate2").datepicker("setDate", row.leaveDate);
 		$('#email2').val(row.email);
 		$('#remark2').val(row.remark);
 

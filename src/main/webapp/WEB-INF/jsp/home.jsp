@@ -128,7 +128,7 @@
 
 
 
-			<h2 class="sub-header">客户基本信息</h2>
+			<h2 class="sub-header"></h2>
            <div class="table-responsive">
             <div id="toolbar" class="btn-group">
                 <button type="button" class="btn btn-default" data-toggle="modal" data-target="#addModal" title="创建任务">
@@ -271,7 +271,7 @@
                   </div>
                   
                    <div class="form-group">
-                    <label for="formalDateStart1" class="col-sm-3 control-label">正式工作起始日期</label>
+                    <label for="formalDateStart1" class="col-sm-3 control-label">转正日期</label>
                     <div class="col-sm-8">
                         <input type="text" class="form-control" id="formalDateStart1" placeholder="">
                     </div>
@@ -420,7 +420,7 @@
                   </div>
                   
                    <div class="form-group">
-                    <label for="formalDateStart2" class="col-sm-3 control-label">正式工作起始日期</label>
+                    <label for="formalDateStart2" class="col-sm-3 control-label">转正日期</label>
                     <div class="col-sm-8">
                         <input type="text" class="form-control" id="formalDateStart2" placeholder="">
                     </div>

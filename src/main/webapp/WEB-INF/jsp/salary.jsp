@@ -222,7 +222,8 @@
 				data-show-footer="true">
 				<thead>
 					<tr>
-						<th data-field="staffNumber" data-align="center"  data-footer-formatter="合计">员工编号</th>
+					    <th data-field="payDate" data-align="center"  data-footer-formatter="合计">日期</th>
+						<th data-field="staffNumber" data-align="center" >员工编号</th>
 						<th data-field="name" data-align="center">员工姓名</th>
 						<th data-field="depName" data-align="center">部门</th>
 						<th data-field="postionsSalary" data-align="center" data-footer-formatter="tbfooter0" data-formatter="numberFormate">岗位工资</th>
@@ -236,9 +237,9 @@
 						<th data-field="housePersonalTotal" data-align="center" data-footer-formatter="tbfooter8" data-formatter="numberFormate">个人公积金缴费合计</th>
 						 <th data-field="incomeTax" data-align="center"  data-footer-formatter="tbfooter9" data-formatter="numberFormate">个人所得税</th>
 						<th data-field="salaryOther" data-align="right"
-							data-formatter="operationFormatter" data-footer-formatter="tbfooter10" >其他款项 &nbsp; &nbsp; &nbsp; &nbsp; </th>
+							data-formatter="operationFormatter" data-footer-formatter="tbfooter10" > &nbsp;其他款项 &nbsp; &nbsp;</th>
 						<th data-field="actualSalary" data-align="right"
-							data-formatter="salaryFormatter" data-footer-formatter="tbfooter11" >实发工资 &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</th>
+							data-formatter="salaryFormatter" data-footer-formatter="tbfooter11" >实发工资 &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; </th>
 					</tr>
 				</thead>
 			</table>

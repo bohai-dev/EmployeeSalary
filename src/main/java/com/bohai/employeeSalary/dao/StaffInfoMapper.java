@@ -70,6 +70,11 @@ public interface StaffInfoMapper {
 	 * 按部门查询
 	 * */
 	List<StaffInfo> selectByDepartment(String depNumber);
+	
+	/**
+     * 查询某部门所有的员工编号
+     * */
+	List<String> selectByDepartmentId(QueryStaffInfoParamVO paramVO);
 
 
 }

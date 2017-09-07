@@ -658,7 +658,8 @@
   	</if>
   	 
   	</where>
-  ORDER BY a.STAFF_DEPARTMENT_ID 
+  ORDER BY a.STAFF_DEPARTMENT_ID,PAY_DATE desc
  </select>
   
+ 
 </mapper>

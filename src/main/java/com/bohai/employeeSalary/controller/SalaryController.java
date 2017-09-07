@@ -117,7 +117,7 @@ public class SalaryController{
 	public void exportSalary(QueryStaffSalaryParamVO paramVo,HttpServletRequest request, HttpServletResponse response){
 		int count=0;
 		try {
-			count = exportService.exportSalary(paramVo,response);
+			count = exportService.exportSalary(paramVo,request,response);
 		} catch (BohaiException e) {
 
 			

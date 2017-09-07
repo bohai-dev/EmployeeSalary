@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
@@ -17,14 +18,14 @@ public class ZipUtil {
      * @param srcfile：源文件列表 
      * @param zipfile：压缩后的文件 
      */  
-    public static void zipFiles(File[] srcfile, File zipfile) {  
+    public static void zipFiles(List<File> srcfile, File zipfile) {  
         byte[] buf = new byte[1024];  
         try {  
             //ZipOutputStream类：完成文件或文件夹的压缩  
             ZipOutputStream out = new ZipOutputStream(new FileOutputStream(zipfile));  
-            for (int i = 0; i < srcfile.length; i++) {  
-                FileInputStream in = new FileInputStream(srcfile[i]);
-                out.putNextEntry(new ZipEntry(srcfile[i].getName()));
+            for (int i = 0; i < srcfile.size(); i++) {  
+                FileInputStream in = new FileInputStream(srcfile.get(i));
+                out.putNextEntry(new ZipEntry(srcfile.get(i).getName()));
                 int len;  
                 while ((len = in.read(buf)) > 0) {  
                     out.write(buf, 0, len);  

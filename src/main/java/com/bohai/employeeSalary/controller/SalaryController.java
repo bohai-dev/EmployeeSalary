@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
+import java.util.Optional;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
@@ -30,6 +31,7 @@ import com.bohai.employeeSalary.dao.StaffSalaryMapper;
 import com.bohai.employeeSalary.entity.StaffSalary;
 import com.bohai.employeeSalary.service.StaffSalaryService;
 import com.bohai.employeeSalary.service.exportSalaryService;
+import com.bohai.employeeSalary.util.CommonUtils;
 import com.bohai.employeeSalary.util.MailUtil;
 import com.bohai.employeeSalary.vo.QueryStaffSalaryParamVO;
 import com.bohai.employeeSalary.vo.TableJsonResponse;
@@ -85,12 +87,45 @@ public class SalaryController{
 	@RequestMapping(value="updateSalary")
 	@ResponseBody
 	public int updateSalary(@RequestBody(required = true) StaffSalary staffSalary){
-		int count=StaffSalaryMapper.updateByStaffNumAndDate(staffSalary);  //更新其他款项
+		//后台修改个人社保缴纳合计、公司社保缴纳合计、社保缴纳总计、公积金个人缴纳合计、公积金公司缴纳合计、公积金缴纳合计
+		double personalTotal=Optional.ofNullable(staffSalary.getPensionPersonal()).map(v->Double.valueOf(v)).orElse(0.00)+
+				             Optional.ofNullable(staffSalary.getMedicalPersonal()).map(v->Double.valueOf(v)).orElse(0.00)+
+				             Optional.ofNullable(staffSalary.getUnemploymentPersonal()).map(v->Double.valueOf(v)).orElse(0.00)+
+				             Optional.ofNullable(staffSalary.getPersonalReserve1()).map(v->Double.valueOf(v)).orElse(0.00)+
+				             Optional.ofNullable(staffSalary.getPersonalReserve2()).map(v->Double.valueOf(v)).orElse(0.00);
+		
+		double companyTotal=Optional.ofNullable(staffSalary.getPensionCompany()).map(v->Double.valueOf(v)).orElse(0.00)+
+				            Optional.ofNullable(staffSalary.getMedicalCompany()).map(v->Double.valueOf(v)).orElse(0.00)+
+				            Optional.ofNullable(staffSalary.getUnemploymentCompany()).map(v->Double.valueOf(v)).orElse(0.00)+
+				            Optional.ofNullable(staffSalary.getInjuryCompany()).map(v->Double.valueOf(v)).orElse(0.00)+
+				            Optional.ofNullable(staffSalary.getBirthCompany()).map(v->Double.valueOf(v)).orElse(0.00)+
+				            Optional.ofNullable(staffSalary.getCompanyReserve1()).map(v->Double.valueOf(v)).orElse(0.00)+
+				            Optional.ofNullable(staffSalary.getCompanyReserve2()).map(v->Double.valueOf(v)).orElse(0.00);
+	   double paymentTotal=personalTotal+companyTotal;		
+	   
+	   double housePersonalTotal=Optional.ofNullable(staffSalary.getHouseBasePersonal()).map(v->Double.valueOf(v)).orElse(0.00)+
+			                     Optional.ofNullable(staffSalary.getHouseSupplyPersonal()).map(v->Double.valueOf(v)).orElse(0.00);
+	   
+	   double houseCompanyTotal=Optional.ofNullable(staffSalary.getHouseBaseCompany()).map(v->Double.valueOf(v)).orElse(0.00)+
+			                    Optional.ofNullable(staffSalary.getHouseSupplyCompany()).map(v->Double.valueOf(v)).orElse(0.00);
+	   
+	   double houseToatal=housePersonalTotal+houseCompanyTotal;
+
+	   
+	    staffSalary.setPersonalTotal(String.valueOf(CommonUtils.getRound(personalTotal)));
+		staffSalary.setCompanyTotal(String.valueOf(CommonUtils.getRound(companyTotal)));
+		staffSalary.setPaymentTotal(String.valueOf(CommonUtils.getRound(paymentTotal)));
+		staffSalary.setHousePersonalTotal(String.valueOf(CommonUtils.getRound(housePersonalTotal)));
+		staffSalary.setHouseCompanyTotal(String.valueOf(CommonUtils.getRound(houseCompanyTotal)));
+		staffSalary.setHouseToatal(String.valueOf(CommonUtils.getRound(houseToatal)));
+		
+		
+		int count=StaffSalaryMapper.updateByStaffNumAndDate(staffSalary);  //更新其他款项	
 		
 		QueryStaffSalaryParamVO paramVo=new QueryStaffSalaryParamVO();
 		paramVo.setStaffNum(staffSalary.getStaffNumber());
 		paramVo.setPayDate(staffSalary.getPayDate());
-		salaryService.updateSalary(paramVo);
+		salaryService.updateSalary(paramVo);  //修改信息之后要重新计算工资并更新
 		return count;
 	}
 	

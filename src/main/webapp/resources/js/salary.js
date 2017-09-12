@@ -63,7 +63,8 @@ function operationFormatter(value,row,index) {
 		value='0.00';
 	}  
     
-	var html = value+'&nbsp;&nbsp;<button type="button" id="editButton'+index+'" class="btn btn-link btn-sm">修改'
+	var html=value;
+/*	var html = value+'&nbsp;&nbsp;<button type="button" id="editButton'+index+'" class="btn btn-link btn-sm">修改'
     + '</button>';
             
         //添加修改事件
@@ -71,9 +72,11 @@ function operationFormatter(value,row,index) {
      
        $("#salaryTable").on("click","#editButton"+index,row,function(event){
            config(row);
-        });       
+        });       */
   
    
+       
+       
     return html;
 }
 
@@ -90,6 +93,25 @@ function config(row){
     $("#month").val(row.payDate);
     $("#otherSalary").val(other);   
     $("#remark").val(row.otherRemark);
+    
+    $("#pensionPersonal").val(row.pensionPersonal);
+    $("#medicalPersonal").val(row.medicalPersonal);
+    $("#unemploymentPersonal").val(row.unemploymentPersonal);
+    $("#personalReserve1").val(row.personalReserve1);
+    $("#personalReserve2").val(row.personalReserve2);
+    $("#pensionCompany").val(row.pensionCompany);
+    $("#medicalCompany").val(row.medicalCompany);
+    $("#unemploymentCompany").val(row.unemploymentCompany);
+    $("#injuryCompany").val(row.injuryCompany);
+    $("#birthCompany").val(row.birthCompany);
+    $("#companyReserve1").val(row.companyReserve1);
+    $("#companyReserve2").val(row.companyReserve2);
+    $("#houseBasePersonal").val(row.houseBasePersonal);
+    $("#houseSupplyPersonal").val(row.houseSupplyPersonal);
+    $("#houseBaseCompany").val(row.houseBaseCompany);
+    $("#houseSupplyCompany").val(row.houseSupplyCompany);
+    
+    
     staffNum=row.staffNumber;
     $("#editModal").modal('show');
 }
@@ -105,7 +127,28 @@ function updateSalary(){
 	       		staffNumber:staffNum,
 	       		payDate:$('#month').val(),
 	       		salaryOther: $("#otherSalary").val(),
-	       		otherRemark:$("#remark").val()
+	       		otherRemark:$("#remark").val(),
+	       		
+	       		pensionPersonal:$("#pensionPersonal").val(),
+	       		medicalPersonal:$("#medicalPersonal").val(),
+	       		unemploymentPersonal:$("#unemploymentPersonal").val(),
+	       		personalReserve1:$("#personalReserve1").val(),
+	       		personalReserve2:$("#personalReserve2").val(),
+	       		pensionCompany:$("#pensionCompany").val(),
+	       		medicalCompany:$("#medicalCompany").val(),
+	       		unemploymentCompany:$("#unemploymentCompany").val(),
+	       		injuryCompany:$("#injuryCompany").val(),
+	       		birthCompany:$("#birthCompany").val(),
+	       		companyReserve1:$("#companyReserve1").val(),
+	       		companyReserve2:$("#companyReserve2").val(),
+	       		houseBasePersonal:$("#houseBasePersonal").val(),
+	       		houseSupplyPersonal:$("#houseSupplyPersonal").val(),
+	       		houseBaseCompany:$("#houseBaseCompany").val(),
+	       		houseSupplyCompany:$("#houseSupplyCompany").val()       		
+	       		
+	       		
+	       		
+	       		
 	       		
 	            };
 	        $.ajax({
@@ -129,8 +172,6 @@ function salaryFormatter(value,row,index) {
 	}
     
     var html = value+'&nbsp;&nbsp;<button type="button" id="cog'+index+'" class="btn btn-link btn-sm">查看详情'
-                             + '</button>'
-                             +'&nbsp;&nbsp;<button type="button" id="mail'+index+'" class="btn btn-link btn-sm">发送工资条'
                              + '</button>';
             
     //添加查看事件
@@ -138,12 +179,35 @@ function salaryFormatter(value,row,index) {
      $("#salaryTable").on("click","#cog"+index,row,function(event){
            detail(row);
         });
-     $("#salaryTable").off("click","#mail"+index);
+   /*  $("#salaryTable").off("click","#mail"+index);
      $("#salaryTable").on("click","#mail"+index,row,function(event){
            send(row);
-        });
+        });*/
     return html;
 }
+function operateFormate(value,row,index){
+	
+	var html = '<button type="button" id="editButton'+index+'" class="btn btn-link btn-sm">修改'
+    + '</button>'
+    +'&nbsp;&nbsp;<button type="button" id="mail'+index+'" class="btn btn-link btn-sm">发送工资条'
+    + '</button>';;
+            
+        //添加修改事件
+       $("#salaryTable").off("click","#editButton"+index);
+     
+       $("#salaryTable").on("click","#editButton"+index,row,function(event){
+           config(row);
+        });
+       
+       //添加发送工资条事件
+       $("#salaryTable").off("click","#mail"+index);
+       $("#salaryTable").on("click","#mail"+index,row,function(event){
+             send(row);
+          });
+      return html;
+	
+}
+
 
 /* 查看详情模态框 */
 function detail(row){

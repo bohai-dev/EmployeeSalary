@@ -311,7 +311,7 @@ public class StaffSalaryService {
 				            +Optional.ofNullable(salary.getSalaryOther()).map(i->Double.valueOf(i)).orElse((double)0);
 		
 		salary.setActualSalary(CommonUtils.getRound(actualSalary)+"");  //设置实发工资
-		DecimalFormat    df   = new DecimalFormat("#.00");   //取两位小数，因可能为负数，所以未四舍五入   
+		DecimalFormat    df   = new DecimalFormat("0.00");   //取两位小数，因可能为负数，所以未四舍五入   
 		
 		salary.setGrossSalary(df.format(shouldSalary)+"");  //设置应发工资
 		salary.setIncomeTax(df.format(tax)+"");  //设置个人所得税

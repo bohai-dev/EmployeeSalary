@@ -88,26 +88,26 @@ public class SalaryController{
 	@ResponseBody
 	public int updateSalary(@RequestBody(required = true) StaffSalary staffSalary){
 		//后台修改个人社保缴纳合计、公司社保缴纳合计、社保缴纳总计、公积金个人缴纳合计、公积金公司缴纳合计、公积金缴纳合计
-		double personalTotal=Optional.ofNullable(staffSalary.getPensionPersonal()).map(v->Double.valueOf(v)).orElse(0.00)+
-				             Optional.ofNullable(staffSalary.getMedicalPersonal()).map(v->Double.valueOf(v)).orElse(0.00)+
-				             Optional.ofNullable(staffSalary.getUnemploymentPersonal()).map(v->Double.valueOf(v)).orElse(0.00)+
-				             Optional.ofNullable(staffSalary.getPersonalReserve1()).map(v->Double.valueOf(v)).orElse(0.00)+
-				             Optional.ofNullable(staffSalary.getPersonalReserve2()).map(v->Double.valueOf(v)).orElse(0.00);
+		double personalTotal=Optional.ofNullable(staffSalary.getPensionPersonal()).filter(v->v.length()>0).map(v->Double.valueOf(v)).orElse(0.00)+
+				             Optional.ofNullable(staffSalary.getMedicalPersonal()).filter(v->v.length()>0).map(v->Double.valueOf(v)).orElse(0.00)+
+				             Optional.ofNullable(staffSalary.getUnemploymentPersonal()).filter(v->v.length()>0).filter(v->v.length()>0).map(v->Double.valueOf(v)).orElse(0.00)+
+				             Optional.ofNullable(staffSalary.getPersonalReserve1()).filter(v->v.length()>0).map(v->Double.valueOf(v)).orElse(0.00)+
+				             Optional.ofNullable(staffSalary.getPersonalReserve2()).filter(v->v.length()>0).map(v->Double.valueOf(v)).orElse(0.00);
 		
-		double companyTotal=Optional.ofNullable(staffSalary.getPensionCompany()).map(v->Double.valueOf(v)).orElse(0.00)+
-				            Optional.ofNullable(staffSalary.getMedicalCompany()).map(v->Double.valueOf(v)).orElse(0.00)+
-				            Optional.ofNullable(staffSalary.getUnemploymentCompany()).map(v->Double.valueOf(v)).orElse(0.00)+
-				            Optional.ofNullable(staffSalary.getInjuryCompany()).map(v->Double.valueOf(v)).orElse(0.00)+
-				            Optional.ofNullable(staffSalary.getBirthCompany()).map(v->Double.valueOf(v)).orElse(0.00)+
-				            Optional.ofNullable(staffSalary.getCompanyReserve1()).map(v->Double.valueOf(v)).orElse(0.00)+
-				            Optional.ofNullable(staffSalary.getCompanyReserve2()).map(v->Double.valueOf(v)).orElse(0.00);
+		double companyTotal=Optional.ofNullable(staffSalary.getPensionCompany()).filter(v->v.length()>0).map(v->Double.valueOf(v)).orElse(0.00)+
+				            Optional.ofNullable(staffSalary.getMedicalCompany()).filter(v->v.length()>0).map(v->Double.valueOf(v)).orElse(0.00)+
+				            Optional.ofNullable(staffSalary.getUnemploymentCompany()).filter(v->v.length()>0).map(v->Double.valueOf(v)).orElse(0.00)+
+				            Optional.ofNullable(staffSalary.getInjuryCompany()).filter(v->v.length()>0).map(v->Double.valueOf(v)).orElse(0.00)+
+				            Optional.ofNullable(staffSalary.getBirthCompany()).filter(v->v.length()>0).map(v->Double.valueOf(v)).orElse(0.00)+
+				            Optional.ofNullable(staffSalary.getCompanyReserve1()).filter(v->v.length()>0).map(v->Double.valueOf(v)).orElse(0.00)+
+				            Optional.ofNullable(staffSalary.getCompanyReserve2()).filter(v->v.length()>0).map(v->Double.valueOf(v)).orElse(0.00);
 	   double paymentTotal=personalTotal+companyTotal;		
 	   
-	   double housePersonalTotal=Optional.ofNullable(staffSalary.getHouseBasePersonal()).map(v->Double.valueOf(v)).orElse(0.00)+
-			                     Optional.ofNullable(staffSalary.getHouseSupplyPersonal()).map(v->Double.valueOf(v)).orElse(0.00);
+	   double housePersonalTotal=Optional.ofNullable(staffSalary.getHouseBasePersonal()).filter(v->v.length()>0).map(v->Double.valueOf(v)).orElse(0.00)+
+			                     Optional.ofNullable(staffSalary.getHouseSupplyPersonal()).filter(v->v.length()>0).map(v->Double.valueOf(v)).orElse(0.00);
 	   
-	   double houseCompanyTotal=Optional.ofNullable(staffSalary.getHouseBaseCompany()).map(v->Double.valueOf(v)).orElse(0.00)+
-			                    Optional.ofNullable(staffSalary.getHouseSupplyCompany()).map(v->Double.valueOf(v)).orElse(0.00);
+	   double houseCompanyTotal=Optional.ofNullable(staffSalary.getHouseBaseCompany()).filter(v->v.length()>0).map(v->Double.valueOf(v)).orElse(0.00)+
+			                    Optional.ofNullable(staffSalary.getHouseSupplyCompany()).filter(v->v.length()>0).map(v->Double.valueOf(v)).orElse(0.00);
 	   
 	   double houseToatal=housePersonalTotal+houseCompanyTotal;
 

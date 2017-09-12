@@ -316,14 +316,14 @@
 								<label class="col-sm-4 control-label">个人备用条目1</label>
 								<div class="col-sm-7">
 									<input type="text" class="form-control" id="personalReserve1"
-										placeholder="">
+										>
 								</div>
 							</div>
 							<div class="form-group">
 								<label  class="col-sm-4 control-label">个人备用条目2</label>
 								<div class="col-sm-7">
 									<input type="text" class="form-control" id="personalReserve2"
-										placeholder="">
+										>
 								</div>
 							</div>
 							<hr/>
@@ -366,14 +366,14 @@
 								<label  class="col-sm-4 control-label">公司备用条目1</label>
 								<div class="col-sm-7">
 									<input type="text" class="form-control" id="companyReserve1"
-										placeholder="">
+										>
 								</div>
 							</div>
 							<div class="form-group">
 								<label  class="col-sm-4 control-label">公司备用条目2</label>
 								<div class="col-sm-7">
 									<input type="text" class="form-control" id="companyReserve2"
-										placeholder="">
+										>
 								</div>
 							</div>
 							<hr/>

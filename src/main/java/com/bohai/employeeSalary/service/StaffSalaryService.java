@@ -171,7 +171,12 @@ public class StaffSalaryService {
                     //当月试用期天数
                     int probationDays=dateMapper.countWorkDays(year+"", month+"", startDay+"", day+"");
                     //当月正式工作天数
-                    int formalDays=dateMapper.countWorkDays(year+"", month+"", Integer.parseInt(day)+1+"",31+"");
+                    String fDays=Integer.parseInt(day)+1+"";
+                    
+                    if(fDays.length()<=1) {
+                    	fDays="0"+fDays;
+                    }
+                    int formalDays=dateMapper.countWorkDays(year+"", month+"", fDays,31+"");
                     
                     posSalary=posSalary*0.8*probationDays/21.75+posSalary*formalDays/21.75;
                     

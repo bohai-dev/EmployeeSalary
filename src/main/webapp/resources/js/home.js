@@ -1,11 +1,17 @@
  /**
    * home页面初始化
-   */
-   
+   */ 
 $(function(){
-	  
-	   	var treeObj = [{"href":"toHome","selectable":false,"showCheckbox":false,"text":"员工信息管理"},
-       	{"href":"toSalary","selectable":false,"showCheckbox":false,"text":"员工工资管理"}];
+		var treeObj;
+	    if(userLocked=="1"){
+	    	treeObj = [{"href":"toHome","selectable":false,"showCheckbox":false,"text":"员工信息管理"},
+	    	           {"href":"toCheck","selectable":false,"showCheckbox":false,"text":"申报信息审核"},
+    	               {"href":"toSalary","selectable":false,"showCheckbox":false,"text":"员工工资管理"}];
+	    }else{
+	    	
+	    	treeObj = [{"href":"toHome","selectable":false,"showCheckbox":false,"text":"员工信息管理"},
+	    	               {"href":"toSalary","selectable":false,"showCheckbox":false,"text":"员工工资管理"}];
+	    }
 	   	$('#tree').treeview({data: treeObj,enableLinks: true});
 	   
 	    $('#probationDateStart1').datepicker({
@@ -158,6 +164,21 @@ $(function(){
   	
   }
   
+  function idFormatter(value,row,index){
+	  return index+1;
+  }
+  function submitTypeFormatter(vaule,row,index){
+	  var result=row.submitType;
+	  if(result=="0"){
+		  result="新建员工信息审核";
+	  }else if(result=="1"){
+		  result="修改员工信息审核";
+	  }else if(result=="2"){
+		  result="离职员工信息审核";
+	  }
+	  return result;
+  }
+  
 /*------------------------------------------------------------------------------------------------*/   
 
 
@@ -211,7 +232,7 @@ $(function(){
   	){
   		alert("标★为必填项，请重新填写!");
   	}else{
-  		saveStaffInfo();
+  		submitStaffInfo();
   	}
   		
   }
@@ -222,7 +243,7 @@ $(function(){
   		if($('#leaveDate').val()==""){
   			alert("正在执行员工离职操作，请输入离职日期!");
   		}else{
-  		updateStaffInfo();
+  		submitUpdateStaffInfo();
   		}
   	}
   	else{
@@ -233,7 +254,7 @@ $(function(){
   	){
   		alert("标★为必填项，请重新填写!");
   	}else{
-  		updateStaffInfo();
+  		submitUpdateStaffInfo();
   	}
   	}
   }
@@ -259,36 +280,65 @@ $(function(){
   		);
   }
 
- //保存员工信息事件
-  function saveStaffInfo(){
-      var param = {
-      		staffNumber:$('#staffNumber1').val(),
-      		name:$('#name1').val(),
-      		departmentId:$('#depName1').val(),
-      		positionSalary:$('#positionSalary1').val(),
-      		skillSalary:$('#skillSalary1').val(),
-      		workYears:$('#workYears1').val(),
-      		probationDateStart:$('#probationDateStart1').val(),
-      		formalDateStart:$('#formalDateStart1').val(),
-      		isProbation:$('#isProbation1').val(),
-      		coefficeient:$('#coefficeient1').val(),
-              email:$('#email1').val(),
-              remark:$('#remark1').val()
-              }
-       $.ajax({
-           url: 'saveStaffInfo',
-           type: 'post',
-           contentType: "application/json;charset=UTF-8",
-           data: JSON.stringify(param),
-           success: function (data,status) {
-               $('#addModal').modal('hide');
-               $('#staffInfoTable').bootstrapTable('refresh');
-           }
-      });
-  }
+// //保存员工信息事件
+//  function saveStaffInfo(){
+//      var param = {
+//      		staffNumber:$('#staffNumber1').val(),
+//      		name:$('#name1').val(),
+//      		departmentId:$('#depName1').val(),
+//      		positionSalary:$('#positionSalary1').val(),
+//      		skillSalary:$('#skillSalary1').val(),
+//      		workYears:$('#workYears1').val(),
+//      		probationDateStart:$('#probationDateStart1').val(),
+//      		formalDateStart:$('#formalDateStart1').val(),
+//      		isProbation:$('#isProbation1').val(),
+//      		coefficeient:$('#coefficeient1').val(),
+//              email:$('#email1').val(),
+//              remark:$('#remark1').val()
+//              }
+//       $.ajax({
+//           url: 'saveStaffInfo',
+//           type: 'post',
+//           contentType: "application/json;charset=UTF-8",
+//           data: JSON.stringify(param),
+//           success: function (data,status) {
+//               $('#addModal').modal('hide');
+//               $('#staffInfoTable').bootstrapTable('refresh');
+//           }
+//      });
+//  }
+//  
   
-	//更新员工信息事件
-  function updateStaffInfo(){
+//提交审核信息事件
+function submitStaffInfo(){
+    var param = {
+    		staffNumber:$('#staffNumber1').val(),
+    		name:$('#name1').val(),
+    		departmentId:$('#depName1').val(),
+    		positionSalary:$('#positionSalary1').val(),
+    		skillSalary:$('#skillSalary1').val(),
+    		workYears:$('#workYears1').val(),
+    		probationDateStart:$('#probationDateStart1').val(),
+    		formalDateStart:$('#formalDateStart1').val(),
+    		isProbation:$('#isProbation1').val(),
+    		coefficeient:$('#coefficeient1').val(),
+            email:$('#email1').val(),
+            remark:$('#remark1').val()
+            }
+     $.ajax({
+         url: 'submitStaffInfo',
+         type: 'post',
+         contentType: "application/json;charset=UTF-8",
+         data: JSON.stringify(param),
+         success: function (data,status) {
+             $('#addModal').modal('hide');
+             alert("信息以提交审核，请等待!");
+         }
+    });
+}
+
+	//提交更新员工审核信息事件
+  function submitUpdateStaffInfo(){
   	 var param = {
        		staffNumber:$('#staffNumber2').val(),
        		name:$('#name2').val(),      		
@@ -306,12 +356,13 @@ $(function(){
               remark:$('#remark2').val()
                }
         $.ajax({
-            url: 'updateStaffInfo',
+            url: 'submitUpdateStaffInfo',
             type: 'post',
             contentType: "application/json;charset=UTF-8",
             data: JSON.stringify(param),
             success: function (data,status) {
                 $('#editModal').modal('hide');
+                alert("信息以提交审核，请等待!");
                 $('#staffInfoTable').bootstrapTable('refresh');
             }
        });
@@ -336,6 +387,13 @@ $(function(){
 			}
 		});
 	}
+  
+  function queryCheckMessagesBySubmitter(){
+	  $("#submittercheckMessageTable").bootstrapTable('refresh', {
+		  url:"queryCheckMessagesBySubmitter"
+	  });
+	  }
+ 
 /*------------------------------------------------------------------------------------------*/   
 
   

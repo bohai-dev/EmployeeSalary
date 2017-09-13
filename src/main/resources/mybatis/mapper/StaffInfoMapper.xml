@@ -18,7 +18,7 @@
     <result column="EMAIL" property="email" jdbcType="VARCHAR" />
     <result column="REMARK" property="remark" jdbcType="VARCHAR" />
     <result column="DEPARTMENT_ID" property="departmentId" jdbcType="VARCHAR" />
-     <result column="DEP_NAME" property="departmentName" jdbcType="VARCHAR" />
+    <result column="DEP_NAME" property="departmentName" jdbcType="VARCHAR" />
     <result column="IS_LEAVE" property="isLeave" jdbcType="VARCHAR" />
     <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
     <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />

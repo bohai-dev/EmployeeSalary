@@ -69,13 +69,9 @@ public class SalaryController{
 	public TableJsonResponse<StaffSalary> querySalaryByParams(@RequestBody(required = true) QueryStaffSalaryParamVO paramVO){
 		
 		PageHelper.startPage(paramVO.getPageNumber(), paramVO.getPageSize());
-		List<StaffSalary> list=StaffSalaryMapper.queryStaffSalaryByParams(paramVO);
-		
+		List<StaffSalary> list=StaffSalaryMapper.queryStaffSalaryByParams(paramVO);		
 		Page<StaffSalary> page = (Page)list;
-		TableJsonResponse<StaffSalary> response = new TableJsonResponse<StaffSalary>();
-		
-		
-		
+		TableJsonResponse<StaffSalary> response = new TableJsonResponse<StaffSalary>();	
 		response.setTotal(page.getTotal());
 		response.setRows(list);		
 		return response;

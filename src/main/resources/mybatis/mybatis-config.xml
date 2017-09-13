@@ -83,6 +83,7 @@
        <mapper resource="mybatis/mapper/StaffInfoMapper.xml"/>
        <mapper resource="mybatis/mapper/DepartmentMapper.xml"/>
        <mapper resource="mybatis/mapper/SalaryDateMapper.xml"/>
+       <mapper resource="mybatis/mapper/CheckMessageMapper.xml"/>
     </mappers>
 
 

@@ -60,6 +60,10 @@
 <link
 	href="resources/bootstrap-datepicker/css/bootstrap-datepicker3.css"
 	rel="stylesheet">
+<script type="text/javascript">
+    var userLocked = ${sessionScope.user["locked"]}
+</script>
+	
 </head>
 <body>
 
@@ -79,7 +83,7 @@
 			<ul class="nav navbar-nav navbar-right">
 
 
-				<li><a href="#">欢迎：caoxingyu</a></li>
+				<li><a href="#">欢迎：${sessionScope.user.fullName}</a></li>
 				<li><a href="logout">退出</a></li>
 			</ul>
 

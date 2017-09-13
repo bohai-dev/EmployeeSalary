@@ -1,17 +1,11 @@
 package com.bohai.employeeSalary.util;
 
 import java.io.File;
-import java.io.OutputStream;
 import java.util.Date;
-import java.util.List;
-import java.util.Properties;
 
-import javax.activation.DataSource;
 import javax.mail.MessagingException;
-import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-import org.springframework.core.io.InputStreamSource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;

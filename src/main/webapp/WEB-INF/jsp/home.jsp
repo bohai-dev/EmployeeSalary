@@ -35,6 +35,10 @@
     <script src="resources/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js"></script>
    
     <script type="text/javascript" src="resources/js/home.js"></script>
+    
+    <script type="text/javascript">
+    var userLocked = ${sessionScope.user["locked"]}
+    </script>
 </head>
 <body>
 
@@ -53,7 +57,7 @@
           <ul class="nav navbar-nav navbar-right">       
             
             
-            <li><a href="#">欢迎：caoxingyu</a></li>
+            <li><a href="#">欢迎：${sessionScope.user.fullName}</a></li>
             <li><a href="logout">退出</a></li>
           </ul>
          
@@ -126,6 +130,51 @@
           </div>
 
 
+<div class="panel-group" id="panel-642522">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						 <a class="panel-title" data-toggle="collapse" data-parent="#panel-642522" href="#panel-element-334090">审核信息状态详情</a>
+					</div>
+					<div id="panel-element-334090" class="panel-collapse in">
+						<div class="panel-body">
+				<table id="submittercheckMessageTable"
+                   class="table table-striped"
+                   data-toggle="table" 
+                   data-toolbar="#toolbar"
+                   data-show-refresh="true"
+                   data-show-toggle="true"
+                   data-show-columns="true"
+                   data-show-export="true"
+                   data-detail-view="false"
+                   data-detail-formatter="detailFormatter"
+                   data-height="562"
+                   data-url="queryCheckMessagesBySubmitter"
+                   data-pagination="true"
+                   data-method="post"
+                   data-page-list="[5, 10, 20, 50]"
+                   data-search="true">
+                <thead>
+                <tr>
+                    <!-- <th data-field="state" data-checkbox="true"></th> -->
+                    <th data-field="id" data-align="center" data-formatter="idFormatter">序号</th>
+                    <th data-field="staffNumber" data-align="center" >员工编号</th>
+                    <th data-field="name" data-align="center" >员工姓名</th>
+                    <th data-field="departmentName" data-align="center">所属部门</th>
+                    <th data-field="positionSalary" data-align="center" >岗位工资</th>
+                    <th data-field="skillSalary" data-align="center">技能工资</th>
+                    <th data-field="workYears" data-align="center" >司龄工资</th>
+                    <th data-field="isProbation" data-align="center" data-formatter="probationFormatter">员工类型</th>
+                    <th data-field="isLeave" data-align="center" data-formatter="LeaveFormatter">员工状态</th>
+                    <th data-field="submitType" data-align="center" data-formatter="submitTypeFormatter">审批类型</th>
+                    <th data-field="submitter" data-align="center">审批人</th>
+                    <th data-field="approvalOpinion" data-align="center">审核意见</th>
+                </tr>
+                </thead>
+            </table>
+						</div>
+					</div>
+				</div>
+			</div>
 
 
 			<h2 class="sub-header">客户基本信息</h2>
@@ -326,7 +375,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-            <button type="button" class="btn btn-primary" onclick="checkData()">保存</button>
+            <button type="button" class="btn btn-primary" onclick="checkData()">提交审核</button>
           </div>
         </div>
       </div>
@@ -493,7 +542,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-            <button type="button" class="btn btn-primary" onclick="checkData2()">保存</button>
+            <button type="button" class="btn btn-primary" onclick="checkData2()">提交审核</button>
           </div>
         </div>
       </div>

@@ -3,6 +3,9 @@ package com.bohai.employeeSalary.test;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+
+import com.bohai.employeeSalary.util.CommonUtils;
 
 
 public class TestClass {
@@ -28,10 +31,8 @@ public class TestClass {
 	/*	DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		String dateString = dateTimeFormatter.format(LocalDateTime.now());
 		System.out.println("日期转字符串: " + dateString);*/
-		String s="长春营业部2017年07月营销人员提成表";
-		String num=filterNumber(s);
-		System.out.println(num);
-
+		//计算个人所得税   ROUND(MAX(计税基数*5%*{0.6,2,4,5,6,7,9}-5*{0,21,111,201,551,1101,2701},0),2)		
+		//  System.out.println(CommonUtils.getPath());
 	}
 
 }

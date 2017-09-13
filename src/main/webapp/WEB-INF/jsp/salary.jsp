@@ -190,7 +190,7 @@
 					id="customerForm2">
 					<div class="col-sm-10 col-md-2  ">
 						<input class="btn btn-default  col-xs-7" type="button"
-							value="计算工资" onclick="calculateSalary()">
+							value="生成工资" onclick="calculateSalary()">
 					</div>
 
 					<div class="col-sm-10 col-md-2  ">
@@ -226,7 +226,8 @@
 				data-show-footer="true">
 				<thead>
 					<tr>
-						<th data-field="staffNumber" data-align="center"  data-footer-formatter="合计">员工编号</th>
+					    <th data-field="payDate" data-align="center"  data-footer-formatter="合计">日期</th>
+						<th data-field="staffNumber" data-align="center" >员工编号</th>
 						<th data-field="name" data-align="center">员工姓名</th>
 						<th data-field="depName" data-align="center">部门</th>
 						<th data-field="postionsSalary" data-align="center" data-footer-formatter="tbfooter0" data-formatter="numberFormate">岗位工资</th>
@@ -239,10 +240,11 @@
 						<th data-field="personalTotal" data-align="center" data-footer-formatter="tbfooter7" data-formatter="numberFormate">个人社保缴费合计</th>
 						<th data-field="housePersonalTotal" data-align="center" data-footer-formatter="tbfooter8" data-formatter="numberFormate">个人公积金缴费合计</th>
 						 <th data-field="incomeTax" data-align="center"  data-footer-formatter="tbfooter9" data-formatter="numberFormate">个人所得税</th>
-						<th data-field="salaryOther" data-align="right"
-							data-formatter="operationFormatter" data-footer-formatter="tbfooter10" >其他款项 &nbsp; &nbsp; &nbsp; &nbsp; </th>
+						<th data-field="salaryOther" data-align="center"
+							data-footer-formatter="tbfooter10" > &nbsp;其他款项 &nbsp; &nbsp;</th>
 						<th data-field="actualSalary" data-align="right"
-							data-formatter="salaryFormatter" data-footer-formatter="tbfooter11" >实发工资 &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</th>
+							data-formatter="salaryFormatter" data-footer-formatter="tbfooter11" >实发工资 &nbsp; &nbsp; &nbsp; </th>
+					    <th data-align="center" data-formatter="operateFormate">操作</th>
 					</tr>
 				</thead>
 			</table>
@@ -265,43 +267,162 @@
 					<button type="button" class="close" data-dismiss="modal">
 						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
 					</button>
-					<h4 class="modal-title" id="myModalLabel1">修改其他款项</h4>
-					<h5 class="modal-title">(正数表示增加款项，负数表示扣款)</h5>
+					<h4 class="modal-title" id="myModalLabel1">修改(正数表示增加款项，负数表示扣款)</h4>
+					
 				</div>	
 				<div class="modal-body">
 						<form class="form-horizontal" role="form">
 							<div class="form-group">
-								<label for="staffName" class="col-sm-3 control-label">姓名</label>
-								<div class="col-sm-8">
+								<label for="staffName" class="col-sm-4 control-label">姓名</label>
+								<div class="col-sm-7">
 									<input type="text" class="form-control" id="staffName"
 										placeholder="" readonly>
 								</div>
 							</div>
 							<div class="form-group">
-								<label for="departMentName" class="col-sm-3 control-label">部门</label>
-								<div class="col-sm-8">
+								<label for="departMentName" class="col-sm-4 control-label">部门</label>
+								<div class="col-sm-7">
 									<input type="text" class="form-control" id="departMentName"
 										placeholder="" readonly>
 								</div>
 							</div>
 							<div class="form-group">
-								<label for="month" class="col-sm-3 control-label">月份</label>
-								<div class="col-sm-8">
+								<label for="month" class="col-sm-4 control-label">月份</label>
+								<div class="col-sm-7">
 									<input type="text" class="form-control" id="month"
 										placeholder="" readonly="readonly">
 								</div>
 							</div>
+							<hr/>
+							<!--  -->
 							<div class="form-group">
-								<label for="mediatorName1" class="col-sm-3 control-label">其他款项</label>
-								<div class="col-sm-8">
+								<label  class="col-sm-4 control-label">个人缴纳养老保险</label>
+								<div class="col-sm-7">
+									<input type="text" class="form-control" id="pensionPersonal"
+										placeholder="">
+								</div>
+							</div>
+							<div class="form-group">
+								<label  class="col-sm-4 control-label">个人缴纳医疗保险</label>
+								<div class="col-sm-7">
+									<input type="text" class="form-control" id="medicalPersonal"
+										placeholder="">
+								</div>
+							</div>
+							<div class="form-group">
+								<label  class="col-sm-4 control-label">个人缴纳失业保险</label>
+								<div class="col-sm-7">
+									<input type="text" class="form-control" id="unemploymentPersonal"
+										placeholder="">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-4 control-label">个人备用条目1</label>
+								<div class="col-sm-7">
+									<input type="text" class="form-control" id="personalReserve1"
+										>
+								</div>
+							</div>
+							<div class="form-group">
+								<label  class="col-sm-4 control-label">个人备用条目2</label>
+								<div class="col-sm-7">
+									<input type="text" class="form-control" id="personalReserve2"
+										>
+								</div>
+							</div>
+							<hr/>
+							<div class="form-group">
+								<label  class="col-sm-4 control-label">公司缴纳养老保险</label>
+								<div class="col-sm-7">
+									<input type="text" class="form-control" id="pensionCompany"
+										placeholder="">
+								</div>
+							</div>
+							<div class="form-group">
+								<label  class="col-sm-4 control-label">公司缴纳医疗保险</label>
+								<div class="col-sm-7">
+									<input type="text" class="form-control" id="medicalCompany"
+										placeholder="">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-4 control-label">公司缴纳失业保险</label>
+								<div class="col-sm-7">
+									<input type="text" class="form-control" id="unemploymentCompany"
+										placeholder="">
+								</div>
+							</div>
+							<div class="form-group">
+								<label  class="col-sm-4 control-label">公司缴纳工伤保险</label>
+								<div class="col-sm-7">
+									<input type="text" class="form-control" id="injuryCompany"
+										placeholder="">
+								</div>
+							</div>
+							<div class="form-group">
+								<label  class="col-sm-4 control-label">公司缴纳生育保险</label>
+								<div class="col-sm-7">
+									<input type="text" class="form-control" id="birthCompany"
+										placeholder="">
+								</div>
+							</div>
+							<div class="form-group">
+								<label  class="col-sm-4 control-label">公司备用条目1</label>
+								<div class="col-sm-7">
+									<input type="text" class="form-control" id="companyReserve1"
+										>
+								</div>
+							</div>
+							<div class="form-group">
+								<label  class="col-sm-4 control-label">公司备用条目2</label>
+								<div class="col-sm-7">
+									<input type="text" class="form-control" id="companyReserve2"
+										>
+								</div>
+							</div>
+							<hr/>
+							<div class="form-group">
+								<label  class="col-sm-4 control-label">公积金个人缴纳基本</label>
+								<div class="col-sm-7">
+									<input type="text" class="form-control" id="houseBasePersonal"
+										placeholder="">
+								</div>
+							</div>
+							<div class="form-group">
+								<label  class="col-sm-4 control-label">公积金个人缴纳补充</label>
+								<div class="col-sm-7">
+									<input type="text" class="form-control" id="houseSupplyPersonal"
+										placeholder="">
+								</div>
+							</div>
+							
+							<div class="form-group">
+								<label for="mediatorName1" class="col-sm-4 control-label">公积金公司缴纳基本</label>
+								<div class="col-sm-7">
+									<input type="text" class="form-control" id="houseBaseCompany"
+										placeholder="">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="mediatorName1" class="col-sm-4 control-label">公积金公司缴纳补充</label>
+								<div class="col-sm-7">
+									<input type="text" class="form-control" id="houseSupplyCompany"
+										placeholder="">
+								</div>
+							</div>
+							
+							<hr/>
+							<div class="form-group">
+								<label for="mediatorName1" class="col-sm-4 control-label">其他款项</label>
+								<div class="col-sm-7">
 									<input type="text" class="form-control" id="otherSalary"
 										placeholder="">
 								</div>
 							</div>
 							<div class="form-group">
-								<label for="remark" class="col-sm-3 control-label">备注</label>
-								<div class="col-sm-8">
-									<input type="text" class="form-control" id="remark"
+								<label for="remark" class="col-sm-4 control-label">备注</label>
+								<div class="col-sm-7">
+									<input type="text" class="form-control" id="remark" 
 										placeholder="">
 								</div>
 							</div>

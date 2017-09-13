@@ -1,13 +1,16 @@
 package com.bohai.employeeSalary.service;
 
 import java.awt.Color;
-import java.io.FileNotFoundException;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
@@ -30,6 +33,7 @@ import org.springframework.stereotype.Service;
 import com.bohai.employeeSalary.controller.exception.BohaiException;
 import com.bohai.employeeSalary.dao.StaffSalaryMapper;
 import com.bohai.employeeSalary.entity.StaffSalary;
+import com.bohai.employeeSalary.util.ZipUtil;
 import com.bohai.employeeSalary.vo.QueryStaffSalaryParamVO;
 
 @Service("exportService")
@@ -50,26 +54,84 @@ public class exportSalaryService {
 	 * @return
 	 * @throws IOException 
 	 */
-	public int exportSalary(QueryStaffSalaryParamVO paramVo,HttpServletResponse response) throws BohaiException {  //paramVo:departNum(可为null) month不为null
+	public int exportSalary(QueryStaffSalaryParamVO paramVo,HttpServletRequest request,HttpServletResponse response) throws BohaiException {  //paramVo:departNum(可为null) month不为null
 		int count=0;
 		
+		String path=request.getSession().getServletContext().getRealPath("/")+"/savedFolder/";
+		File dirFile=new File(path);
+		if (!dirFile.exists()) {
+			if (dirFile.mkdirs()) {
+				System.out.println("文件夹创建成功！创建后的目录为"+dirFile.getPath());
+			}
+		}
 		if (paramVo.getDepNum()==null||paramVo.getDepNum()=="") { //部门为null，查询所有部门
+			List<File> fileList=new  ArrayList<File>();
 			List<String> departIds=salaryMapper.queryDepartIds();   //部门List
 			for(int i=0;i<departIds.size();i++) {
 				paramVo.setDepNum(departIds.get(i));
 				/*查询该部门该月份所有员工的信息*/
 				List<StaffSalary> salaryList=staffSalaryMapper.queryStaffSalaryByParams(paramVo);
-				exportSalary(salaryList,response);
-				count+=1;
 				
+				try {
+					XSSFWorkbook workbook=exportSalary(salaryList,response);
+					//FileOutputStream fos=new FileOutputStream(salaryList.get(0).getPayDate()+salaryList.get(0).getDepName()+"工资明细表");
+					File f = new File(path+salaryList.get(0).getPayDate()+salaryList.get(0).getDepName()+"工资明细表.xlsx");
+					workbook.write(new FileOutputStream(f)); 
+					fileList.add(f);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					throw new BohaiException("", "生成工资明细文件失败");
+				} 
+				count+=1;				
 			}
+			//输出压缩文件
+			try {
+	            OutputStream output=response.getOutputStream();
+	            response.reset();
+	            response.setContentType("application/zip");  
+	            response.setCharacterEncoding("UTF-8");  
+	            String fileName = new String(("各部门工资明细表").getBytes("UTF-8"),"ISO-8859-1");
+	            File zipFile=new File(path+"各部门工资明细表.zip");
+	          
+	            ZipUtil.zipFiles(fileList, zipFile);
+	            response.setHeader("Content-Disposition", "attachment;filename="+fileName+".zip");
+	            FileInputStream inputStream = new FileInputStream(zipFile);
+	            int length = 0;
+	            byte[] buf = new byte[1024];
+	            while ((length = inputStream.read(buf)) > 0) {	            	
+	            	    output.write(buf, 0, length);
+	            	    
+	                }
+	            output.flush();
+	            output.close();
+	        } catch (IOException e) {
+	        	logger.error("导出压缩文件失败",e);
+	        	System.out.println("导出压缩文件失败");
+	        	throw new BohaiException("", "导出压缩文件失败");
+	        }
 		}
 		
 		else {
 			
 			/*查询该部门该月份所有员工的信息*/
 			List<StaffSalary> salaryList=staffSalaryMapper.queryStaffSalaryByParams(paramVo);
-			exportSalary(salaryList,response);
+			XSSFWorkbook wb=exportSalary(salaryList,response);
+			
+			 try {
+		            OutputStream output=response.getOutputStream();
+		            response.reset();
+		            response.setContentType("application/x-xls");  
+		            response.setCharacterEncoding("UTF-8");  
+		            String FileName = new String((salaryList.get(0).getPayDate()+salaryList.get(0).getDepName()+"工资明细表").getBytes("UTF-8"),"ISO-8859-1");
+		            response.setHeader("Content-Disposition", "attachment;filename="+FileName+".xlsx");
+		            wb.write(output);  
+		            output.close(); 
+		        } catch (IOException e) {
+		        	logger.error("导出工资明细表失败",e);
+		        	System.out.println("导出工资明细表失败");
+		        	throw new BohaiException("", "导出工资明细表失败");
+		        }
 			count+=1;
 		}
 		
@@ -83,7 +145,7 @@ public class exportSalaryService {
  * @throws BohaiException 
   * @throws IOException
   */
-	public void exportSalary(List<StaffSalary> salaryList,HttpServletResponse response) throws BohaiException{   //一共20列   0-19
+	public XSSFWorkbook exportSalary(List<StaffSalary> salaryList,HttpServletResponse response) throws BohaiException{   //一共20列   0-19
 		 // FileOutputStream fos=new FileOutputStream("E:\\14.xls"); 
 		  String[] salaryHead1= {"序号","姓名","岗位工资","绩效工资","司龄","技能工资","应发工资","取暖补贴","扣款","实发工资","邮箱","备注"};  //length=12
 		  String[] salaryHead2= {"住房公积","养老保险","失业保险","医疗保险","补扣保险\n公积金","社保公积金\n代扣合计","计税基数","个人所得税","其他款项"};  //length=9
@@ -282,7 +344,7 @@ public class exportSalaryService {
 	     
 	      sheet.autoSizeColumn(18); 
 	      
-	        try {
+	    /*    try {
 	            OutputStream output=response.getOutputStream();
 	            response.reset();
 	            response.setContentType("application/x-xls");  
@@ -295,7 +357,8 @@ public class exportSalaryService {
 	        	logger.error("导出工资明细表失败",e);
 	        	System.out.println("导出工资明细表失败");
 	        	throw new BohaiException("", "导出工资明细表失败");
-	        }
+	        }*/
+	      return wb;
 	}
 	
 	

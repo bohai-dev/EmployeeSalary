@@ -301,4 +301,18 @@
    </where>
    ORDER BY a.STAFF_NUMBER
  </select>
+ 
+ <select id="selectByDepartmentId" parameterType="com.bohai.employeeSalary.vo.QueryStaffInfoParamVO" resultType="java.lang.String">
+    SELECT  distinct STAFF_NUMBER from STAFF_INFO
+   
+  <where>
+   <if test="departmentId !=null and departmentId !=''">
+    DEPARTMENT_ID=#{departmentId}  and
+   </if>
+   
+  IS_LEAVE='0'
+   </where>
+  
+ </select>
+ 
 </mapper>

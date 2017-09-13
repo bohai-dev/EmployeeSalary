@@ -1,18 +1,21 @@
 package com.bohai.employeeSalary.util;
 
 import java.io.File;
+import java.nio.file.Files;
+import java.util.Arrays;
+import java.util.List;
 
 public class ZipTest {
     
     public static void main(String[] args) {
         
-        File f = new File("C:/Users/BHQH-CXYWB/Desktop/期货合约代码对应改.xlsx");
+        File f = new File("C:/Users/cxy/Desktop/曹星昱.docx");
         
-        File f1 = new File("C:/Users/BHQH-CXYWB/Desktop/渤海期货股份有限公司OA系统评估报告.doc");
+        File f1 = new File("C:/Users/cxy/Desktop/工资表.xlsx");
         
-        File[] files = {f,f1};
+        List<File> files= Arrays.asList(f,f1);
         
-        File zipFile = new File("C:/123.zip");
+        File zipFile = new File("C:/Users/cxy/Desktop/test.zip");
         ZipUtil.zipFiles(files, zipFile);
     }
 

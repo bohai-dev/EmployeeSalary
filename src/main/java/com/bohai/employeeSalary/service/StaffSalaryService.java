@@ -15,10 +15,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bohai.employeeSalary.dao.SalaryDateMapper;
+import com.bohai.employeeSalary.dao.StaffInfoMapper;
 import com.bohai.employeeSalary.dao.StaffSalaryMapper;
 import com.bohai.employeeSalary.entity.StaffSalary;
 import com.bohai.employeeSalary.service.impl.SalaryUploadServiceImpl;
 import com.bohai.employeeSalary.util.CommonUtils;
+import com.bohai.employeeSalary.vo.QueryStaffInfoParamVO;
 import com.bohai.employeeSalary.vo.QueryStaffSalaryParamVO;
 
 
@@ -38,6 +40,9 @@ public class StaffSalaryService {
 	
 	@Autowired
 	SalaryDateMapper   dateMapper;
+	
+	@Autowired
+	StaffInfoMapper  staffInfoMapper;
 	
 	public String saveOrUpdate(StaffSalary staffSalary) {
 	 /*String staffNum=staffSalary.getStaffNumber();
@@ -70,8 +75,23 @@ public class StaffSalaryService {
         int count=0;
         /*查询该部门该月份所有员工的信息*/
         List<StaffSalary> salaryList=staffSalaryMapper.queryStaffSalaryByParams(paramVo);
-        for(int i=0;i<salaryList.size();i++) {
-        	StaffSalary salary=calculateSalary(salaryList.get(i));   //计算工资
+        
+        if (salaryList==null||salaryList.size()<=0) {     //没有该月份信息
+        	QueryStaffInfoParamVO vo=new QueryStaffInfoParamVO();
+        	vo.setDepartmentId(paramVo.getDepNum());
+        	List<String>  staffnums=staffInfoMapper.selectByDepartmentId(vo);    //查询该部门所有的员工编号
+        	for(int i=0;i<staffnums.size();i++) {
+        		StaffSalary staffSalary=new StaffSalary();
+        		staffSalary.setStaffNumber(staffnums.get(i));
+        		staffSalary.setPayDate(paramVo.getPayDate());
+        		staffSalary.setStaffDepartmentId(paramVo.getDepNum());
+        		saveOrUpdate(staffSalary);
+        	}
+		}
+        
+        List<StaffSalary> list=staffSalaryMapper.queryStaffSalaryByParams(paramVo);
+        for(int i=0;i<list.size();i++) {
+        	StaffSalary salary=calculateSalary(list.get(i));   //计算工资
            // salaryList.get(i).setActualSalary(salary+"");  //设置实发工资
             count+=staffSalaryMapper.updateByStaffNumAndDate(salary);
             
@@ -151,7 +171,12 @@ public class StaffSalaryService {
                     //当月试用期天数
                     int probationDays=dateMapper.countWorkDays(year+"", month+"", startDay+"", day+"");
                     //当月正式工作天数
-                    int formalDays=dateMapper.countWorkDays(year+"", month+"", Integer.parseInt(day)+1+"",31+"");
+                    String fDays=Integer.parseInt(day)+1+"";
+                    
+                    if(fDays.length()<=1) {
+                    	fDays="0"+fDays;
+                    }
+                    int formalDays=dateMapper.countWorkDays(year+"", month+"", fDays,31+"");
                     
                     posSalary=posSalary*0.8*probationDays/21.75+posSalary*formalDays/21.75;
                     
@@ -164,10 +189,11 @@ public class StaffSalaryService {
             if ("1".equals(isProbation)) {   //试用期员工在职
                 
                 String tempDate=CommonUtils.getYearMonthDay(salary.getProbationDateStart()); //试用期起始日期
-                if(salary.getPayDate().equals(tempDate.substring(0,7))){ //试用期员工入职当月  岗位工资=                    
+                String startDay=tempDate.split("-")[2];  //1-31  起始工作的天
+                if(salary.getPayDate().equals(tempDate.substring(0,7))&&!("01".equals(startDay))){ //试用期员工入职当月                
                     String year=tempDate.split("-")[0]; //获取试用期起始日期的年份
                     String month=tempDate.split("-")[1];  //获取试用期起始日期的月份
-                    String startDay=tempDate.split("-")[2];  //1-31  起始工作的天
+                   
                     int countWorkDays=dateMapper.countWorkDays(year, month, startDay,31+"");  //试用当月的工作天数                    
                     posSalary=posSalary*countWorkDays/21.75;
                 //    actualSalary=computeSalary(salary, posSalary);
@@ -197,6 +223,61 @@ public class StaffSalaryService {
      * @return  实发工资
      */
     public StaffSalary  computeSalary(StaffSalary salary,double postionSalary) {
+    	String sheBao="0.00";
+    	String house="0.00";
+    	QueryStaffSalaryParamVO vo=new QueryStaffSalaryParamVO();
+    	vo.setStaffNum(salary.getStaffNumber());
+    	List<StaffSalary> salaryList=staffSalaryMapper.queryStaffSalaryByParams(vo);
+    	for(StaffSalary staffSalary : salaryList) {
+    		 if (staffSalary.getPersonalTotal()!=null) {
+				//社保
+    			   sheBao=staffSalary.getPersonalTotal();  
+    			//公积金
+    			   house=staffSalary.getHousePersonalTotal();
+    			   
+    			   salary.setPayBase(staffSalary.getPayBase());
+    			   salary.setPensionPersonal(staffSalary.getPensionPersonal());
+    			   salary.setMedicalPersonal(staffSalary.getMedicalPersonal());
+    			   salary.setUnemploymentPersonal(staffSalary.getUnemploymentPersonal());
+    			   salary.setPensionPersonalPercent(staffSalary.getPensionPersonalPercent());
+    			   salary.setMedicalPersonalPercent(staffSalary.getMedicalPersonalPercent());
+    			   salary.setUnemploymentPersonalPercent(staffSalary.getUnemploymentPersonalPercent());
+    			   salary.setPersonalReserve1(staffSalary.getPersonalReserve1());
+    			   salary.setPersonalReserve2(staffSalary.getPersonalReserve2());
+    			   salary.setPensionCompany(staffSalary.getPensionCompany());
+    			   salary.setPensionCompanyPercent(staffSalary.getPensionPersonalPercent());
+    			   salary.setMedicalCompanyPercent(staffSalary.getMedicalCompanyPercent());
+    			   salary.setMedicalCompany(staffSalary.getMedicalCompany());
+    			   salary.setUnemploymentCompanyPercent(staffSalary.getUnemploymentCompanyPercent());
+    			   salary.setUnemploymentCompany(staffSalary.getUnemploymentCompany());
+    			   salary.setInjuryCompanyPercent(staffSalary.getInjuryCompanyPercent());
+    			   salary.setInjuryCompany(staffSalary.getInjuryCompany());
+    			   salary.setBirthCompayPercent(staffSalary.getBirthCompayPercent());
+    			   salary.setBirthCompany(staffSalary.getBirthCompany());
+    			   salary.setCompanyReserve1(staffSalary.getCompanyReserve1());
+    			   salary.setCompanyReserve2(staffSalary.getCompanyReserve2());
+    			   salary.setPersonalTotal(staffSalary.getPersonalTotal());
+    			   salary.setCompanyTotal(staffSalary.getCompanyTotal());
+    			   salary.setPaymentTotal(staffSalary.getPaymentTotal());
+    			   
+    			   salary.setHouseBasePersonalPercent(staffSalary.getHouseBasePersonalPercent());
+    			   salary.setHouseBasePersonal(staffSalary.getHouseBasePersonal());
+    			   salary.setHouseSupplyPersonalPercent(staffSalary.getHouseSupplyPersonalPercent());
+    			   salary.setHouseSupplyPersonal(staffSalary.getHouseSupplyPersonal());
+    			   salary.setHouseBaseCompany(staffSalary.getHouseBaseCompany());
+    			   salary.setHouseSupplyCompany(staffSalary.getHouseSupplyCompany());
+    			   salary.setHouseBaseCompanyPercent(staffSalary.getHouseBaseCompanyPercent());
+    			   salary.setHouseSupplyCompanyPercent(staffSalary.getHouseSupplyCompanyPercent());
+    			   salary.setHousePersonalTotal(staffSalary.getHousePersonalTotal());
+    			   salary.setHouseCompanyTotal(staffSalary.getHouseCompanyTotal());
+    			   salary.setHouseToatal(staffSalary.getHouseToatal());
+    			   salary.setStaffDepartmentId(staffSalary.getStaffDepartmentId());
+    			   
+    			   break;
+			}
+    		
+    		
+    	}
         //计算 应发工资=岗位工资*系数+绩效工资+司龄工资+技能工资
         
         double shouldSalary= postionSalary                           
@@ -207,9 +288,11 @@ public class StaffSalaryService {
 
         //计算计税基数=应发工资-社保公积金代扣合计+取暖补贴-3500
 
-		double taxBase=shouldSalary-Optional.ofNullable(salary.getPersonalTotal()).map(i->Double.valueOf(i)).orElse((double) 0)
+		/*double taxBase=shouldSalary-Optional.ofNullable(salary.getPersonalTotal()).map(i->Double.valueOf(i)).orElse((double) 0)
 				       -Optional.ofNullable(salary.getHousePersonalTotal()).map(i->Double.valueOf(i)).orElse((double) 0)
-				       +Optional.ofNullable(salary.getWarmSubsidy()).map(i->Double.valueOf(i)).orElse((double)0)-3500;
+				       +Optional.ofNullable(salary.getWarmSubsidy()).map(i->Double.valueOf(i)).orElse((double)0)-3500;*/
+        double taxBase=shouldSalary-Double.valueOf(sheBao)-Double.valueOf(house)
+			       +Optional.ofNullable(salary.getWarmSubsidy()).map(i->Double.valueOf(i)).orElse((double)0)-3500;
 		System.out.println("计税基数："+taxBase);
 		//计算个人所得税   ROUND(MAX(计税基数*5%*{0.6,2,4,5,6,7,9}-5*{0,21,111,201,551,1101,2701},0),2)		 
 		ArrayList<Double> tempList=new ArrayList<Double>();
@@ -224,15 +307,16 @@ public class StaffSalaryService {
 		
 		double tax=CommonUtils.getRound(CommonUtils.getMax(tempList));  //个人所得税
 		
-		//计算 实发工资=应发工资+取暖补贴-社保公积金代扣合计-个人所得税-其他扣款		
+		//计算 实发工资=应发工资+取暖补贴-社保公积金代扣合计-个人所得税+其他款项		
 		
 		double actualSalary=shouldSalary+Optional.ofNullable(salary.getWarmSubsidy()).map(i->Double.valueOf(i)).orElse((double)0)
-				            -Optional.ofNullable(salary.getPersonalTotal()).map(i->Double.valueOf(i)).orElse((double) 0)
-			                -Optional.ofNullable(salary.getHousePersonalTotal()).map(i->Double.valueOf(i)).orElse((double) 0)-tax
+				            -Double.valueOf(sheBao)
+			                -Double.valueOf(house)
+			                -tax
 				            +Optional.ofNullable(salary.getSalaryOther()).map(i->Double.valueOf(i)).orElse((double)0);
 		
 		salary.setActualSalary(CommonUtils.getRound(actualSalary)+"");  //设置实发工资
-		DecimalFormat    df   = new DecimalFormat("#.00");   //取两位小数，因可能为负数，所以未四舍五入   
+		DecimalFormat    df   = new DecimalFormat("0.00");   //取两位小数，因可能为负数，所以未四舍五入   
 		
 		salary.setGrossSalary(df.format(shouldSalary)+"");  //设置应发工资
 		salary.setIncomeTax(df.format(tax)+"");  //设置个人所得税

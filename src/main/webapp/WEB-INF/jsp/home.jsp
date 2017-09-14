@@ -351,9 +351,6 @@
                     <div class="col-sm-8">
                       <input type="text" class="form-control" id="workYears1" placeholder="">
                     </div>
-                      <div>
-                    		<p style="padding-top: 5px;">★</p>
-                    </div>
                   </div>
                   
                   <hr>
@@ -499,10 +496,7 @@
                     <label for="workYears2" class="col-sm-3 control-label">司龄工资</label>
                     <div class="col-sm-8">
                       <input type="text" class="form-control" id="workYears2" placeholder="">
-                    </div>
-                      <div>
-                    		<p style="padding-top: 5px;">★</p>
-                    </div>
+                    </div> 
                   </div>
                   
                   <hr>

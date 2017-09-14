@@ -23,6 +23,7 @@ import com.bohai.employeeSalary.entity.CheckMessage;
 import com.bohai.employeeSalary.entity.StaffInfo;
 import com.bohai.employeeSalary.entity.SysUser;
 import com.bohai.employeeSalary.service.StaffInfoService;
+import com.bohai.employeeSalary.vo.QueryCheckMessageParamVO;
 import com.bohai.employeeSalary.vo.QueryStaffInfoParamVO;
 import com.bohai.employeeSalary.vo.TableJsonResponse;
 import com.github.pagehelper.Page;
@@ -137,5 +138,12 @@ public class StaffInfoController {
 		Subject currentUser = SecurityUtils.getSubject();
         String userName=((SysUser)currentUser.getSession().getAttribute("user")).getFullName();
         return this.checkMessageMapper.selectBySubmitter(userName);
+	}
+	
+	@RequestMapping("queryCheckMessageByCondition")
+	@ResponseBody
+	public List<CheckMessage> queryCheckMessageByCondition(@RequestBody(required=true) QueryCheckMessageParamVO paramVO){
+		List<CheckMessage> list=this.checkMessageMapper.selectByCheckCondition(paramVO);
+		return list;	
 	}
 }

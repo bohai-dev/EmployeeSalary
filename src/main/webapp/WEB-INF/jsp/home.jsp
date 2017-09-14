@@ -133,10 +133,56 @@
 <div class="panel-group" id="panel-642522">
 				<div class="panel panel-default">
 					<div class="panel-heading">
-						 <a class="panel-title" data-toggle="collapse" data-parent="#panel-642522" href="#panel-element-334090">审核信息状态详情</a>
+						 <a class="panel-title" data-toggle="collapse" data-parent="#panel-642522" href="#collapse">审核信息状态详情</a>
 					</div>
-					<div id="panel-element-334090" class="panel-collapse in">
+					<div id="collapse" class="accordion-body collapse">
 						<div class="panel-body">
+				
+      <div class="row placeholders">
+            
+            <!-- 查询条件表单 -->
+                      <form id="queryForm2" method="post" action="exportCustomer" enctype="application/json;charset=UTF-8" class="form-horizontal" style="margin-top: 30px">
+                          <div class="form-group">  
+                                <label for="depName3" class="col-sm-2 col-md-1 control-label">归属部门</label>
+                                <div class="col-sm-10 col-md-2">
+                                  <select class="selectpicker form-control" id="depName3" data-live-Search="true" name="depname3">
+                                    </select>
+                                </div>
+
+                                <label for="staffNumber3" class="col-sm-2 col-md-1 control-label">员工编号</label>
+                                <div class="col-sm-10 col-md-2">
+                                  <input type="text" class="form-control" id="staffNumber3" name="investorName">
+                                </div>
+                                <label for="name3" class="col-sm-2 col-md-1 control-label">员工姓名</label>
+                                <div class="col-sm-10 col-md-2">
+                                  <input type="text" class="form-control" id="name3" name="investorName">
+                                </div>
+
+                          </div>
+                          <div class="form-group">
+                               
+                                 <label for="tage" class="col-sm-2 col-md-1 control-label">审核状态</label>
+                                <div class="col-sm-10 col-md-2">
+                                 <select class="selectpicker form-control" id="tage">
+                      	   	 			<option value=""> </option>
+                          				<option value="0">等待审核</option>
+                          				<option value="1">通过审核</option>
+                          				<option value="2">拒绝审核</option>
+                      				</select>
+                                </div>
+                          </div>
+                          
+                          <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10 col-md-2 col-md-offset-4 ">
+                              <input class="btn btn-default col-xs-7" type="button" value="查询" onclick="queryCheckMessageByCondition()">
+                            </div>
+                           <!-- <div class=" col-sm-10 col-md-2 ">
+                              <input class="btn btn-default col-xs-7" type="button" value="导出" onclick="exportStaffInfo()">
+                            </div> --> 
+                          </div>
+                      </form>
+                      <!-- 查询条件表单结束 -->
+          </div>
 				<table id="submittercheckMessageTable"
                    class="table table-striped"
                    data-toggle="table" 
@@ -168,6 +214,7 @@
                     <th data-field="submitType" data-align="center" data-formatter="submitTypeFormatter">审批类型</th>
                     <th data-field="submitter" data-align="center">审批人</th>
                     <th data-field="approvalOpinion" data-align="center">审核意见</th>
+                     <th data-field="tage" data-align="center" data-formatter="tageFormatter">审核状态</th>
                 </tr>
                 </thead>
             </table>

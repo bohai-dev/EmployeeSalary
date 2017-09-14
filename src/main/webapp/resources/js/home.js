@@ -97,6 +97,8 @@ $(function(){
 	                 $('#depName1').selectpicker('refresh'); 
 	                 $('#depName2').html(optionString);
 	                 $('#depName2').selectpicker('refresh'); 
+	                 $('#depName3').html(optionString);
+	                 $('#depName3').selectpicker('refresh'); 
 	            }
 	        });
 	    });
@@ -109,6 +111,13 @@ $(function(){
                queryByCondition();
            }
        });
+	    $("#queryForm2").keypress(function(e){
+	           var eCode = e.keyCode ? e.keyCode : e.which ? e.which : e.charCode;
+	           if (eCode == 13){
+	               
+	               queryCheckMessageByCondition();
+	           }
+	       });
    });
    
 /*------------------------------------------------------------------------------------------------*/ 
@@ -178,7 +187,17 @@ $(function(){
 	  }
 	  return result;
   }
-  
+  function tageFormatter(vaule,row,index){
+	  var result=row.tage;
+	  if(result=="0"){
+		  result="待审核";
+	  }else if(result=="1"){
+		  result="审核通过";
+	  }else if(result=="2"){
+		  result="拒绝审核";
+	  }
+	  return result;
+  }
 /*------------------------------------------------------------------------------------------------*/   
 
 
@@ -399,6 +418,19 @@ function submitStaffInfo(){
  
 /*------------------------------------------------------------------------------------------*/   
 
-  
+//按条件查询
+  function  queryCheckMessageByCondition(){
+  	$('#submittercheckMessageTable').bootstrapTable('refresh',{
+  		url:"queryCheckMessageByCondition",
+  					query:{
+  						departmentId:$('#depName3').val(),
+  						staffNumber:$('#staffNumber3').val(),
+  						name:$('#name3').val(),
+  						tage:$('#tage').val(),
+  						submitType:$('#submitType').val()
+  					}
+  				}
+  		);
+  }
    
    

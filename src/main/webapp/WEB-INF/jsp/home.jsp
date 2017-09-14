@@ -157,7 +157,6 @@
                                 <div class="col-sm-10 col-md-2">
                                   <input type="text" class="form-control" id="name3" name="investorName">
                                 </div>
-
                           </div>
                           <div class="form-group">
                                

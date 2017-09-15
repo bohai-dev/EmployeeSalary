@@ -402,9 +402,6 @@
                     <div class="col-sm-8">
                       <input type="text" class="form-control" id="email1" placeholder="">
                     </div>
-                     <div>
-                    		<p style="padding-top: 5px;">★</p>
-                    </div>
                   </div>
                   
                
@@ -566,9 +563,7 @@
                     <div class="col-sm-8">
                       <input type="text" class="form-control" id="email2" placeholder="">
                     </div>
-                     <div>
-                    		<p style="padding-top: 5px;">★</p>
-                    </div>
+                   
                   </div>
                   
                

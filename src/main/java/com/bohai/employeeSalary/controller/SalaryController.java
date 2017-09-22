@@ -40,7 +40,7 @@ import com.bohai.employeeSalary.vo.TableJsonResponse;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 
-@RestController
+@Controller
 public class SalaryController{
 	
 	@Autowired

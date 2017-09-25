@@ -109,7 +109,7 @@
 						id="finput1" type="file" class="file" multiple>
 					<script type="text/javascript">
                     $("#finput1").fileinput({
-                        language: 'zh',
+                       language: 'zh',
                         uploadAsync: true,
                         uploadUrl: "salaryFileUpload", //异步上传地址
                         maxFileCount: 10,//最大上传文件数限制

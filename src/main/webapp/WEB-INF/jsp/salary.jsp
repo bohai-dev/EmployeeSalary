@@ -120,6 +120,10 @@
                         allowedFileExtensions: ["xls", "xlsx"]  //接收的文件后缀 
                         //previewFileIcon: "<i class='glyphicon glyphicon-king'></i>" //选择文件后缩略图
                     }); 
+                    
+                    $("#finput1").on("fileuploaded", function (event, data, previewId, index) {
+                    	 $('#salaryTable').bootstrapTable('refresh');
+                    });
                  </script>
 				</div>
 				<div class="col-sm-9 col-md-4">
@@ -413,7 +417,21 @@
 							
 							<hr/>
 							<div class="form-group">
-								<label for="mediatorName1" class="col-sm-4 control-label">其他款项</label>
+								<label  class="col-sm-4 control-label">绩效工资</label>
+								<div class="col-sm-7">
+									<input type="text" class="form-control" id="achiementSalary"
+										placeholder="">
+								</div>
+							</div>
+							<div class="form-group">
+								<label  class="col-sm-4 control-label">取暖补贴</label>
+								<div class="col-sm-7">
+									<input type="text" class="form-control" id="warmSubsidy"
+										placeholder="">
+								</div>
+							</div>
+							<div class="form-group">
+								<label  class="col-sm-4 control-label">其他款项</label>
 								<div class="col-sm-7">
 									<input type="text" class="form-control" id="otherSalary"
 										placeholder="">

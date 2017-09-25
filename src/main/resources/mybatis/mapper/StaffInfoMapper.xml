@@ -309,8 +309,12 @@
    <if test="departmentId !=null and departmentId !=''">
     DEPARTMENT_ID=#{departmentId}  and
    </if>
+   IS_LEAVE='0' 
+    <if test="leaveDate !=null and leaveDate !=''">
+     or   to_char(LEAVE_DATE,'yyyy-mm')=#{leaveDate} 
+   </if>
    
-  IS_LEAVE='0'
+  
    </where>
   
  </select>

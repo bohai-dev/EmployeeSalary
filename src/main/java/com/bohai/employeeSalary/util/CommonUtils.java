@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import com.mysql.fabric.xmlrpc.base.Array;
 
@@ -39,30 +40,28 @@ public  class CommonUtils {
 	 
 	 
 	 /**
-	  * 得到一个double类型数组中的最大值
+	  * 得到一个BigDecimal类型数组中的最大值
 	  * @param list
 	  * @return
 	  */
-	 public static double getMax(ArrayList<Double> list) {
-		 double max=list.get(0);
+	 public static BigDecimal getMax(List<BigDecimal> list) {
+		 BigDecimal max=list.get(0);
 		 for(int i=1;i<list.size();i++) {
-			 if(list.get(i)>max) {
-				 max=list.get(i);
-			 }
+			 max=max.max(list.get(i));
 		 }
 		 
 		 return max;
 		 
 	 }
 	 /**
-	  * 对一个double数字进行四舍五入，并保留两位小数
+	  * 对一个BigDecimal数字进行四舍五入，并保留两位小数
 	  * @return
 	  */
-	 public static double getRound(double d) {
+	 public static BigDecimal getRound(BigDecimal money) {
 			 
-			BigDecimal  b=new BigDecimal(d);  
-			double num =b.setScale(2,RoundingMode.UP).doubleValue();  
-		    return num;
+		//	BigDecimal  b=new BigDecimal(d);  
+		    money=money.setScale(2,RoundingMode.HALF_UP);  
+		    return money;
 	 }
 	 
 	 /**

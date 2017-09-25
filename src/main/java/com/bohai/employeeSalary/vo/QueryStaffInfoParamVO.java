@@ -16,7 +16,8 @@ public class QueryStaffInfoParamVO extends PaginationParamVO{
 	private String isProbation;
 	
 	private String isLeave;
-
+	
+    private String leaveDate;
 	
 
 	public String getDepartmentId() {
@@ -57,6 +58,14 @@ public class QueryStaffInfoParamVO extends PaginationParamVO{
 
 	public void setIsLeave(String isLeave) {
 		this.isLeave = isLeave;
+	}
+
+	public String getLeaveDate() {
+		return leaveDate;
+	}
+
+	public void setLeaveDate(String leaveDate) {
+		this.leaveDate = leaveDate;
 	}
 	
 	

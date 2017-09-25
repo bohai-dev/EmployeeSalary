@@ -1,6 +1,7 @@
 package com.bohai.employeeSalary.service;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -69,9 +70,7 @@ public class StaffSalaryService {
      * @return
      */
     public int updateSalary(QueryStaffSalaryParamVO paramVo) {
-        /*QueryStaffSalaryParamVO paramVo=new QueryStaffSalaryParamVO();
-        paramVo.setDepNum(depNum);
-        paramVo.setPayDate(month);*/
+     
         int count=0;
         /*查询该部门该月份所有员工的信息*/
         List<StaffSalary> salaryList=staffSalaryMapper.queryStaffSalaryByParams(paramVo);
@@ -79,6 +78,7 @@ public class StaffSalaryService {
         if (salaryList==null||salaryList.size()<=0) {     //没有该月份信息
         	QueryStaffInfoParamVO vo=new QueryStaffInfoParamVO();
         	vo.setDepartmentId(paramVo.getDepNum());
+        	vo.setLeaveDate(paramVo.getPayDate());
         	List<String>  staffnums=staffInfoMapper.selectByDepartmentId(vo);    //查询该部门所有的员工编号
         	for(int i=0;i<staffnums.size();i++) {
         		StaffSalary staffSalary=new StaffSalary();
@@ -102,8 +102,10 @@ public class StaffSalaryService {
     /*计算某员工的工资*/
     public StaffSalary calculateSalary(StaffSalary salary) {
         
-        double posSalary= Double.valueOf(Optional.ofNullable(salary.getPositionSalary()).orElse("0")) *Double.valueOf(Optional.ofNullable(salary.getCoefficeient()).orElse("0"));  //岗位工资*系数
-        double actualSalary=0;    //实发工资
+        BigDecimal posSalary= new BigDecimal(Optional.ofNullable(salary.getPositionSalary()).orElse("0.00"))
+        		              .multiply(new BigDecimal(Optional.ofNullable(salary.getCoefficeient()).orElse("0.00"))); //岗位工资*系数
+       
+        BigDecimal actualSalary=new BigDecimal("0.00");    //实发工资
         String isLeave=salary.getIsLeave();   //是否离职
         if("1".equals(isLeave)) {   //离职员工
             Date leaveDate=salary.getLeaveDate();    //获取到离职日期
@@ -124,13 +126,16 @@ public class StaffSalaryService {
                      int proDays=dateMapper.countWorkDays(tempDate.split("-")[0], tempDate.split("-")[1], startDay,formalDay);
                      //正式工作的天数
                      int formalDays=dateMapper.countWorkDays(tempDate.split("-")[0], tempDate.split("-")[1], formalDay,leaveDay);
-                     posSalary=posSalary*0.8*proDays/21.75+posSalary*formalDays/21.75;
+                     //posSalary=posSalary*0.8*proDays/21.75+posSalary*formalDays/21.75;
+                     posSalary=(posSalary.multiply(new BigDecimal("0.8")).multiply(new BigDecimal(proDays)).divide(new BigDecimal("21.75"),2,RoundingMode.HALF_UP))
+                    		 .add(posSalary.multiply(new BigDecimal(formalDays)).divide(new BigDecimal("21.75"),2,RoundingMode.HALF_UP));
                     
                     
                 }else {   //普通正式员工离职
                      String[] dateArray=CommonUtils.getYearMonthDay(leaveDate).split("-");                    
                      int workDays=dateMapper.countWorkDays(dateArray[0], dateArray[1], "01", dateArray[2]);
-                     posSalary=posSalary*workDays/21.75;
+                     //posSalary=posSalary*workDays/21.75;
+                     posSalary=posSalary.multiply(new BigDecimal(workDays)).divide(new BigDecimal("21.75"),2,RoundingMode.HALF_UP);
                 }
                 
             }
@@ -147,8 +152,8 @@ public class StaffSalaryService {
                 }
                 
                  int workDays=dateMapper.countWorkDays(leaDate.split("-")[0], leaDate.split("-")[1], startDay, leaDate.split("-")[2]);
-                 posSalary=posSalary*workDays/21.75;
-                
+                // posSalary=posSalary*workDays/21.75;
+                posSalary=posSalary.multiply(new BigDecimal(workDays)).divide(new BigDecimal("21.75"),2,RoundingMode.HALF_UP);
                 
             }
         
@@ -168,17 +173,22 @@ public class StaffSalaryService {
                     if (formalDate.substring(0,7).equals(CommonUtils.getYearMonth(salary.getProbationDateStart()))) { //试用期的年月和转正的年月相等  也就是说入职当月转正
                          startDay=CommonUtils.getYearMonthDay(salary.getProbationDateStart()).split("-")[2];
                     }
-                    //当月试用期天数
-                    int probationDays=dateMapper.countWorkDays(year+"", month+"", startDay+"", day+"");
-                    //当月正式工作天数
-                    String fDays=Integer.parseInt(day)+1+"";
                     
-                    if(fDays.length()<=1) {
-                    	fDays="0"+fDays;
+                    String pDay=Integer.parseInt(day)-1+"";
+                    if(pDay.length()<=1) {
+                    	pDay="0"+pDay;
                     }
-                    int formalDays=dateMapper.countWorkDays(year+"", month+"", fDays,31+"");
+                    //当月试用期天数
+                    int probationDays=dateMapper.countWorkDays(year, month, startDay, pDay);
+                    //当月正式工作天数
+                   // String fDays=Integer.parseInt(day)+1+"";
                     
-                    posSalary=posSalary*0.8*probationDays/21.75+posSalary*formalDays/21.75;
+                   
+                    int formalDays=dateMapper.countWorkDays(year, month, day,"31");
+                    
+                  //  posSalary=posSalary*0.8*probationDays/21.75+posSalary*formalDays/21.75;
+                    posSalary=posSalary.multiply(new BigDecimal("0.8")).multiply(new BigDecimal(probationDays)).divide(new BigDecimal("21.75"),2,RoundingMode.HALF_UP)
+                    		  .add(posSalary.multiply(new BigDecimal(formalDays)).divide(new BigDecimal("21.75"),2,RoundingMode.HALF_UP));
                     
                     
                 }else {      //普遍情况: 在职正式员工 不用处理
@@ -194,8 +204,9 @@ public class StaffSalaryService {
                     String year=tempDate.split("-")[0]; //获取试用期起始日期的年份
                     String month=tempDate.split("-")[1];  //获取试用期起始日期的月份
                    
-                    int countWorkDays=dateMapper.countWorkDays(year, month, startDay,31+"");  //试用当月的工作天数                    
-                    posSalary=posSalary*countWorkDays/21.75;
+                    int countWorkDays=dateMapper.countWorkDays(year, month, startDay,"31");  //试用当月的工作天数                    
+                  //  posSalary=posSalary*countWorkDays/21.75;
+                    posSalary=posSalary.multiply(new BigDecimal(countWorkDays)).divide(new BigDecimal("21.75"),2,RoundingMode.HALF_UP);
                 //    actualSalary=computeSalary(salary, posSalary);
                     
                 }else {  //非首月试用期   试用期员工正常情况 不用处理
@@ -222,12 +233,13 @@ public class StaffSalaryService {
      * @param postionSalary 岗位工资
      * @return  实发工资
      */
-    public StaffSalary  computeSalary(StaffSalary salary,double postionSalary) {
+    public StaffSalary  computeSalary(StaffSalary salary,BigDecimal modPosSalary) {
+    	//modPosSalary= CommonUtils.getRound(modPosSalary);
     	String sheBao="0.00";
     	String house="0.00";
     	QueryStaffSalaryParamVO vo=new QueryStaffSalaryParamVO();
     	vo.setStaffNum(salary.getStaffNumber());
-    	List<StaffSalary> salaryList=staffSalaryMapper.queryStaffSalaryByParams(vo);
+    	List<StaffSalary> salaryList=staffSalaryMapper.queryStaffSalaryByParams(vo);   //查询到最近月份的工资信息
     	for(StaffSalary staffSalary : salaryList) {
     		 if (staffSalary.getPersonalTotal()!=null) {
 				//社保
@@ -280,10 +292,13 @@ public class StaffSalaryService {
     	}
         //计算 应发工资=岗位工资*系数+绩效工资+司龄工资+技能工资
         
-        double shouldSalary= postionSalary                           
-                            +Double.valueOf(Optional.ofNullable(salary.getAchiementSalary()).orElse("0"))
-                            +Double.valueOf(Optional.ofNullable(salary.getWorkYears()).orElse("0"))+Double.valueOf(Optional.ofNullable(salary.getSkillSalary()).orElse("0"));
+        BigDecimal shouldSalary= modPosSalary                           
+                                 .add(new BigDecimal(Optional.ofNullable(salary.getAchiementSalary()).orElse("0.00")))
+                                 .add(new BigDecimal(Optional.ofNullable(salary.getWorkYears()).orElse("0.00")))
+                                 .add(new BigDecimal(Optional.ofNullable(salary.getSkillSalary()).orElse("0.00")));
                                  
+        
+        shouldSalary=CommonUtils.getRound(shouldSalary);
         System.out.println("应发工资："+shouldSalary);
 
         //计算计税基数=应发工资-社保公积金代扣合计+取暖补贴-3500
@@ -291,39 +306,47 @@ public class StaffSalaryService {
 		/*double taxBase=shouldSalary-Optional.ofNullable(salary.getPersonalTotal()).map(i->Double.valueOf(i)).orElse((double) 0)
 				       -Optional.ofNullable(salary.getHousePersonalTotal()).map(i->Double.valueOf(i)).orElse((double) 0)
 				       +Optional.ofNullable(salary.getWarmSubsidy()).map(i->Double.valueOf(i)).orElse((double)0)-3500;*/
-        double taxBase=shouldSalary-Double.valueOf(sheBao)-Double.valueOf(house)
-			       +Optional.ofNullable(salary.getWarmSubsidy()).map(i->Double.valueOf(i)).orElse((double)0)-3500;
+        // double taxBase=shouldSalary-Double.valueOf(sheBao)-Double.valueOf(house)
+		//	       +Optional.ofNullable(salary.getWarmSubsidy()).map(i->Double.valueOf(i)).orElse((double)0)-3500;
+        BigDecimal taxBase=shouldSalary.subtract(new BigDecimal(sheBao)).subtract(new BigDecimal(house)).add(Optional.ofNullable(salary.getWarmSubsidy()).map(i->new BigDecimal(i)).orElse(new BigDecimal("0.00")))
+        		            .subtract(new BigDecimal(3500));
+        taxBase=CommonUtils.getRound(taxBase);
 		System.out.println("计税基数："+taxBase);
-		//计算个人所得税   ROUND(MAX(计税基数*5%*{0.6,2,4,5,6,7,9}-5*{0,21,111,201,551,1101,2701},0),2)		 
-		ArrayList<Double> tempList=new ArrayList<Double>();
-		tempList.add(taxBase*0.05*0.6-5*0);
-		tempList.add(taxBase*0.05*2-5*21);
-		tempList.add(taxBase*0.05*4-5*111);
-		tempList.add(taxBase*0.05*5-5*201);
-		tempList.add(taxBase*0.05*6-5*551);
-		tempList.add(taxBase*0.05*7-5*1101);
-		tempList.add(taxBase*0.05*9-5*2701);
-		tempList.add((double)0);
 		
-		double tax=CommonUtils.getRound(CommonUtils.getMax(tempList));  //个人所得税
+		//计算个人所得税   ROUND(MAX(计税基数*5%*{0.6,2,4,5,6,7,9}-5*{0,21,111,201,551,1101,2701},0),2)		 
+		ArrayList<BigDecimal> tempList=new ArrayList<BigDecimal>();
+	
+		tempList.add(new BigDecimal(taxBase.doubleValue()*0.05*0.6-5*0));
+		tempList.add(new BigDecimal(taxBase.doubleValue()*0.05*2-5*21));
+		tempList.add(new BigDecimal(taxBase.doubleValue()*0.05*4-5*111));
+		tempList.add(new BigDecimal(taxBase.doubleValue()*0.05*5-5*201));
+		tempList.add(new BigDecimal(taxBase.doubleValue()*0.05*6-5*551));
+		tempList.add(new BigDecimal(taxBase.doubleValue()*0.05*7-5*1101));
+		tempList.add(new BigDecimal(taxBase.doubleValue()*0.05*9-5*2701));
+		tempList.add(new BigDecimal("0.00"));
+		
+		BigDecimal tax=CommonUtils.getRound(CommonUtils.getMax(tempList));  //个人所得税
 		
 		//计算 实发工资=应发工资+取暖补贴-社保公积金代扣合计-个人所得税+其他款项		
 		
-		double actualSalary=shouldSalary+Optional.ofNullable(salary.getWarmSubsidy()).map(i->Double.valueOf(i)).orElse((double)0)
+		/*double actualSalary=shouldSalary+Optional.ofNullable(salary.getWarmSubsidy()).map(i->Double.valueOf(i)).orElse((double)0)
 				            -Double.valueOf(sheBao)
 			                -Double.valueOf(house)
 			                -tax
-				            +Optional.ofNullable(salary.getSalaryOther()).map(i->Double.valueOf(i)).orElse((double)0);
-		
+				            +Optional.ofNullable(salary.getSalaryOther()).map(i->Double.valueOf(i)).orElse((double)0);*/
+		BigDecimal actualSalary=shouldSalary.add(Optional.ofNullable(salary.getWarmSubsidy()).map(i->new BigDecimal(i)).orElse(new BigDecimal("0.00")))
+				               .subtract(new BigDecimal(sheBao)).subtract(new BigDecimal(house)).subtract(tax)
+				               .add(Optional.ofNullable(salary.getSalaryOther()).map(i->new BigDecimal(i)).orElse(new BigDecimal("0.00")));
+				               
 		salary.setActualSalary(CommonUtils.getRound(actualSalary)+"");  //设置实发工资
-		DecimalFormat    df   = new DecimalFormat("0.00");   //取两位小数，因可能为负数，所以未四舍五入   
+		 
 		
-		salary.setGrossSalary(df.format(shouldSalary)+"");  //设置应发工资
-		salary.setIncomeTax(df.format(tax)+"");  //设置个人所得税
-		salary.setTaxBase(df.format(taxBase)+"");  //设置缴费基数
-		salary.setPostionsSalary(Optional.ofNullable(salary.getPositionSalary()).orElse("0.00"));    //设置岗位工资
-		salary.setSkillsSalary(Optional.ofNullable(salary.getSkillSalary()).orElse("0.00"));     //设置技能工资
-		salary.setYearsSalary(Optional.ofNullable(salary.getWorkYears()).orElse("0.00"));      //设置司龄工资
+		salary.setGrossSalary(shouldSalary.toString());  //设置应发工资
+		salary.setIncomeTax(tax.toString());  //设置个人所得税
+		salary.setTaxBase(taxBase.toString());  //设置缴费基数
+		salary.setPostionsSalary(Optional.ofNullable(salary.getPositionSalary()).map(v->CommonUtils.getRound(new BigDecimal(v)).toString()).orElse("0.00"));    //设置岗位工资
+		salary.setSkillsSalary(Optional.ofNullable(salary.getSkillSalary()).map(v->CommonUtils.getRound(new BigDecimal(v)).toString()).orElse("0.00"));     //设置技能工资
+		salary.setYearsSalary(Optional.ofNullable(salary.getWorkYears()).map(v->CommonUtils.getRound(new BigDecimal(v)).toString()).orElse("0.00"));      //设置司龄工资
 		return  salary;
 	}	
 	

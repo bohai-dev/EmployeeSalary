@@ -16,7 +16,7 @@ $(function(){
             $('.selectpicker').selectpicker();
     	    
             //绑定初始化方法
-    	    $('.selectpicker').on('loaded.bs.select', function (e) {
+    	    $('#selectDepName').on('loaded.bs.select', function (e) {
     	        $.ajax({
     	            url: 'queryDepartment',
     	            type: 'post',
@@ -152,13 +152,11 @@ function updateSalary(){
 	       		houseBasePersonal:$("#houseBasePersonal").val(),
 	       		houseSupplyPersonal:$("#houseSupplyPersonal").val(),
 	       		houseBaseCompany:$("#houseBaseCompany").val(),
-	       		houseSupplyCompany:$("#houseSupplyCompany").val()       		
+	       		houseSupplyCompany:$("#houseSupplyCompany").val(),
+	       		warmSubsidy:$("#warmSubsidy").val(),
+	       		achiementSalary:$("#achiementSalary").val()      		
 	       		
-	       		
-	       		
-	       		
-	       		
-	            };
+	       	 };
 	        $.ajax({
 	            url: 'updateSalary',
 	            type: 'post',
@@ -178,7 +176,8 @@ function salaryFormatter(value,row,index) {
 	if(value==null){
 		value='0.00';
 	}
-    
+    value=value.replace(/(\d)(?=(\d{3})+\.)/g, '$1,') ; 
+
     var html = value+'&nbsp;&nbsp;<button type="button" id="cog'+index+'" class="btn btn-link btn-sm">查看详情'
                              + '</button>';
             
@@ -348,8 +347,9 @@ function exportSalary(){
 function exportDetail(){
 	//console.log($('#exportDepName').val());
 	//console.log($('#exportMonth').val());
-    if($('#payDate').val()==null||$('#payDate').val()==''||isNull($('#depNum').val())){
-    	alert('请选择月份和部门！');
+    if(isNull($("#payDate").val())){
+    	
+    	alert('请选择月份！');
     }
     
     else{ 
@@ -388,10 +388,30 @@ function isNull(value){
 
 function numberFormate(value,row,index) {
 	//console.log(value);
+	value=toDecimal(value);
 	if(!isNull(value)){
 		return (value+'').replace(/(\d)(?=(\d{3})+\.)/g, '$1,');//使用正则替换，每隔三个数加一个','  
 	}
 }
+
+//强制保留2位小数，如：2，会在2后面补上00.即2.00 
+function toDecimal(x) { 
+  var f = parseFloat(x); 
+  if (isNaN(f)) { 
+    return false; 
+  } 
+  var f = Math.round(x*100)/100; 
+  var s = f.toString(); 
+  var rs = s.indexOf('.'); 
+  if (rs < 0) { 
+    rs = s.length; 
+    s += '.'; 
+  } 
+  while (s.length <= rs + 2) { 
+    s += '0'; 
+  } 
+  return s; 
+} 
 
 //岗位工资合计
 function tbfooter0(data){

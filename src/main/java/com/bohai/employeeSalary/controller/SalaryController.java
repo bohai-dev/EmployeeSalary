@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,6 +26,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.bohai.employeeSalary.controller.exception.BohaiException;
 import com.bohai.employeeSalary.dao.StaffSalaryMapper;
@@ -108,12 +110,12 @@ public class SalaryController{
 	   double houseToatal=housePersonalTotal+houseCompanyTotal;
 
 	   
-	    staffSalary.setPersonalTotal(String.valueOf(CommonUtils.getRound(personalTotal)));
-		staffSalary.setCompanyTotal(String.valueOf(CommonUtils.getRound(companyTotal)));
-		staffSalary.setPaymentTotal(String.valueOf(CommonUtils.getRound(paymentTotal)));
-		staffSalary.setHousePersonalTotal(String.valueOf(CommonUtils.getRound(housePersonalTotal)));
-		staffSalary.setHouseCompanyTotal(String.valueOf(CommonUtils.getRound(houseCompanyTotal)));
-		staffSalary.setHouseToatal(String.valueOf(CommonUtils.getRound(houseToatal)));
+	    staffSalary.setPersonalTotal(String.valueOf(CommonUtils.getRound(new BigDecimal(personalTotal))));
+		staffSalary.setCompanyTotal(String.valueOf(CommonUtils.getRound(new BigDecimal(companyTotal))));
+		staffSalary.setPaymentTotal(String.valueOf(CommonUtils.getRound(new BigDecimal(paymentTotal))));
+		staffSalary.setHousePersonalTotal(String.valueOf(CommonUtils.getRound(new BigDecimal(housePersonalTotal))));
+		staffSalary.setHouseCompanyTotal(String.valueOf(CommonUtils.getRound(new BigDecimal(houseCompanyTotal))));
+		staffSalary.setHouseToatal(String.valueOf(CommonUtils.getRound(new BigDecimal(houseToatal))));
 		
 		
 		int count=StaffSalaryMapper.updateByStaffNumAndDate(staffSalary);  //更新其他款项	

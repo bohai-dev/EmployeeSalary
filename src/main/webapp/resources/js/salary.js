@@ -24,17 +24,20 @@ $(function(){
     	            success: function (data) {
     	                var len = data.length;
     	                var optionString = '';
-    	                optionString += "<option value=''> </option>";
+    	               /* optionString += "<option value=''> </option>";*/
     	                 for (i = 0; i < len; i++) {
     	                     optionString += "<option value=\'"+ data[i].depNumber +"\'>" + data[i].depName + "</option>";
     	                 }
     	                 
     	                 $('.selectpicker').html(optionString);
     	                 $('.selectpicker').selectpicker('refresh'); 
+    	                 
     	                
     	            }
     	        });
     	    });    
+    	    
+    	   
     	    
     	    /* 初始化datepicker */
             $('.month').datepicker({
@@ -48,6 +51,8 @@ $(function(){
                   autoclose: true,
                   todayHighlight: true
             });
+            
+            
             
             
           

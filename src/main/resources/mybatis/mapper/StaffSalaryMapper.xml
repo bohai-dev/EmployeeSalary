@@ -656,6 +656,14 @@
   	<if test="payDate !=null and payDate !=''">
   		AND a.PAY_DATE=#{payDate}   
   	</if>
+  	<if test="depNums !=null">
+  		AND a.STAFF_DEPARTMENT_ID in
+  		<foreach collection="depNums" item="item" open="(" separator="," close=")">
+  		   #{item} 
+  		</foreach>
+  		
+  		  
+  	</if>
   	 
   	</where>
   ORDER BY a.STAFF_DEPARTMENT_ID,PAY_DATE desc

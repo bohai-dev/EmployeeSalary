@@ -6,7 +6,9 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,6 +35,7 @@ import org.springframework.stereotype.Service;
 import com.bohai.employeeSalary.controller.exception.BohaiException;
 import com.bohai.employeeSalary.dao.StaffSalaryMapper;
 import com.bohai.employeeSalary.entity.StaffSalary;
+import com.bohai.employeeSalary.util.CommonUtils;
 import com.bohai.employeeSalary.util.ZipUtil;
 import com.bohai.employeeSalary.vo.QueryStaffSalaryParamVO;
 
@@ -64,7 +67,7 @@ public class exportSalaryService {
 				System.out.println("文件夹创建成功！创建后的目录为"+dirFile.getPath());
 			}
 		}
-		if (paramVo.getDepNum()==null||paramVo.getDepNum()=="") { //部门为null，查询所有部门
+		if (paramVo.getDepNums()==null||paramVo.getDepNums().isEmpty()) { //部门为null，查询所有部门
 			List<File> fileList=new  ArrayList<File>();
 			List<String> departIds=salaryMapper.queryDepartIds();   //部门List
 			for(int i=0;i<departIds.size();i++) {
@@ -123,7 +126,7 @@ public class exportSalaryService {
 		            response.reset();
 		            response.setContentType("application/x-xls");  
 		            response.setCharacterEncoding("UTF-8");  
-		            String FileName = new String((salaryList.get(0).getPayDate()+salaryList.get(0).getDepName()+"工资明细表").getBytes("UTF-8"),"ISO-8859-1");
+		            String FileName = new String((salaryList.get(0).getPayDate()+"工资明细表").getBytes("UTF-8"),"ISO-8859-1");
 		            response.setHeader("Content-Disposition", "attachment;filename="+FileName+".xlsx");
 		            wb.write(output);  
 		            output.close(); 
@@ -150,12 +153,13 @@ public class exportSalaryService {
 		  String[] salaryHead1= {"序号","姓名","岗位工资","绩效工资","司龄","技能工资","应发工资","取暖补贴","扣款","实发工资","邮箱","备注"};  //length=12
 		  String[] salaryHead2= {"住房公积","养老保险","失业保险","医疗保险","补扣保险\n公积金","社保公积金\n代扣合计","计税基数","个人所得税","其他款项"};  //length=9
 		  XSSFWorkbook wb = new XSSFWorkbook();
-	      XSSFSheet sheet=wb.createSheet(salaryList.get(0).getPayDate()+salaryList.get(0).getDepName());    //表名
+	      XSSFSheet sheet=wb.createSheet(salaryList.get(0).getPayDate()+"工资明细表");    //表名
 	      XSSFCellStyle style = wb.createCellStyle();
 	      XSSFFont font = wb.createFont(); 
 	      font.setBold(true);//粗体显示    
 	      font.setFontHeightInPoints((short) 16);//设置字体大小
 	      style.setFont(font);
+	      style.setAlignment(HorizontalAlignment.CENTER);  //字体居中
 		  XSSFCellStyle style3 = setStyle(wb.createCellStyle());   //表格内容的样式
 	      
 		  
@@ -172,9 +176,7 @@ public class exportSalaryService {
 	      CellRangeAddress cra=new CellRangeAddress(0, 0, 0, 19);   //合并第一行所有的列
 	      //在sheet里增加合并单元格  
 	      sheet.addMergedRegion(cra);    //第一行	     标题	    
-	      setRegionBorder(1, cra, sheet);
-	      cell_1.setCellValue(salaryList.get(0).getPayDate()+salaryList.get(0).getDepName()+"工资明细表");    //第一行标题  "2017年3月郑州部工资明细表"	     
-	      style=setStyle(style);
+	      cell_1.setCellValue(salaryList.get(0).getPayDate()+"工资明细表");    //第一行标题  "2017年3月工资明细表"	     
 	      cell_1.setCellStyle(style);
 	      
 		  XSSFCellStyle style1 = wb.createCellStyle();
@@ -183,10 +185,10 @@ public class exportSalaryService {
 	      style1.setAlignment(HorizontalAlignment.CENTER);
 	      style1.setFont(font2);
 	      style1=setStyle(style1);
-	      Row row1 = sheet.createRow(1);      //第二行表头	
+	      Row row1 = sheet.createRow(2);      //第二行表头	
 	      for(int i=0;i<8;i++) {
 	    	  Cell cell1=row1.createCell(i);
-	    	  CellRangeAddress cra1=new CellRangeAddress(1, 2, i, i);  
+	    	  CellRangeAddress cra1=new CellRangeAddress(2, 3, i, i);  
 	    	  sheet.addMergedRegion(cra1); 
 	    	  setRegionBorder(1,cra1,sheet);
 	    	
@@ -201,7 +203,7 @@ public class exportSalaryService {
 	     
 	      
 	      Cell cell2=row1.createCell(8);
-	      CellRangeAddress cra3=new CellRangeAddress(1, 1, 8, 16);     //扣款
+	      CellRangeAddress cra3=new CellRangeAddress(2, 2, 8, 16);     //扣款
     	  sheet.addMergedRegion(cra3); 
     	  setRegionBorder(1,cra3,sheet);
     	  cell2.setCellValue(salaryHead1[8]);
@@ -218,7 +220,7 @@ public class exportSalaryService {
 	      row1.createCell(18).setCellValue(salaryHead1[10]);  
 	      row1.createCell(19).setCellValue(salaryHead1[11]);
 	      for(int j=17;j<=19;j++) {
-	    	  CellRangeAddress cra2=new CellRangeAddress(1, 2, j, j); 
+	    	  CellRangeAddress cra2=new CellRangeAddress(2, 3, j, j); 
 	    	  sheet.addMergedRegion(cra2); 
 	    	  setRegionBorder(1,cra2,sheet);
 	      }
@@ -227,7 +229,7 @@ public class exportSalaryService {
 	      row1.getCell(19).setCellStyle(style1);
 	    
 	      
-	      Row row2 = sheet.createRow(2);      //第三行表头
+	      Row row2 = sheet.createRow(3);      //第三行表头
 	      row2.setHeight((short) (35 * 20));  
 	      for(int i=0;i<=19;i++) {
 	    	  if (i<8||i>16) {
@@ -247,7 +249,7 @@ public class exportSalaryService {
 	    		  
 	      //向表格中填入数据
 	      for(int j=0;j<salaryList.size();j++) {
-	    	  Row sheetRow= sheet.createRow(j+3);
+	    	  Row sheetRow= sheet.createRow(j+4);
 	    	  
 	    	  sheetRow.createCell(0).setCellValue(j+1);   //序号   Optional.ofNullable(salary.getAchiementSalary()).orElse("0")
 	    	  sheetRow.createCell(1).setCellValue(salaryList.get(j).getName());
@@ -293,30 +295,35 @@ public class exportSalaryService {
 	    
 	    	
 	      }
-	      Row totalRow= sheet.createRow(3+salaryList.size());   //合计行
+	      Row totalRow= sheet.createRow(4+salaryList.size());   //合计行
 	      totalRow.createCell(0).setCellValue(" ");
 	      totalRow.createCell(1).setCellValue("合计");
-	      totalRow.createCell(2).setCellValue(totalPostion+"");
-	      totalRow.createCell(3).setCellValue(totalAchieve+"");
-	      totalRow.createCell(4).setCellValue(totalYears+"");
-	      totalRow.createCell(5).setCellValue(totalSkill+"");
-	      totalRow.createCell(6).setCellValue(totalShould+"");
-	      totalRow.createCell(7).setCellValue(totalWarm+"");
-	      totalRow.createCell(8).setCellValue(totalHouse+"");
-	      totalRow.createCell(9).setCellValue(totalPension+"");
-	      totalRow.createCell(10).setCellValue(totalUnemployment+"");
-	      totalRow.createCell(11).setCellValue(totalMedical+"");
-	      totalRow.createCell(12).setCellValue(totalSupplyInsurance+"");
-	      totalRow.createCell(13).setCellValue(totalPersonal+"");
-	      totalRow.createCell(14).setCellValue(totalTaxBase+"");
-	      totalRow.createCell(15).setCellValue(totalTax+"");
-	      totalRow.createCell(16).setCellValue(totalOther+"");
-	      totalRow.createCell(17).setCellValue(totalActural+"");
+	      totalRow.createCell(2).setCellValue(CommonUtils.getRound(new BigDecimal(totalPostion)).toString());
+	      totalRow.createCell(3).setCellValue(CommonUtils.getRound(new BigDecimal(totalAchieve)).toString());
+	      totalRow.createCell(4).setCellValue(CommonUtils.getRound(new BigDecimal(totalYears)).toString());
+	      totalRow.createCell(5).setCellValue(CommonUtils.getRound(new BigDecimal(totalSkill)).toString());
+	      totalRow.createCell(6).setCellValue(CommonUtils.getRound(new BigDecimal(totalShould)).toString());
+	      totalRow.createCell(7).setCellValue(CommonUtils.getRound(new BigDecimal(totalWarm)).toString());
+	      totalRow.createCell(8).setCellValue(CommonUtils.getRound(new BigDecimal(totalHouse)).toString());
+	      totalRow.createCell(9).setCellValue(CommonUtils.getRound(new BigDecimal(totalPension)).toString());
+	      totalRow.createCell(10).setCellValue(CommonUtils.getRound(new BigDecimal(totalUnemployment)).toString());
+	      totalRow.createCell(11).setCellValue(CommonUtils.getRound(new BigDecimal(totalMedical)).toString());
+	      totalRow.createCell(12).setCellValue(CommonUtils.getRound(new BigDecimal(totalSupplyInsurance)).toString());
+	      totalRow.createCell(13).setCellValue(CommonUtils.getRound(new BigDecimal(totalPersonal)).toString());
+	      totalRow.createCell(14).setCellValue(CommonUtils.getRound(new BigDecimal(totalTaxBase)).toString());
+	      totalRow.createCell(15).setCellValue(CommonUtils.getRound(new BigDecimal(totalTax)).toString());
+	      totalRow.createCell(16).setCellValue(CommonUtils.getRound(new BigDecimal(totalOther)).toString());
+	      totalRow.createCell(17).setCellValue(CommonUtils.getRound(new BigDecimal(totalActural)).toString());
 	    
-	     
+	      CellRangeAddress subtitle=new CellRangeAddress(1, 1, 13, 15);     //副标题 日期和单位
+	      sheet.addMergedRegion(subtitle);
+	      
+	      Row subtitleRow=sheet.createRow(1);
+	      subtitleRow.createCell(13).setCellValue("日期："+CommonUtils.getYearMonthDay(new Date())); //日期
+	      subtitleRow.createCell(19).setCellValue("单位：元");
 	      
 	      
-	      Row lastRow= sheet.createRow(5+salaryList.size());
+	      Row lastRow= sheet.createRow(6+salaryList.size());
 	      lastRow.createCell(0).setCellValue("总经理:");
 	      lastRow.createCell(3).setCellValue("分管领导：");
 	      lastRow.createCell(7).setCellValue("财务总监：");
@@ -324,7 +331,7 @@ public class exportSalaryService {
 	      lastRow.createCell(13).setCellValue("营业部经理：");
 	      lastRow.createCell(16).setCellValue("制表人：");
 	      //设置内容行的边框
-	      for(int index=3;index<sheet.getLastRowNum();index++) {
+	      for(int index=4;index<sheet.getLastRowNum();index++) {
 	    	  
 	    	  for(int c=0;c<=19;c++) {
 	    		  

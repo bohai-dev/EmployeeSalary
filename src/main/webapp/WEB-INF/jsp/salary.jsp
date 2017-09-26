@@ -522,8 +522,8 @@
 							<div class="form-group">
 								<label for="exportDepName" class="col-sm-3 control-label">部门</label>
 								<div class="col-sm-8 col-md-4">
-									<select class="selectpicker form-control " name="depNum" id="depNum"
-										data-live-Search="true" >
+									<select class="selectpicker form-control " name="depNums" id="depNum" multiple
+										data-live-Search="true"  data-actions-box="true">
 
 									</select>
 								</div>

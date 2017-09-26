@@ -1,5 +1,7 @@
 package com.bohai.employeeSalary.vo;
 
+import java.util.List;
+
 public class QueryStaffSalaryParamVO extends PaginationParamVO{
 	
 	
@@ -7,6 +9,7 @@ public class QueryStaffSalaryParamVO extends PaginationParamVO{
 	private String depNum;
 	private String payDate;
 	private String staffName;
+	private List<String> depNums;
 	
 	public String getStaffName() {
 		return staffName;
@@ -31,6 +34,12 @@ public class QueryStaffSalaryParamVO extends PaginationParamVO{
 	}
 	public void setPayDate(String payDate) {
 		this.payDate = payDate;
+	}
+	public List<String> getDepNums() {
+		return depNums;
+	}
+	public void setDepNums(List<String> depNums) {
+		this.depNums = depNums;
 	}
 	
 	

@@ -4,9 +4,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import org.apache.log4j.Logger;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
@@ -25,9 +22,6 @@ import com.bohai.employeeSalary.entity.SysUser;
 import com.bohai.employeeSalary.service.StaffInfoService;
 import com.bohai.employeeSalary.vo.QueryCheckMessageParamVO;
 import com.bohai.employeeSalary.vo.QueryStaffInfoParamVO;
-import com.bohai.employeeSalary.vo.TableJsonResponse;
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
 
 
 
@@ -46,6 +40,11 @@ public class StaffInfoController {
 	@Autowired
 	private CheckMessageMapper checkMessageMapper;
 	
+	
+	@RequestMapping("tochangePw")
+	public String tochangePW(){
+		return "changePw";
+	}
 //	@RequestMapping("toStaffInfo")
 //	public String toStaffInfo(){
 //		return "home";

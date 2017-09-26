@@ -51,12 +51,20 @@
           </button>
           <a class="navbar-brand" href="#">渤海期货</a>
         </div>
-        <div id="navbar" class="navbar-collapse collapse">
+         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">       
             
             
-            <li><a href="#">欢迎：${sessionScope.user.fullName}</a></li>
-            <li><a href="logout">退出</a></li>
+            <li  class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">欢迎：${sessionScope.user.fullName}<strong class="caret"></strong></a>
+            <ul class="dropdown-menu">
+            <li>
+				 <a href="tochangePw">修改密码</a>
+			</li>
+			 <li><a href="logout">退出</a></li>
+			</ul>
+            </li>
+            
           </ul>
          
         </div>

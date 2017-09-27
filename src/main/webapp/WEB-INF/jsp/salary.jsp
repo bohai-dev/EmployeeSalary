@@ -43,7 +43,7 @@
 <!-- optionally if you need translation for your language then include 
         locale file as mentioned below -->
 <script src="resources/fileInput/js/locales/zh.js"></script>
-<script type="text/javascript" src="resources/js/salary.js"></script>
+<script type="text/javascript" src="resources/js/salary.js?<%=Math.random()%>"></script>
 <!-- table -->
 <link rel="stylesheet"
 	href="resources/bootstrap-table/bootstrap-table.css">

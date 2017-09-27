@@ -18,7 +18,7 @@
     <script type="text/javascript" src="resources/dist/js/bootstrapValidator.js"></script>
     <script type="text/javascript" src="resources/dist/js/language/zh_CN.js"></script>
     <script type="text/javascript" src="resources/tree/bootstrap-treeview.min.js"></script>
-    <script type="text/javascript" src="resources/js/changePw.js"></script>
+    <script type="text/javascript" src="resources/js/changePw.js?<%=Math.random()%>"></script>
     <script type="text/javascript">
     var userLocked = ${sessionScope.user["locked"]}
     </script>

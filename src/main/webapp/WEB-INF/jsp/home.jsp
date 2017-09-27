@@ -34,7 +34,7 @@
     <script src="resources/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
     <script src="resources/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js"></script>
    
-    <script type="text/javascript" src="resources/js/home.js"></script>
+    <script type="text/javascript" src="resources/js/home.js?<%=Math.random()%>"></script>
     
     <script type="text/javascript">
     var userLocked = ${sessionScope.user["locked"]}

@@ -24,13 +24,21 @@ $(function(){
     	            success: function (data) {
     	                var len = data.length;
     	                var optionString = '';
-    	               /* optionString += "<option value=''> </option>";*/
+    	                var optionStringNoSelectAll = '';
+    	                optionStringNoSelectAll += "<option value=''> </option>";
     	                 for (i = 0; i < len; i++) {
     	                     optionString += "<option value=\'"+ data[i].depNumber +"\'>" + data[i].depName + "</option>";
+    	                     optionStringNoSelectAll += "<option value=\'"+ data[i].depNumber +"\'>" + data[i].depName + "</option>";
     	                 }
     	                 
-    	                 $('.selectpicker').html(optionString);
-    	                 $('.selectpicker').selectpicker('refresh'); 
+    	                 $('#depNum').html(optionString);
+    	                 $('#depNum').selectpicker('refresh'); 
+    	                 
+    	                 $('#queryDepName').html(optionStringNoSelectAll);
+    	                 $('#queryDepName').selectpicker('refresh'); 
+    	                 
+    	                 $('#selectDepName').html(optionStringNoSelectAll);
+    	                 $('#selectDepName').selectpicker('refresh'); 
     	                 
     	                
     	            }

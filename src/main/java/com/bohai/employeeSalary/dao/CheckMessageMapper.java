@@ -67,4 +67,6 @@ public interface CheckMessageMapper {
 	List<CheckMessage> selectByCheckCondition(QueryCheckMessageParamVO paramVO);
 
 	List<CheckMessage> selectBySubmitter(String userName);
+	
+	List<CheckMessage> selectByStaffNumber(String staffNumber);
 }

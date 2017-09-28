@@ -265,6 +265,7 @@
                     <th data-field="workYears" data-align="center" >司龄工资</th>
                     <th data-field="isProbation" data-align="center" data-formatter="probationFormatter">员工类型</th>
                     <th data-field="isLeave" data-align="center" data-formatter="LeaveFormatter">员工状态</th>
+                    <th data-field="submitStatus" data-align="center" data-formatter="statusFormatter">是否已提交申请</th>
                     <th data-field="" data-formatter="operationFormatter">操作</th>
                 </tr>
                 </thead>

@@ -2,7 +2,9 @@ package com.bohai.employeeSalary.controller;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.apache.shiro.SecurityUtils;
@@ -67,7 +69,15 @@ public class StaffInfoController {
 	 * */
 	@RequestMapping(value="submitStaffInfo")   
 	 @ResponseBody
-	public void submitStaffInfo(@RequestBody(required = true) CheckMessage paramVO) throws BohaiException{		
+	public Map<String,String> submitStaffInfo(@RequestBody(required = true) CheckMessage paramVO) throws BohaiException{		
+		Map<String,String> map=new HashMap<String,String>();
+		List<CheckMessage> cm=this.checkMessageMapper.selectByStaffNumber(paramVO.getStaffNumber());
+		if(cm!=null){
+			System.out.println("你大爷的！");
+			map.put("status", "false");
+			return  map;
+		}
+		else{
 		//获取当前系统时间
 		long date=Calendar.getInstance().getTimeInMillis();
 		paramVO.setCreateTime(new Date(date));
@@ -82,6 +92,9 @@ public class StaffInfoController {
 		paramVO.setTage("0");
 		paramVO.setSubmitType("0");
 	    this.checkMessageMapper.insert(paramVO);
+	    map.put("status", "success");
+	    return map;
+		}
 	}
 	/**
 	 * 分页查询所有用户信息
@@ -128,6 +141,9 @@ public class StaffInfoController {
 					paramVO.setSubmitType("2");
 				}
 				 this.checkMessageMapper.insert(paramVO);
+				 StaffInfo staff=this.staffInfoMapper.selectByPrimaryKey(paramVO.getStaffNumber());
+				 staff.setSubmitStatus("0");
+				 this.staffInfoMapper.updateByPrimaryKey(staff);
 	}
 	
 	@RequestMapping("queryCheckMessagesBySubmitter")

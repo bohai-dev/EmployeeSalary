@@ -64,6 +64,7 @@ public class CheckMessageServiceImpl implements CheckMessageService{
 		staffInfo.setIsProbation(checkmessage.getIsProbation());
 		staffInfo.setCoefficeient(checkmessage.getCoefficeient());
 		staffInfo.setSkillSalary(checkmessage.getSkillSalary());
+		staffInfo.setSubmitStatus("1");
 		if(checkmessage.getSubmitType().equals("0")){
 		this.staffInfoMapper.insert(staffInfo);
 		}else{
@@ -83,6 +84,9 @@ public class CheckMessageServiceImpl implements CheckMessageService{
 		paramVO.setCheckTime(new Date(date));
 		paramVO.setTage("2");
 		this.checkMessageMapper.updateByPrimaryKeySelective(paramVO);
+		StaffInfo staff=this.staffInfoMapper.selectByPrimaryKey(paramVO.getStaffNumber());
+		staff.setSubmitStatus("1");
+		 this.staffInfoMapper.updateByPrimaryKey(staff);
 	}
 
 }

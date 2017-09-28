@@ -371,4 +371,16 @@
    
    ORDER BY a.TAGE
  </select>
+ 
+  <select id="selectByStaffNumber" parameterType="java.lang.String" resultMap="BaseResultMap">
+    SELECT 
+    <include refid="Base_Column_List" />
+    ,b.DEP_NAME 
+  FROM CHECK_MESSAGE a LEFT JOIN DEPARTMENT b ON a.DEPARTMENT_ID=b.DEP_NUMBER 
+  <where>
+   a.STAFF_NUMBER=#{staffNumber}
+   </where>
+   
+   ORDER BY a.TAGE
+ </select>
 </mapper>

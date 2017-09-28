@@ -198,6 +198,15 @@ $(function(){
 	  }
 	  return result;
   }
+  function statusFormatter(vaule,row,index){
+	  var result=row.submitStatus;
+	  if(result=="0"){
+		  result="是";
+	  }else if(result=="1"||result==null||result==""){
+		  result="否";
+	  }
+	  return result;
+  }
   
 /*------------------------------------------------------------------------------------------------*/   
 
@@ -354,8 +363,12 @@ function submitStaffInfo(){
          contentType: "application/json;charset=UTF-8",
          data: JSON.stringify(param),
          success: function (data,status) {
+        	 if(data["status"]=="false"){
+        		 alert("请勿重复提交新增员工申请信息");
+        	 }else if(data["status"]=="success"){
              $('#addModal').modal('hide');
              alert("信息以提交审核，请等待!");
+	        	 }
          }
     });
 }
@@ -398,15 +411,16 @@ function submitStaffInfo(){
 		$("#staffInfoTable").bootstrapTable('refresh', {
 			url : "queryStaffInfos",	
 			query : {
-				staffNumber:$('#staffNumber').val(),
+			staffNumber:$('#staffNumber').val(),
       		name:$('#name').val(),
       		departmentId:$('#departmentId').val(),
       		positionSalary:$('positionSalary').val(),
       		skillSalary:$('skillSalary').val(),
       		workYears:$('#workYears').val(),
       		isProbation:$('#isProbation').val(),
-              email:$('#email').val(),
-              remark:$('#remark').val()
+            email:$('#email').val(),
+            remark:$('#remark').val(),
+            submitStatus:$('#submitStatus').val()
 
 			}
 		});

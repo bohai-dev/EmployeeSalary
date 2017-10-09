@@ -258,7 +258,7 @@
                 <thead>
                 <tr>
                     <!-- <th data-field="state" data-checkbox="true"></th> -->
-                    <th data-field="staffNumber" data-align="center" >员工编号</th>
+                    <th data-field="staffNumber" data-align="center" data-sortable="true">员工编号</th>
                     <th data-field="name" data-align="center" >员工姓名</th>
                     <th data-field="departmentName" data-align="center">所属部门</th>
                     <th data-field="positionSalary" data-align="center" >岗位工资</th>

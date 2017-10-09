@@ -210,7 +210,7 @@
                 <tr>
                     <!-- <th data-field="state" data-checkbox="true"></th> -->
                     <th data-field="id" data-align="center" data-formatter="idFormatter">序号</th>
-                    <th data-field="staffNumber" data-align="center" >员工编号</th>
+                    <th data-field="staffNumber" data-align="center" data-sortable="true">员工编号</th>
                     <th data-field="name" data-align="center" >员工姓名</th>
                     <th data-field="departmentName" data-align="center">所属部门</th>
                     <th data-field="positionSalary" data-align="center" >岗位工资</th>
@@ -219,7 +219,8 @@
                     <th data-field="isProbation" data-align="center" data-formatter="probationFormatter">员工类型</th>
                     <th data-field="isLeave" data-align="center" data-formatter="LeaveFormatter">员工状态</th>
                     <th data-field="submitType" data-align="center" data-formatter="submitTypeFormatter">审批类型</th>
-                    <th data-field="submitter" data-align="center">审批人</th>
+                    <th data-field="submitter" data-align="center">提交人</th>
+                    <th data-field="checker" data-align="center">审批人</th>
                     <th data-field="approvalOpinion" data-align="center">审核意见</th>
                      <th data-field="tage" data-align="center" data-formatter="tageFormatter">审核状态</th>
                 </tr>
@@ -257,7 +258,7 @@
                 <thead>
                 <tr>
                     <!-- <th data-field="state" data-checkbox="true"></th> -->
-                    <th data-field="staffNumber" data-align="center" >员工编号</th>
+                    <th data-field="staffNumber" data-align="center" data-sortable="true">员工编号</th>
                     <th data-field="name" data-align="center" >员工姓名</th>
                     <th data-field="departmentName" data-align="center">所属部门</th>
                     <th data-field="positionSalary" data-align="center" >岗位工资</th>

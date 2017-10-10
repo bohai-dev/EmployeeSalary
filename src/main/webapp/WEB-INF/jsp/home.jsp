@@ -129,9 +129,6 @@
                             <div class="col-sm-offset-2 col-sm-10 col-md-2 col-md-offset-4 ">
                               <input class="btn btn-default col-xs-7" type="button" value="查询" onclick="queryByCondition()">
                             </div>
-                           <!-- <div class=" col-sm-10 col-md-2 ">
-                              <input class="btn btn-default col-xs-7" type="button" value="导出" onclick="exportStaffInfo()">
-                            </div> --> 
                           </div>
                       </form>
                       <!-- 查询条件表单结束 -->
@@ -238,6 +235,12 @@
                 <button type="button" class="btn btn-default" data-toggle="modal" data-target="#addModal" title="创建任务">
                     <i class="glyphicon glyphicon-plus">新建</i>
                 </button>
+            </div>
+            <div>
+            
+                <button type="button" class="btn btn-default" >导入 </button>
+                <button type="button" class="btn btn-default">模板下载</button>
+            
             </div>
             <table id="staffInfoTable"
                    class="table table-striped"

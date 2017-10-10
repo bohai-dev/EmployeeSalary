@@ -306,7 +306,8 @@ $(function(){
   						staffNumber:$('#staffNumber').val(),
   						name:$('#name').val(),
   						isProbation:$('#isProbation').val(),
-  						isLeave:$('#isLeave').val()
+  						isLeave:$('#isLeave').val(),
+  						submitStatus:$('#submitStatus').val()
   					}
   				}
   		);

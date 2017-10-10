@@ -123,6 +123,16 @@
                       				</select>
                                 </div>
                                 
+                                  <label for="submitStatus" class="col-sm-2 col-md-1 control-label">审核提交状态</label>
+                                <div class="col-sm-10 col-md-2">
+                                 <select class="selectpicker form-control" id="submitStatus">
+                      	   	 			<option value=""> </option>
+                          				<option value="0">已提交</option>
+                          				<option value="1">未提交</option>
+                      				</select>
+                                </div>
+                                
+                                
                           </div>
                           
                           <div class="form-group">
@@ -175,6 +185,7 @@
                       				</select>
                                 </div>
                           </div>
+
                           
                           <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10 col-md-2 col-md-offset-4 ">

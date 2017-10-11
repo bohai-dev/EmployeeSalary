@@ -449,5 +449,14 @@ function submitStaffInfo(){
   				}
   		);
   }
+  
+  
+  //模板下载
+  function downloadModel(){
+	  $('#downloadForm').submit();
+	  
+  }
+  
+  
    
    

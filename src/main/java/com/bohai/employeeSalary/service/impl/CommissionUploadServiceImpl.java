@@ -87,11 +87,11 @@ public class CommissionUploadServiceImpl implements FileUploadService{
                 if (commisonSheet.getRow(i) != null) {
                     
                     //设置单元格类型
-                    commisonSheet.getRow(i).getCell(marketerNameIndex).setCellType(CellType.STRING);
-                    commisonSheet.getRow(i).getCell(marketerProfitIndex).setCellType(CellType.STRING);
-                    commisonSheet.getRow(i).getCell(marketerNoIndex).setCellType(CellType.STRING);
-                    
-                    if (StringUtils.isNotEmpty(commisonSheet.getRow(i).getCell(marketerNameIndex).getStringCellValue())) {
+                	if(commisonSheet.getRow(i).getCell(marketerNameIndex)!=null) {
+                		commisonSheet.getRow(i).getCell(marketerNameIndex).setCellType(CellType.STRING);
+                        commisonSheet.getRow(i).getCell(marketerProfitIndex).setCellType(CellType.STRING);
+                        commisonSheet.getRow(i).getCell(marketerNoIndex).setCellType(CellType.STRING);
+                        
                         //获取员工姓名
                         StaffSalary staffSalary=new StaffSalary();
                         staffSalary.setPayDate(time);
@@ -111,8 +111,10 @@ public class CommissionUploadServiceImpl implements FileUploadService{
                             staffSalary.setStaffNumber(staffInfo.getStaffNumber());
                             this.salaryService.saveOrUpdate(staffSalary);
                         }
-                    }
+                	}
                     
+                    
+                   
                 }
             }
             

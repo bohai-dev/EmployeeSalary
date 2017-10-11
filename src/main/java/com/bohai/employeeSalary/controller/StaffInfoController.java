@@ -1,12 +1,20 @@
 package com.bohai.employeeSalary.controller;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.log4j.Logger;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +32,7 @@ import com.bohai.employeeSalary.entity.SysUser;
 import com.bohai.employeeSalary.service.StaffInfoService;
 import com.bohai.employeeSalary.vo.QueryCheckMessageParamVO;
 import com.bohai.employeeSalary.vo.QueryStaffInfoParamVO;
+import com.bohai.employeeSalary.vo.QueryStaffSalaryParamVO;
 
 
 
@@ -160,5 +169,40 @@ public class StaffInfoController {
 	public List<CheckMessage> queryCheckMessageByCondition(@RequestBody(required=true) QueryCheckMessageParamVO paramVO){
 		List<CheckMessage> list=this.checkMessageMapper.selectByCheckCondition(paramVO);
 		return list;	
+	}
+	
+	/**
+	 * 员工信息模板下载
+	 * @return
+	 * @throws BohaiException 
+	 */
+	@RequestMapping(value="downloadModel")
+	public void downloadModel(HttpServletRequest request, HttpServletResponse response) throws BohaiException{
+		String path=request.getSession().getServletContext().getRealPath("/WEB-INF/classes/externalFile/员工信息模板.xlsx");
+		File  modelFile=new File(path);
+		
+		
+		 try {
+			    String FileName = new String(("员工信息模板").getBytes("UTF-8"),"ISO-8859-1");
+	            OutputStream output=response.getOutputStream();
+	            response.reset();
+	            response.setContentType("application/x-xls");  
+	            response.setCharacterEncoding("UTF-8");  	           
+	            response.setHeader("Content-Disposition", "attachment;filename="+FileName+".xlsx");
+	            
+	            FileInputStream inputStream = new FileInputStream(modelFile);
+	            int length = 0;
+	            byte[] buf = new byte[1024];
+	            while ((length = inputStream.read(buf)) > 0) {	            	
+	            	    output.write(buf, 0, length);
+	            	    
+	                }
+	            output.flush();
+	            output.close();
+	        } catch (IOException e) {	        
+	        	System.out.println("导出模板失败:"+e);
+	        	throw new BohaiException("", "导出模板文件失败");
+	        }
+		
 	}
 }

@@ -163,7 +163,7 @@ function comparePositionSalary(vaule,row,index){
 		else{
 			return temp2;
 		}
-		}else{
+	 }else{
 			return temp1;
 		}
 	} 
@@ -560,6 +560,29 @@ function checkSome(){
 	 if(selectData.length<=0){
 		 alert("请选中一行")
 	}else{
+		var dataArray=new Array();
+		for(i=0;i<selectData.length;i++){
+			var param = {
+					id:selectData[i]["ID"],
+		    		staffNumber:selectData[i]["STAFF_NUMBER1"],
+		    		name:selectData[i]["NAME1"],
+		    		departmentId:selectData[i]["DEPARTMENT_ID1"],
+		    		positionSalary:selectData[i]["ID"],
+		    		skillSalary:selectData[i]["ID"],
+		    		workYears:selectData[i]["ID"],
+		    		probationDateStart:selectData[i]["ID"],
+		    		formalDateStart:selectData[i]["ID"],
+		    		isProbation:selectData[i]["ID"],
+		    		coefficeient:selectData[i]["ID"],
+		            email:selectData[i]["ID"],
+		            remark:selectData[i]["ID"],
+		            isLeave:selectData[i]["ID"],
+		            LeaveDate:selectData[i]["ID"],
+		            approvalOpinion:selectData[i]["ID"]
+		            }
+		   	
+		}
+		
 		var param=JSON.stringify( selectData );
 		console.log(param);
 		 $.ajax({

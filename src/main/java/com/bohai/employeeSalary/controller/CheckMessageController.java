@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.bohai.employeeSalary.dao.CheckMessageMapper;
 import com.bohai.employeeSalary.entity.CheckMessage;
 import com.bohai.employeeSalary.service.CheckMessageService;
+import com.bohai.employeeSalary.vo.CheckMessageListVO;
 import com.bohai.employeeSalary.vo.QueryCheckMessageParamVO;
 
 @Controller
@@ -43,6 +44,15 @@ public class CheckMessageController {
 	@ResponseBody
 	public void agreeStaffInfo(@RequestBody(required=true) CheckMessage paramVO){
 		checkMessageService.agreeStaffInfo(paramVO);
+	}
+	
+	/**
+	 *批量通过审核信息
+	 * */
+	@RequestMapping(value="agreeStaffInfoList")
+	@ResponseBody
+	public void agreeStaffInfoList(@RequestBody(required=true) CheckMessageListVO paramVO){
+		checkMessageService.agreeStaffInfoList(paramVO);
 	}
 	
 	/**

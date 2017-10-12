@@ -15,6 +15,7 @@ import com.bohai.employeeSalary.entity.CheckMessage;
 import com.bohai.employeeSalary.entity.StaffInfo;
 import com.bohai.employeeSalary.entity.SysUser;
 import com.bohai.employeeSalary.service.CheckMessageService;
+import com.bohai.employeeSalary.vo.CheckMessageListVO;
 import com.bohai.employeeSalary.vo.PaginationParamVO;
 
 @Service("checkMessageService")
@@ -65,11 +66,18 @@ public class CheckMessageServiceImpl implements CheckMessageService{
 		staffInfo.setCoefficeient(checkmessage.getCoefficeient());
 		staffInfo.setSkillSalary(checkmessage.getSkillSalary());
 		staffInfo.setSubmitStatus("1");
+		
 		if(checkmessage.getSubmitType().equals("0")){
 		this.staffInfoMapper.insert(staffInfo);
 		}else{
 			this.staffInfoMapper.updateByPrimaryKey(staffInfo);
 		}
+	}
+	
+	@Override
+	public void agreeStaffInfoList(CheckMessageListVO paramvo) {
+		
+		
 	}
 
 	@Override

@@ -3,6 +3,7 @@ package com.bohai.employeeSalary.service;
 import java.util.List;
 
 import com.bohai.employeeSalary.entity.CheckMessage;
+import com.bohai.employeeSalary.vo.CheckMessageListVO;
 import com.bohai.employeeSalary.vo.PaginationParamVO;
 
 public interface CheckMessageService {
@@ -16,5 +17,7 @@ public interface CheckMessageService {
 	void agreeStaffInfo(CheckMessage paramVO);
 //
 	void refuseStaffInfo(CheckMessage paramVO);
+	
+	void agreeStaffInfoList(CheckMessageListVO paramvo);
 
 }

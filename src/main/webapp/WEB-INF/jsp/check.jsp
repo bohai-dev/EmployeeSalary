@@ -131,7 +131,11 @@
 
 			<h2 class="sub-header">申报信息</h2>
            <div class="table-responsive">
-            
+            <div id="toolbar" >
+                <button type="button" class="btn btn-info" onclick="checkSome()">批量审核 </button>          
+                
+                
+            </div>
             <table id="checkMessageTable"
                    class="table table-striped"
                    data-toggle="table" 
@@ -150,7 +154,7 @@
                    data-search="true">
                 <thead>
                 <tr>
-                    <!-- <th data-field="state" data-checkbox="true"></th> -->
+                    <th data-field="state" data-checkbox="true"></th> 
                     <th data-field="id" data-align="center" data-formatter="idFormatter">序号</th>
                     <th data-field="staffNumber" data-align="center" >员工编号</th>
                     <th data-field="name" data-align="center" >员工姓名</th>

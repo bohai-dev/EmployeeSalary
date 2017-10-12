@@ -304,4 +304,30 @@ function refuse(vaule,row,index){
 	    });
 	}
 }
+
+function checkSome(){
+	
+	var a= $("#checkMessageTable").bootstrapTable('getSelections');
+	 if(a.length<=0){
+		 alert("请选中一行")
+	}else{
+		var b=JSON.stringify( a );
+		console.log(b);
+		/*var url="${pageContext.request.contextPath}/login/datalist";
+ 		    $.ajax({
+ 		        dataType: "json",
+ 		        traditional:true,//这使json格式的字符不会被转码
+ 		        data: {"datalist":b},
+ 		        type: "post", 
+ 		        url: url,
+ 		        success : function (data) {
+ 		            alert("成功！");
+ 		        },
+ 		        error : function (data){
+ 		            alert(data.responseText);
+ 		        }
+ 		    });*/
+	} 
+	
+}
    

@@ -1,6 +1,7 @@
 package com.bohai.employeeSalary.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,8 +32,8 @@ public class CheckMessageController {
 	 * */
 	@RequestMapping(value="queryCheckMessages")
 	@ResponseBody
-	public List<CheckMessage> queryCheckMessagesPagination(){
-		List<CheckMessage> list = this.checkMessageService.queryCheckMessages(null);	
+	public List<Map> queryCheckMessagesPagination(){
+		List<Map> list = this.checkMessageService.queryCheckMessages(null);	
 		return list;
 	}
 	

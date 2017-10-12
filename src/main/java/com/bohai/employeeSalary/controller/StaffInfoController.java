@@ -72,8 +72,8 @@ public class StaffInfoController {
 	public Map<String,String> submitStaffInfo(@RequestBody(required = true) CheckMessage paramVO) throws BohaiException{		
 		Map<String,String> map=new HashMap<String,String>();
 		List<CheckMessage> cm=this.checkMessageMapper.selectByStaffNumber(paramVO.getStaffNumber());
-		if(cm!=null){
-			System.out.println("你大爷的！");
+		StaffInfo cm2=this.staffInfoMapper.selectByPrimaryKey(paramVO.getStaffNumber());
+		if(cm!=null || cm2!=null){
 			map.put("status", "false");
 			return  map;
 		}

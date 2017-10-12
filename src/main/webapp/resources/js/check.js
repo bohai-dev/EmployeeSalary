@@ -112,34 +112,283 @@ $(function(){
    });
    
 /*------------------------------------------------------------------------------------------------*/ 
-  
+/**
+ * 判断姓名是否更改
+ * */
+function compareName(vaule,row,index){
+	var temp1=row.NAME;
+	var temp2=row.NAME1;
+	if(row.SUBMIT_TYPE!=0){
+	if(temp1!=temp2){
+//		document.getElementById("name").style.color="red"; 
+		return temp2+"/<span style='color:red;'>"+temp1+"</span>";
+	}
+	else{
+		return temp2;
+	}
+	}else{
+		return temp1;
+	}
+}  
+/**
+ * 判断部门是否更改
+ * */
+function compareDep(vaule,row,index){
+	var temp1=row.DEP_NAME;
+	var temp2=row.DEP_NAME1;
+	if(row.SUBMIT_TYPE!=0){
+		if(temp1!=temp2){
+			return temp2+"/<span style='color:red;'>"+temp1+"</span>";
+		}
+		else{
+			return temp2;
+		}
+		}else{
+			return temp1;
+		}
+	}  
+/**
+ * 岗位工资
+ * */
+function comparePositionSalary(vaule,row,index){
+	var temp1=row.POSITION_SALARY;
+	var temp2=row.POSITION_SALARY1;
+	if(temp2==null){
+		temp2="0";
+	}
+	if(row.SUBMIT_TYPE!=0){
+		if(temp1!=temp2){
+			return temp2+"/<span style='color:red;'>"+temp1+"</span>";
+		}
+		else{
+			return temp2;
+		}
+		}else{
+			return temp1;
+		}
+	} 
+/**
+ * 技能工资
+ * 
+ * */
+function compareSkillSalary(vaule,row,index){
+	var temp1=row.SKILL_SALARY;
+	var temp2=row.SKILL_SALARY1;
+	if(temp1==temp2&&temp2==null){
+		temp1="-";
+		temp2="-";
+	}
+	if(row.SUBMIT_TYPE!=0){
+		if(temp1!=temp2){
+			return temp2+"/<span style='color:red;'>"+temp1+"</span>";
+		}
+		else{
+			return temp2;
+		}
+		}else{
+			return temp1;
+		}
+	}  
+
+/**
+ * 司龄工资
+ * */
+function compareWorkYears(vaule,row,index){
+	var temp1=row.WORK_YEARS;
+	var temp2=row.WORK_YEARS1;
+	if(temp1==temp2&&temp2==null){
+		temp1="-";
+		temp2="-";
+	}
+	if(row.SUBMIT_TYPE!=0){
+		if(temp1!=temp2){
+			return temp2+"/<span style='color:red;'>"+temp1+"</span>";
+		}
+		else{
+			return temp2;
+		}
+		}else{
+			return temp1;
+		}
+	}  
+/**
+ * 试用期起始日期
+ * */
+function compareProbationDateStart(vaule,row,index){
+	var temp1=row.PROBATION_DATE_START;
+	var temp2=row.PROBATION_DATE_START1;
+	if(temp1==temp2&&temp2==null){
+		temp1="-";
+		temp2="-";
+	}
+	if(row.SUBMIT_TYPE!=0){
+		if(temp1!=temp2){
+			return temp2+"/<span style='color:red;'>"+temp1+"</span>";
+		}
+		else{
+			return temp2;
+		}
+		}else{
+			return temp1;
+		}
+	}  
+/**
+ * 判断转正日期
+ * */
+function compareFormalDateStart(vaule,row,index){
+	var temp1=row.FORMAL_DATE_START;
+	var temp2=row.FORMAL_DATE_START1;
+	if(temp1==temp2&&temp2==null){
+		temp1="-";
+		temp2="-";
+	}
+	if(row.SUBMIT_TYPE!=0){
+		if(temp1!=temp2){
+			return temp2+"/<span style='color:red;'>"+temp1+"</span>";
+		}
+		else{
+			return temp2;
+		}
+		}else{
+			return temp1;
+		}
+	}  
 /**
   * 员工类型及状态字符判断
   */
   function probationFormatter(vaule,row,index){
-  	var result=row.isProbation;
-  	if(result=="0"){
-  		result="正式员工";
-  	}else if(result=="1"){
-  		result="试用期员工";
+  	var temp1=row.IS_PROBATION;
+  	var temp2=row.IS_PROBATION1;
+  	if(temp1=="0"){
+  		temp1="正式员工";
+  	}else if(temp1=="1"){
+  		temp1="试用期员工";
   	}else{
-  		result="其他";
+  		temp1="其他";
   	}
-  	return result;
-  }
+  	
+  	if(temp2=="0"){
+  		temp2="正式员工";
+  	}else if(temp2=="1"){
+  		temp2="试用期员工";
+  	}else{
+  		temp2="其他";
+  	}
+
+	if(row.SUBMIT_TYPE!=0){
+		if(temp1!=temp2){
+			return temp2+"/<span style='color:red;'>"+temp1+"</span>";
+		}
+		else{
+			return temp2;
+		}
+		}else{
+			return temp1;
+		}
+	}  
   
+  /**
+   * 判断工资系数
+   * */
+  function compareCoefficeient(vaule,row,index){
+	  var temp1=row.COEFFICEIENT;
+	  var temp2=row.COEFFICEIENT1;
+	  if(row.SUBMIT_TYPE!=0){
+			if(temp1!=temp2){
+				return temp2+"/<span style='color:red;'>"+temp1+"</span>";
+			}
+			else{
+				return temp2;
+			}
+			}else{
+				return temp1;
+			}
+		}  
+  
+  	
+ /**
+  * 比较离职状态判断
+  * */ 
   function LeaveFormatter(vaule,row,index){
-  	var result=row.isLeave;
-  	if(result=="0"){
-  		result="在职";
+  	var temp1=row.IS_LEAVE;
+  	var temp2=row.IS_LEAVE1;
+  	if(temp1=="0"){
+  		temp1="在职";
   	}else{
-  		result="离职";
+  		temp1="离职";
   	}
-  	return result;
+  	
+  	if(temp2=="0"){
+  		temp2="在职";
+  	}else{
+  		temp2="离职";
+  	}
+  	if(row.SUBMIT_TYPE!=0){
+		if(temp1!=temp2){
+			return temp2+"/<span style='color:red;'>"+temp1+"</span>";
+		}
+		else{
+			return temp2;
+		}
+		}else{
+			return temp1;
+		}
+  
+  }
+  /**
+   * 比较离职日期
+   * */
+  function compareLeaveDate(vaule,row,index){
+	var temp1=row.LEAVE_DATE;
+	var temp2=row.LEAVE_DATE1;
+	if(row.SUBMIT_TYPE!=0){
+		if(temp1!=temp2){
+			return temp2+"/<span style='color:red;'>"+temp1+"</span>";
+		}
+		else{
+			return temp2;
+		}
+		}else{
+			return temp1;
+		}
   }
   
+  /**
+   * 比较邮箱
+   * */
+  function compareEmail(vaule,row,index){
+	  var temp1=row.EMAIL;
+	  var temp2=row.EMAIL1;
+	  if(row.SUBMIT_TYPE!=0){
+			if(temp1!=temp2){
+				return temp2+"/<span style='color:red;'>"+temp1+"</span>";
+			}
+			else{
+				return temp2;
+			}
+			}else{
+				return temp1;
+			}
+  }
+  /**
+   * 比较备注
+   * */
+  function compareRemark(vaule,row,index){
+	  var temp1=row.REMARK;
+	  var temp2=row.REMARK1;
+	  if(row.SUBMIT_TYPE!=0){
+			if(temp1!=temp2){
+				return temp2+"/<span style='color:red;'>"+temp1+"</span>";
+			}
+			else{
+				return temp2;
+			}
+			}else{
+				return temp1;
+			}
+  }
   function submitTypeFormatter(vaule,row,index){
-	  var result=row.submitType;
+	  var result=row.SUBMIT_TYPE;
 	  if(result=="0"){
 		  result="新建员工信息审核";
 	  }else if(result=="1"){
@@ -160,11 +409,11 @@ $(function(){
 * 审批详情
 */
 	function operationFormatter(value, row, index) {
-		if(row.tage=="0"){
+		if(row.TAGE=="0"){
 		var html = '<button type="button" id="cog'+index+'" class="btn btn-info" title="查看详情">'
 				+ '审批'
 				+ '</button>';
-		}else if(row.tage=="1"){
+		}else if(row.TAGE=="1"){
 			var html='<label>'+'审批通过'+'</label>';
 		}else{
 			var html='<label>'+'审批拒绝'+'</label>';

@@ -9,6 +9,7 @@ public class QueryCheckMessageParamVO extends PaginationParamVO{
 	private String staffNumber;
 	private String name;
 	private String tage;
+	private String submitType;
 
 	public String getDepartmentId() {
 		return departmentId;
@@ -33,6 +34,12 @@ public class QueryCheckMessageParamVO extends PaginationParamVO{
 	}
 	public void setTage(String tage) {
 		this.tage = tage;
+	}
+	public String getSubmitType() {
+		return submitType;
+	}
+	public void setSubmitType(String submitType) {
+		this.submitType = submitType;
 	}
 
 }

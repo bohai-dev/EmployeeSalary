@@ -112,6 +112,16 @@
                           				<option value="2">拒绝审核</option>
                       				</select>
                                 </div>
+                                
+                                <label for="submitType" class="col-sm-2 col-md-1 control-label">审核类型</label>
+                                <div class="col-sm-10 col-md-2">
+                                 <select class="selectpicker form-control" id="submitType">
+                      	   	 			<option value=""> </option>
+                          				<option value="0">新建</option>
+                          				<option value="1">修改</option>
+                          				<option value="2">离职</option>
+                      				</select>
+                                </div>
                           </div>
                           
                           <div class="form-group">

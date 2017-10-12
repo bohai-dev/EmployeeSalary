@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.bohai.employeeSalary.entity.CheckMessage;
-import com.bohai.employeeSalary.vo.CheckMessageListVO;
 import com.bohai.employeeSalary.vo.PaginationParamVO;
 
 public interface CheckMessageService {
@@ -19,6 +18,6 @@ public interface CheckMessageService {
 //
 	void refuseStaffInfo(CheckMessage paramVO);
 	
-	void agreeStaffInfoList(CheckMessageListVO paramvo);
+	void agreeStaffInfoList(List<CheckMessage> paramvo);
 
 }

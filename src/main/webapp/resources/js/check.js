@@ -536,35 +536,44 @@ function refuse(vaule,row,index){
 }
 
 function checkSome(){
-	
 	var selectData= $("#checkMessageTable").bootstrapTable('getSelections');
 	 if(selectData.length<=0){
-		 alert("请选中一行")
+		 alert("请至少选中一行！")
 	}else{
+	   $('#checkListModal').modal('show');
+	}
+	
+	
+}
+
+function agreeList(){
+	var selectData= $("#checkMessageTable").bootstrapTable('getSelections');
+	
 		var dataArray=new Array();
 		for(i=0;i<selectData.length;i++){
 			var param = {
 					id:selectData[i]["ID"],
-		    		staffNumber:selectData[i]["STAFF_NUMBER1"],
-		    		name:selectData[i]["NAME1"],
-		    		departmentId:selectData[i]["DEPARTMENT_ID1"],
-		    		positionSalary:selectData[i]["ID"],
-		    		skillSalary:selectData[i]["ID"],
-		    		workYears:selectData[i]["ID"],
-		    		probationDateStart:selectData[i]["ID"],
-		    		formalDateStart:selectData[i]["ID"],
-		    		isProbation:selectData[i]["ID"],
-		    		coefficeient:selectData[i]["ID"],
-		            email:selectData[i]["ID"],
-		            remark:selectData[i]["ID"],
-		            isLeave:selectData[i]["ID"],
-		            LeaveDate:selectData[i]["ID"],
-		            approvalOpinion:selectData[i]["ID"]
+		    		staffNumber:selectData[i]["STAFF_NUMBER"],
+		    		name:selectData[i]["NAME"],
+		    		departmentId:selectData[i]["DEPARTMENT_ID"],
+		    		positionSalary:selectData[i]["POSITION_SALARY"],
+		    		skillSalary:selectData[i]["SKILL_SALARY"],
+		    		workYears:selectData[i]["WORK_YEARS"],
+		    		probationDateStart:selectData[i]["PROBATION_DATE_START"],
+		    		formalDateStart:selectData[i]["FORMAL_DATE_START"],
+		    		isProbation:selectData[i]["IS_PROBATION"],
+		    		coefficeient:selectData[i]["COEFFICEIENT"],
+		            email:selectData[i]["EMAIL"],
+		            remark:selectData[i]["REMARK"],
+		            isLeave:selectData[i]["IS_LEAVE"],
+		            LeaveDate:selectData[i]["LEAVE_DATE"],
+		            approvalOpinion:$("#checkOpinion").val()
 		            }
+			dataArray.push(param);
 		   	
 		}
 		
-		var param=JSON.stringify( selectData );
+		var param=JSON.stringify(dataArray);
 		console.log(param);
 		 $.ajax({
 	         url: 'agreeStaffInfoList',
@@ -572,7 +581,7 @@ function checkSome(){
 	         contentType: "application/json;charset=UTF-8",
 	         data: param,
 	         success: function (data,status) {
-	           
+	        	 $('#checkListModal').modal('hide');
 	             alert("信息已通过审核!");
 	             $('#checkMessageTable').bootstrapTable('refresh');
 	         },
@@ -581,21 +590,8 @@ function checkSome(){
 		        }
 	         
 	    });
-		/*var url="${pageContext.request.contextPath}/login/datalist";
- 		    $.ajax({
- 		        dataType: "json",
- 		        traditional:true,//这使json格式的字符不会被转码
- 		        data: {"datalist":b},
- 		        type: "post", 
- 		        url: url,
- 		        success : function (data) {
- 		            alert("成功！");
- 		        },
- 		        error : function (data){
- 		            alert(data.responseText);
- 		        }
- 		    });*/
-	} 
+		
+	
 	
 }
    

@@ -556,12 +556,27 @@ function refuse(vaule,row,index){
 
 function checkSome(){
 	
-	var a= $("#checkMessageTable").bootstrapTable('getSelections');
-	 if(a.length<=0){
+	var selectData= $("#checkMessageTable").bootstrapTable('getSelections');
+	 if(selectData.length<=0){
 		 alert("请选中一行")
 	}else{
-		var b=JSON.stringify( a );
-		console.log(b);
+		var param=JSON.stringify( selectData );
+		console.log(param);
+		 $.ajax({
+	         url: 'agreeStaffInfoList',
+	         type: 'post',
+	         contentType: "application/json;charset=UTF-8",
+	         data: param,
+	         success: function (data,status) {
+	           
+	             alert("信息已通过审核!");
+	             $('#checkMessageTable').bootstrapTable('refresh');
+	         },
+	         error : function (data,status){
+		            alert(data.responseText);
+		        }
+	         
+	    });
 		/*var url="${pageContext.request.contextPath}/login/datalist";
  		    $.ajax({
  		        dataType: "json",

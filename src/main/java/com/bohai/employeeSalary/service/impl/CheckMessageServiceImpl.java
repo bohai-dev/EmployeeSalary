@@ -3,6 +3,7 @@ package com.bohai.employeeSalary.service.impl;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
@@ -28,9 +29,9 @@ public class CheckMessageServiceImpl implements CheckMessageService{
 	private StaffInfoMapper staffInfoMapper;
 
 	@Override
-	public List<CheckMessage> queryCheckMessages(PaginationParamVO paramVO) {
+	public List<Map> queryCheckMessages(PaginationParamVO paramVO) {
 		// TODO Auto-generated method stub
-		List<CheckMessage> checkMessageList=this.checkMessageMapper.queryCheckMessages(null);
+		List<Map> checkMessageList=this.checkMessageMapper.queryCheckMessages(null);
 		return checkMessageList;
 	}
 	

@@ -156,16 +156,22 @@
                 <tr>
                     <th data-field="state" data-checkbox="true"></th> 
                     <th data-field="id" data-align="center" data-formatter="idFormatter">序号</th>
-                    <th data-field="staffNumber" data-align="center" >员工编号</th>
-                    <th data-field="name" data-align="center" >员工姓名</th>
-                    <th data-field="departmentName" data-align="center">所属部门</th>
-                    <th data-field="positionSalary" data-align="center" >岗位工资</th>
-                    <th data-field="skillSalary" data-align="center">技能工资</th>
-                    <th data-field="workYears" data-align="center" >司龄工资</th>
-                    <th data-field="isProbation" data-align="center" data-formatter="probationFormatter">员工类型</th>
-                    <th data-field="isLeave" data-align="center" data-formatter="LeaveFormatter">员工状态</th>
-                    <th data-field="submitType" data-align="center" data-formatter="submitTypeFormatter">审批类型</th>
-                    <th data-field="submitter" data-align="center">申请审核信息用户</th>
+                    <th data-field="STAFF_NUMBER" data-align="center" >员工编号</th>
+                    <th data-field="NAME" data-align="center" data-formatter="compareName" id="name">员工姓名</th>
+                    <th data-field="DEP_NAME" data-align="center" data-formatter="compareDep">所属部门</th>
+                    <th data-field="POSITION_SALARY" data-align="center" data-formatter="comparePositionSalary">岗位工资</th>
+                    <th data-field="SKILL_SALARY" data-align="center" data-formatter="compareSkillSalary">技能工资</th>
+                    <th data-field="WORK_YEARS" data-align="center" data-formatter="compareWorkYears">司龄工资</th>
+                    <th data-field="PROBATION_DATE_START" data-align="center" data-formatter="compareProbationDateStart">试用期起始日期</th>
+                    <th data-field="FORMAL_DATE_START" data-align="center" data-formatter="compareFormalDateStart">转正日期</th>
+                    <th data-field="IS_PROBATION" data-align="center" data-formatter="probationFormatter">员工类型</th>
+                     <th data-field="COEFFICEIENT" data-align="center" data-formatter="compareCoefficeient">工资系数</th>
+                    <th data-field="IS_LEAVE" data-align="center" data-formatter="LeaveFormatter">员工状态</th>
+                    <th data-field="LEAVE_DATE" data-align="center" data-formatter="compareLeaveDate">离职日期</th>
+                    <th data-field="EMAIL" data-align="center" data-formatter="compareEmail">邮箱</th>
+                    <th data-field="REMARK" data-align="center" data-formatter="compareRemark">备注</th>
+                    <th data-field="SUBMIT_TYPE" data-align="center" data-formatter="submitTypeFormatter">审批类型</th>
+                    <th data-field="SUBMITTER" data-align="center" >申请审核信息用户</th>
                     <th data-field="" data-formatter="operationFormatter">审批操作</th>
                 </tr>
                 </thead>
@@ -329,6 +335,8 @@
         </div>
       </div>
     </div>
+    
+    
     
 </body>
 </html>

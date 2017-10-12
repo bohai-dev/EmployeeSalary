@@ -59,7 +59,7 @@ public interface CheckMessageMapper {
     /**
      * 查询所有待审核信息
      * */
-	List<CheckMessage> queryCheckMessages(Map<String,Object> map);
+	List<Map> queryCheckMessages(Map<String,Object> map);
 
 	/**
 	 * 按条件查询审核信息

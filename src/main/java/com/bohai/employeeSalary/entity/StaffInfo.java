@@ -19,6 +19,7 @@ public class StaffInfo {
      *
      * @mbggenerated Tue Aug 15 13:38:03 CST 2017
      */
+    
     private Date probationDateStart;
 
     /**

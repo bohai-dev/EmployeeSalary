@@ -33,6 +33,28 @@
     <!-- datepicker -->
     <script src="resources/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
     <script src="resources/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js"></script>
+    <!-- 文件上传 -->
+   <link href="resources/fileInput/css/fileinput.min.css" media="all"
+	rel="stylesheet" type="text/css" />
+   <!-- canvas-to-blob.min.js is only needed if you wish to resize images before upload.
+     This must be loaded before fileinput.min.js -->
+   <script src="resources/fileInput/js/plugins/canvas-to-blob.min.js"
+	type="text/javascript"></script>
+   <!-- sortable.min.js is only needed if you wish to sort / rearrange files in initial preview.
+         This must be loaded before fileinput.min.js -->
+   <script src="resources/fileInput/js/plugins/sortable.min.js"
+	type="text/javascript"></script>
+  <!-- purify.min.js is only needed if you wish to purify HTML content in your preview for HTML files.
+         This must be loaded before fileinput.min.js -->
+  <script src="resources/fileInput/js/plugins/purify.min.js"
+	type="text/javascript"></script>
+  <!-- the main fileinput plugin file -->
+  <script src="resources/fileInput/js/fileinput.min.js"></script>
+  <!-- 文件上传插件fileInput -->
+<script src="resources/fileInput/themes/fa/theme.js"></script>
+<!-- optionally if you need translation for your language then include 
+        locale file as mentioned below -->
+<script src="resources/fileInput/js/locales/zh.js"></script>
    
     <script type="text/javascript" src="resources/js/home.js?<%=Math.random()%>"></script>
     
@@ -139,16 +161,13 @@
                             <div class="col-sm-offset-2 col-sm-10 col-md-2 col-md-offset-4 ">
                               <input class="btn btn-default col-xs-7" type="button" value="查询" onclick="queryByCondition()">
                             </div>
-                           <!-- <div class=" col-sm-10 col-md-2 ">
-                              <input class="btn btn-default col-xs-7" type="button" value="导出" onclick="exportStaffInfo()">
-                            </div> --> 
                           </div>
                       </form>
                       <!-- 查询条件表单结束 -->
           </div>
 
 
-<div class="panel-group" id="panel-642522">
+     <div class="panel-group" id="panel-642522">
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						 <a class="panel-title" data-toggle="collapse" data-parent="#panel-642522" href="#collapse">审核信息状态详情</a>
@@ -242,13 +261,58 @@
 				</div>
 			</div>
 
-
+            <form action="downloadModel" id="downloadForm" hidden></form>
+            <div class="row">
+            	<div class="col-sm-9 col-md-1">
+            		<label class="control-label">请选择员工信息表上传:</label> 
+            	</div>
+	            <div class="col-sm-9 col-md-4">
+						<input id="finput1" type="file" class="file" multiple>
+						<script type="text/javascript">
+	                    $("#finput1").fileinput({
+	                       language: 'zh',
+	                        uploadAsync: true,
+	                        uploadUrl: "StaffInfoFileUpload", //异步上传地址
+	                        maxFileCount: 10,//最大上传文件数限制
+	                        showCaption: true,//是否显示标题
+	                        showUpload: true,//是否显示上传按钮
+	                        showPreview:false,//默认true
+	
+	                        allowedFileExtensions: ["xls", "xlsx"]  //接收的文件后缀 
+	                        //previewFileIcon: "<i class='glyphicon glyphicon-king'></i>" //选择文件后缩略图
+	                    }); 
+	                    
+	                     $("#finput1").on("fileuploaded", function (event, data, previewId, index) {
+	                    	 //$("#finput1").val(data["response"]["status"]);
+	                    	 var response=data["response"]["status"];
+	                    	 console.log(response);
+	                    	 if(response!=""){
+	                    		
+	                    		 $("#errorMessage").html(response); 
+	                    		 $("#promptModal").modal('show');
+	                    	 }
+	                    	 
+	                    }); 
+	                 </script>
+				</div>
+				
+				<div>
+	               <button type="button" class="col-sm-5 col-md-1 btn btn-default" onclick="downloadModel()">模板下载</button>
+	            </div>
+            </div>
 			<h2 class="sub-header"></h2>
            <div class="table-responsive">
-            <div id="toolbar" class="btn-group">
+            <div id="toolbar" >
                 <button type="button" class="btn btn-default" data-toggle="modal" data-target="#addModal" title="创建任务">
                     <i class="glyphicon glyphicon-plus">新建</i>
-                </button>
+                </button>&nbsp;&nbsp;&nbsp;&nbsp;             
+                
+                
+            </div>
+                
+            <div>          
+                
+            
             </div>
             <table id="staffInfoTable"
                    class="table table-striped"
@@ -603,6 +667,25 @@
         </div>
       </div>
     </div>
-    
+
+	<div class="modal fade" id="promptModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">提示</h4>
+				</div>
+				<div class="modal-body">
+				      <p id="errorMessage"></p>
+				</div>
+				<div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">确定</button>                 
+                </div>
+			</div>
+		</div>
+	</div>
+
 </body>
 </html>

@@ -62,7 +62,7 @@ public class SalaryUploadServiceImpl implements FileUploadService {
 			
 				
 			
-			for(int i = 6;i<salarySheet.getLastRowNum();i++){
+			for(int i = 6;i<salarySheet.getLastRowNum()+1;i++){
 				if (salarySheet.getRow(i)!=null) {
 					for(int j=0;j< salarySheet.getRow(i).getLastCellNum();j++) {
 						salarySheet.getRow(i).getCell(j).setCellType(CellType.STRING);    //将每行单元格的类型都设置为string

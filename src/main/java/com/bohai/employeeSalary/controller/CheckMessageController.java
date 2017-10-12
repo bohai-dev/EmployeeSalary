@@ -70,8 +70,8 @@ public class CheckMessageController {
 	 * */
 	@RequestMapping("queryByCheckCondition")
 	@ResponseBody
-	public List<CheckMessage> queryByCheckCondition(@RequestBody(required=true) QueryCheckMessageParamVO paramVO){
-		List<CheckMessage> list=this.checkMessageMapper.selectByCheckCondition(paramVO);
+	public List<Map> queryByCheckCondition(@RequestBody(required=true) QueryCheckMessageParamVO paramVO){
+		List<Map> list=this.checkMessageMapper.selectByCheckCondition(paramVO);
 		return list;
 	}
 }

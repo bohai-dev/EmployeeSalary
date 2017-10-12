@@ -167,7 +167,7 @@ public class StaffInfoController {
 	@RequestMapping("queryCheckMessageByCondition")
 	@ResponseBody
 	public List<CheckMessage> queryCheckMessageByCondition(@RequestBody(required=true) QueryCheckMessageParamVO paramVO){
-		List<CheckMessage> list=this.checkMessageMapper.selectByCheckCondition(paramVO);
+		List<CheckMessage> list=this.checkMessageMapper.queryCheckMessageByCondition(paramVO);
 		return list;	
 	}
 	

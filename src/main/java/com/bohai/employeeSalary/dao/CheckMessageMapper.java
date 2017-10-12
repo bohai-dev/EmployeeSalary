@@ -64,9 +64,11 @@ public interface CheckMessageMapper {
 	/**
 	 * 按条件查询审核信息
 	 * */
-	List<CheckMessage> selectByCheckCondition(QueryCheckMessageParamVO paramVO);
+	List<Map> selectByCheckCondition(QueryCheckMessageParamVO paramVO);
 
 	List<CheckMessage> selectBySubmitter(String userName);
 	
 	List<CheckMessage> selectByStaffNumber(String staffNumber);
+
+	List<CheckMessage> queryCheckMessageByCondition(QueryCheckMessageParamVO paramVO);
 }

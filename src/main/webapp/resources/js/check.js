@@ -428,21 +428,21 @@ function compareFormalDateStart(vaule,row,index){
 	/* 修改任务模态框 */
 	function config(row) {
 		// 	console.log('456');
-		$('#id2').val(row.id);
-		$('#staffNumber2').val(row.staffNumber);
-		$('#name2').val(row.name);
-		$('#depName2').selectpicker('val',row.departmentId);
-		$('#positionSalary2').val(row.positionSalary);
-		$('#skillSalary2').val(row.skillSalary);
-		$('#workYears2').val(row.workYears);
-		$('#probationDateStart2').val(row.probationDateStart);
-		$('#formalDateStart2').val(row.formalDateStart);
-		$('#isProbation2').selectpicker('val',row.isProbation)
-		$('#coefficeient2').val(row.coefficeient);
-		$('#isLeave2').selectpicker('val',row.isLeave);
-		$('#leaveDate2').selectpicker('val',row.leaveDate);
-		$('#email2').val(row.email);
-		$('#remark2').val(row.remark);
+		$('#id2').val(row.ID);
+		$('#staffNumber2').val(row.STAFF_NUMBER);
+		$('#name2').val(row.NAME);
+		$('#depName2').selectpicker('val',row.DEPARTMENT_ID);
+		$('#positionSalary2').val(row.POSITION_SALARY);
+		$('#skillSalary2').val(row.SKILL_SALARY);
+		$('#workYears2').val(row.WORK_YEARS);
+		$('#probationDateStart2').val(row.PROBATION_DATE_START);
+		$('#formalDateStart2').val(row.FORMAL_DATE_START);
+		$('#isProbation2').selectpicker('val',row.IS_PROBATION)
+		$('#coefficeient2').val(row.COEFFICEIENT);
+		$('#isLeave2').selectpicker('val',row.IS_LEAVE);
+		$('#leaveDate2').selectpicker('val',row.LEAVE_DATE);
+		$('#email2').val(row.EMAIL);
+		$('#remark2').val(row.REMARK);
 
 		$("#allMessageModal").modal('show');
 
@@ -465,25 +465,6 @@ function compareFormalDateStart(vaule,row,index){
   				}
   		);
   }
- 	//查询所有员工信息事件
-  function queryqueryCheckMessages() {
-
-		$("#checkMessageTable").bootstrapTable('refresh', {
-			url : "queryCheckMessages",	
-			query : {
-				staffNumber:$('#staffNumber').val(),
-      		name:$('#name').val(),
-      		departmentId:$('#departmentId').val(),
-      		positionSalary:$('positionSalary').val(),
-      		skillSalary:$('skillSalary').val(),
-      		workYears:$('#workYears').val(),
-      		isProbation:$('#isProbation').val(),
-              email:$('#email').val(),
-              remark:$('#remark').val()
-
-			}
-		});
-	}
 /*------------------------------------------------------------------------------------------*/   
 
 function agree(){

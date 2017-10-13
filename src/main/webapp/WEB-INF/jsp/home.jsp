@@ -55,6 +55,10 @@
 <!-- optionally if you need translation for your language then include 
         locale file as mentioned below -->
 <script src="resources/fileInput/js/locales/zh.js"></script>
+
+    <link rel="stylesheet" href="resources/dist/css/bootstrapValidator.css"/>
+    <script type="text/javascript" src="resources/dist/js/bootstrapValidator.js"></script>
+    <script type="text/javascript" src="resources/dist/js/language/zh_CN.js"></script>
    
     <script type="text/javascript" src="resources/js/home.js?<%=Math.random()%>"></script>
     
@@ -377,9 +381,9 @@
                   <div class="form-group">
                     <label for="staffNumber1" class="col-sm-3 control-label">员工编号</label>
                     <div class="col-sm-8">
-                      <input type="text" class="form-control" id="staffNumber1" placeholder="">
+                      <input type="text" class="form-control" id="staffNumber1" name="staffNumber1" placeholder="" required>
                     </div>
-                      <div>
+                     <div>
                     		<p style="padding-top: 5px;">★</p>
                     </div>
                   </div>
@@ -387,9 +391,9 @@
                   <div class="form-group">
                     <label for="name1" class="col-sm-3 control-label">员工姓名</label>
                     <div class="col-sm-8">
-                            <input type="text" class="form-control" id="name1" placeholder="">
+                            <input type="text" class="form-control" id="name1" name="name1" placeholder="">
                     </div>
-                      <div>
+                     <div>
                     		<p style="padding-top: 5px;">★</p>
                     </div>
                   </div>
@@ -399,7 +403,7 @@
                   <div class="form-group">
                     <label for="depName1" class="col-sm-3 control-label">所属部门</label>
                     <div class="col-sm-8">
-                     <select class="selectpicker form-control" id="depName1" data-live-Search="true" name="depname">
+                     <select class="selectpicker form-control" id="depName1" name="depName1" data-live-Search="true" name="depname">
                          <!-- <option value="0">A部</option>
                           <option value="1">B部</option>
                           <option value="2">C部</option>
@@ -407,7 +411,7 @@
                           <option value="4">E部</option> --> 
                       </select>
                     </div>
-                      <div>
+                     <div>
                     		<p style="padding-top: 5px;">★</p>
                     </div>
                   </div>
@@ -417,9 +421,9 @@
                   <div class="form-group">
                     <label for="positionSalary1" class="col-sm-3 control-label">岗位工资</label>
                     <div class="col-sm-8">
-                      <input type="text" class="form-control" id="positionSalary1" placeholder="">         
+                      <input type="text" class="form-control" id="positionSalary1" name="positionSalary1" placeholder="">         
                     </div>
-                    <div>
+                     <div>
                     		<p style="padding-top: 5px;">★</p>
                     </div>
                   </div>
@@ -459,14 +463,14 @@
                   <div class="form-group">
                     <label for="isProbation1" class="col-sm-3 control-label">员工属性</label>
                     <div class="col-sm-8">
-                     <select class="selectpicker form-control" id="isProbation1" onchange="changeCoefficeient1()">
+                     <select class="selectpicker form-control" id="isProbation1"  name="isProbation1" onchange="changeCoefficeient1()">
                           <option value=""> </option>
                           <option value="0">正式员工</option>
                           <option value="1">试用期员工</option>
                           <option value="2">其他类型</option>
                       </select>
                     </div>
-                      <div>
+                     <div>
                     		<p style="padding-top: 5px;">★</p>
                     </div>
                   </div>
@@ -474,9 +478,9 @@
                   <div class="form-group">
                     <label for="coefficeient1" class="col-sm-3 control-label">工资系数</label>
                     <div class="col-sm-8">
-                       <input type="text" class="form-control" id="coefficeient1"  placeholder="">          
+                       <input type="text" class="form-control" id="coefficeient1" name="coefficeient1" placeholder="">          
                     </div>
-                      <div>
+                     <div>
                     		<p style="padding-top: 5px;">★</p>
                     </div>
                   </div>
@@ -505,7 +509,6 @@
         </div>
       </div>
     </div>
-    
     <!-- 修改员工信息 -->
     <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-dialog">
@@ -522,7 +525,7 @@
                     <div class="col-sm-8">
                       <input type="text" class="form-control" id="staffNumber2" placeholder=""  disabled>
                     </div>
-                      <div>
+                     <div>
                     		<p style="padding-top: 5px;">★</p>
                     </div>
                   </div>
@@ -530,11 +533,11 @@
                   <div class="form-group">
                     <label for="name2" class="col-sm-3 control-label">员工姓名</label>
                     <div class="col-sm-8">
-                            <input type="text" class="form-control" id="name2" placeholder="">
-                    </div>
-                      <div>
+                            <input type="text" class="form-control" id="name2" name="name2" placeholder="">
+                    </div>   
+                     <div>
                     		<p style="padding-top: 5px;">★</p>
-                    </div>
+                    </div>                
                   </div>
                   
                   
@@ -542,7 +545,7 @@
                   <div class="form-group">
                     <label for="depName2" class="col-sm-3 control-label">所属部门</label>
                     <div class="col-sm-8">
-                     <select class="selectpicker form-control" id="depName2" data-live-Search="true" name="depname">
+                     <select class="selectpicker form-control" id="depName2" name="depName2" data-live-Search="true" name="depname">
                          <!-- <option value="0">A部</option>
                           <option value="1">B部</option>
                           <option value="2">C部</option>
@@ -550,7 +553,7 @@
                           <option value="4">E部</option> --> 
                       </select>
                     </div>
-                      <div>
+                     <div>
                     		<p style="padding-top: 5px;">★</p>
                     </div>
                   </div>
@@ -560,11 +563,11 @@
                   <div class="form-group">
                     <label for="positionSalary2" class="col-sm-3 control-label">岗位工资</label>
                     <div class="col-sm-8">
-                      <input type="text" class="form-control" id="positionSalary2" placeholder="">         
-                    </div>
-                    <div>
+                      <input type="text" class="form-control" id="positionSalary2" name="positionSalary2" placeholder="">         
+                    </div> 
+                     <div>
                     		<p style="padding-top: 5px;">★</p>
-                    </div>
+                    </div>           
                   </div>
                   
                   <div class="form-group">
@@ -602,14 +605,14 @@
                   <div class="form-group">
                     <label for="isProbation2" class="col-sm-3 control-label">员工属性</label>
                     <div class="col-sm-8">
-                     <select class="selectpicker form-control" id="isProbation2" onchange="changeCoefficeient2()">
+                     <select class="selectpicker form-control" id="isProbation2" name="isProbation2" onchange="changeCoefficeient2()">
                           <option value=""> </option>
                           <option value="0">正式员工</option>
                           <option value="1">试用期员工</option>
                           <option value="2">其他类型</option>
                       </select>
                     </div>
-                      <div>
+                     <div>
                     		<p style="padding-top: 5px;">★</p>
                     </div>
                   </div>
@@ -617,7 +620,7 @@
                   <div class="form-group">
                     <label for="coefficeient2" class="col-sm-3 control-label">工资系数</label>
                     <div class="col-sm-8">
-                       <input type="text" class="form-control" id="coefficeient2"  placeholder="">          
+                       <input type="text" class="form-control" id="coefficeient2" name="coefficeient2" placeholder="">          
                     </div>
                       <div>
                     		<p style="padding-top: 5px;">★</p>
@@ -686,6 +689,124 @@
 			</div>
 		</div>
 	</div>
+
+
+<script>
+
+$(function () {
+    $('form').bootstrapValidator({
+        message: 'This value is not valid',
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+           
+        	
+        	staffNumber1: {
+                validators: {
+                    notEmpty: {
+                        message: '员工编号不能为空'
+                    },
+                    threshold :  2 , //有2字符以上才发送ajax请求，（input中输入一个字符，插件会向服务器发送一次，设置限制，2字符以上才开始）
+                    remote: {//ajax验证。server result:{"valid",true or false} 向服务发送当前input name值，获得一个json数据。例表示正确：{"valid",true}  
+                        url: 'checkStaffNumber',//验证地址
+                        delay :  1000,//每输入一个字符，就发ajax请求，服务器压力还是太大，设置2秒发送一次ajax（默认输入一个字符，提交一次，服务器压力太大）
+                        type: 'POST'//请求方式
+                        /**自定义提交数据，默认值提交当前input value
+                         *  data: function(validator) {
+                              return {
+                                  password: $('[name="passwordNameAttributeInYourForm"]').val(),
+                                  whatever: $('[name="whateverNameAttributeInYourForm"]').val()
+                              };
+                           }
+                         */
+                    },
+                   
+                   
+                }
+            },
+            
+            name1: {
+            	  validators: {
+                      notEmpty: {
+                          message: '姓名不能为空'
+                      }
+                  }
+              },
+             
+              depName1: {
+            	  validators: {
+                      notEmpty: {
+                          message: '部门不能为空'
+                      }
+                  }
+              	},
+              positionSalary1: {
+               	  validators: {
+                      notEmpty: {
+                             message: '岗位工资不能为空'
+                         }
+                     }
+                 	},
+              isProbation1: {
+               	  validators: {
+                       notEmpty: {
+                             message: '员工属性不能为空'
+                         }
+                     }
+                 	},
+               coefficeient1: {
+                    validators: {
+                        notEmpty: {
+                              message: '工资系数不能为空'
+                                }
+                            }
+                        	},
+              
+               name2: {
+                  validators: {
+                     notEmpty: {
+                             message: '姓名不能为空'
+                                  }
+                              }
+                              },
+                              depName2: {
+                            	  validators: {
+                                      notEmpty: {
+                                          message: '部门不能为空'
+                                      }
+                                  }
+                              	},
+                              positionSalary2: {
+                               	  validators: {
+                                      notEmpty: {
+                                             message: '岗位工资不能为空'
+                                         }
+                                     }
+                                 	},
+                              isProbation2: {
+                               	  validators: {
+                                       notEmpty: {
+                                             message: '员工属性不能为空'
+                                         }
+                                     }
+                                 	},
+                               coefficeient2: {
+                                    validators: {
+                                        notEmpty: {
+                                              message: '工资系数不能为空'
+                                                }
+                                            }
+                                        	},
+            }
+       
+    });
+});
+
+</script>
+
 
 </body>
 </html>

@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bohai.employeeSalary.controller.exception.BohaiException;
@@ -33,6 +34,8 @@ import com.bohai.employeeSalary.service.StaffInfoService;
 import com.bohai.employeeSalary.vo.QueryCheckMessageParamVO;
 import com.bohai.employeeSalary.vo.QueryStaffInfoParamVO;
 import com.bohai.employeeSalary.vo.QueryStaffSalaryParamVO;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 
@@ -204,5 +207,30 @@ public class StaffInfoController {
 	        	throw new BohaiException("", "导出模板文件失败");
 	        }
 		
+	}
+	
+	/**
+	 * 验证员工编号是否存在
+	 * */
+	@RequestMapping("checkStaffNumber")
+	@ResponseBody
+	public String checkStaffNumber(@RequestParam String staffNumber1){
+		StaffInfo checkMember=this.staffInfoMapper.selectByPrimaryKey(staffNumber1);
+		Boolean result=false;
+		if(checkMember!=null){
+			result=false;
+		}else{
+			result=true;
+		}
+		Map<String,Boolean> map=new HashMap<>();
+		map.put("valid", result);
+		ObjectMapper mapper=new ObjectMapper();
+		String resultString="";
+		try{
+			resultString=mapper.writeValueAsString(map);
+		}catch(JsonProcessingException e){
+			e.printStackTrace();
+		}
+		return resultString;
 	}
 }

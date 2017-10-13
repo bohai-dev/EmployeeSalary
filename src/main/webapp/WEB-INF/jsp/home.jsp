@@ -263,7 +263,7 @@
 
             <form action="downloadModel" id="downloadForm" hidden></form>
             <div class="row">
-            	<div class="col-sm-9 col-md-1">
+            	<div class="col-sm-9 col-md-1.5">
             		<label class="control-label">请选择员工信息表上传:</label> 
             	</div>
 	            <div class="col-sm-9 col-md-4">

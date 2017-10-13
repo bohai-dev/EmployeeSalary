@@ -594,4 +594,10 @@ function agreeList(){
 	
 	
 }
+
+function checkFormatter(value, row, index){
+	if(row.TAGE !="0"){
+		return {disabled:true};
+	}
+}
    

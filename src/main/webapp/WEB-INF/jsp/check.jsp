@@ -141,7 +141,11 @@
 
 			<h2 class="sub-header">申报信息</h2>
            <div class="table-responsive">
-            
+            <div id="toolbar" >
+                <button type="button" class="btn btn-info" onclick="checkSome()">批量审核 </button>          
+                
+                
+            </div>
             <table id="checkMessageTable"
                    class="table table-striped"
                    data-toggle="table" 
@@ -160,7 +164,7 @@
                    data-search="true">
                 <thead>
                 <tr>
-                    <!-- <th data-field="state" data-checkbox="true"></th> -->
+                    <th data-field="state" data-checkbox="true"></th> 
                     <th data-field="id" data-align="center" data-formatter="idFormatter">序号</th>
                     <th data-field="STAFF_NUMBER" data-align="center" >员工编号</th>
                     <th data-field="NAME" data-align="center" data-formatter="compareName" id="name">员工姓名</th>
@@ -341,8 +345,27 @@
         </div>
       </div>
     </div>
-    
-    
-    
+
+
+	<div class="modal fade" id="checkListModal" tabindex="-1"
+		role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">审批意见</h4>
+				</div>
+				<div class="modal-body">
+					<textarea id="checkOpinion" rows="4" cols="70"></textarea>
+				</div>
+				 <div class="modal-footer">
+            <button type="button" class="btn btn-default " data-dismiss="modal">关闭</button>
+            <button type="button" class="btn btn-default " onclick="agreeList()">确定</button>
+          </div>
+			</div>
+		</div>
+	</div>
 </body>
 </html>

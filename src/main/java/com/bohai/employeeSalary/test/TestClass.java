@@ -1,9 +1,11 @@
 package com.bohai.employeeSalary.test;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import com.bohai.employeeSalary.util.CommonUtils;
 
@@ -33,6 +35,14 @@ public class TestClass {
 		System.out.println("日期转字符串: " + dateString);*/
 		//计算个人所得税   ROUND(MAX(计税基数*5%*{0.6,2,4,5,6,7,9}-5*{0,21,111,201,551,1101,2701},0),2)		
 		//  System.out.println(CommonUtils.getPath());
+		
+		
+		
+		//System.out.println(CommonUtils.getRound(3713.4));
+	    BigDecimal[] nums=new BigDecimal[] {new BigDecimal(956),new BigDecimal(1269),new BigDecimal(895)};
+	 
+		System.out.println(CommonUtils.getMax(Arrays.asList(nums)));
+		
 	}
 
 }

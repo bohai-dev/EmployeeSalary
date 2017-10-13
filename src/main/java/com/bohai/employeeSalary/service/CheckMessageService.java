@@ -17,5 +17,7 @@ public interface CheckMessageService {
 	void agreeStaffInfo(CheckMessage paramVO);
 //
 	void refuseStaffInfo(CheckMessage paramVO);
+	
+	void agreeStaffInfoList(List<CheckMessage> paramvo);
 
 }

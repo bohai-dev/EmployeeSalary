@@ -47,6 +47,15 @@ public class CheckMessageController {
 	}
 	
 	/**
+	 *批量通过审核信息
+	 * */
+	@RequestMapping(value="agreeStaffInfoList")
+	@ResponseBody
+	public void agreeStaffInfoList(@RequestBody(required=true)List<CheckMessage> paramVO){
+		checkMessageService.agreeStaffInfoList(paramVO);
+	}
+	
+	/**
 	 * 拒绝通过审核
 	 * */
 	@RequestMapping("refuseStaffInfo")

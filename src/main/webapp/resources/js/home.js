@@ -400,7 +400,7 @@ function submitStaffInfo(){
             data: JSON.stringify(param),
             success: function (data,status) {
                 $('#editModal').modal('hide');
-                alert("信息以提交审核，请等待!");
+                alert("信息已提交审核，请等待!");
                 $('#staffInfoTable').bootstrapTable('refresh');
             }
        });

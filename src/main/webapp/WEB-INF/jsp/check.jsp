@@ -164,7 +164,7 @@
                    data-search="true">
                 <thead>
                 <tr>
-                    <th data-field="state" data-checkbox="true"></th> 
+                    <th data-field="state" data-checkbox="true" data-formatter="checkFormatter" ></th> 
                     <th data-field="id" data-align="center" data-formatter="idFormatter">序号</th>
                     <th data-field="STAFF_NUMBER" data-align="center" >员工编号</th>
                     <th data-field="NAME" data-align="center" data-formatter="compareName" id="name">员工姓名</th>
@@ -175,7 +175,7 @@
                     <th data-field="PROBATION_DATE_START" data-align="center" data-formatter="compareProbationDateStart">试用期起始日期</th>
                     <th data-field="FORMAL_DATE_START" data-align="center" data-formatter="compareFormalDateStart">转正日期</th>
                     <th data-field="IS_PROBATION" data-align="center" data-formatter="probationFormatter">员工类型</th>
-                     <th data-field="COEFFICEIENT" data-align="center" data-formatter="compareCoefficeient">工资系数</th>
+                    <th data-field="COEFFICEIENT" data-align="center" data-formatter="compareCoefficeient">工资系数</th>
                     <th data-field="IS_LEAVE" data-align="center" data-formatter="LeaveFormatter">员工状态</th>
                     <th data-field="LEAVE_DATE" data-align="center" data-formatter="compareLeaveDate">离职日期</th>
                     <th data-field="EMAIL" data-align="center" data-formatter="compareEmail">邮箱</th>

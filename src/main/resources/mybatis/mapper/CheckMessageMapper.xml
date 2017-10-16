@@ -568,6 +568,9 @@ on c.STAFF_NUMBER=f.STAFF_NUMBER1
    <if test="tage !=null and tage !=''">
     AND a.TAGE=#{tage}   
    </if>
+   <if test="submitType !=null and submitType !=''">
+    AND a.SUBMIT_TYPE=#{submitType}   
+   </if>
    </where>
    ORDER BY a.STAFF_NUMBER
  </select>

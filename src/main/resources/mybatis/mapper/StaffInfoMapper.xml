@@ -288,8 +288,11 @@
    <if test="isLeave !=null and isLeave !=''">
     AND a.IS_LEAVE=#{isLeave} 
    </if>
-   <if test="submitStatus !=null and submitStatus !=''">
-    AND a.SUBMIT_STATUS=#{submitStatus} 
+    <if test="submitStatus !=null and submitStatus !='' and submitStatus == '1'.toString()">
+    AND (a.SUBMIT_STATUS=#{submitStatus} or a.SUBMIT_STATUS is null)   
+   </if>
+   <if test="submitStatus !=null and submitStatus !='' and submitStatus != '1'.toString()">
+    AND a.SUBMIT_STATUS=#{submitStatus}    
    </if>
    </where>
    ORDER BY a.STAFF_NUMBER

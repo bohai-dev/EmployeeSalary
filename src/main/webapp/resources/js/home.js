@@ -449,13 +449,15 @@ function submitStaffInfo(){
   				}
   		);
   }
-  
-  
-  //模板下载
+//模板下载
   function downloadModel(){
-	  $('#downloadForm').submit();
-	  
+	// alert(123);
+	  document.getElementById("templeteFile").submit();
   }
+  
+  
+  
+
   
   
    

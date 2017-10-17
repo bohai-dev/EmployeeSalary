@@ -179,7 +179,7 @@ public class StaffInfoController {
 	 * @return
 	 * @throws BohaiException 
 	 */
-	@RequestMapping(value="downloadModel")
+	@RequestMapping(value="downloadFile")
 	public void downloadModel(HttpServletRequest request, HttpServletResponse response) throws BohaiException{
 		String path=request.getSession().getServletContext().getRealPath("/WEB-INF/classes/externalFile/员工信息模板.xlsx");
 		File  modelFile=new File(path);

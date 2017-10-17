@@ -64,6 +64,8 @@
     
     <script type="text/javascript">
     var userLocked = ${sessionScope.user["locked"]}
+  
+   
     </script>
 </head>
 <body>
@@ -276,7 +278,7 @@
 				</div>
 			</div>
 
-            <form action="downloadModel" id="downloadForm" hidden></form>
+            
             <div class="row">
             	<div class="col-sm-9 col-md-1.5">
             		<label class="control-label">请选择员工信息表上传:</label> 
@@ -312,7 +314,9 @@
 				</div>
 				
 				<div>
-	               <button type="button" class="col-sm-5 col-md-1 btn btn-default" onclick="downloadModel()">模板下载</button>
+				   <form id="templeteFile" action="downloadFile" enctype="application/x-www-form-urlencoded">
+		               <button type="button" class="col-sm-5 col-md-1 btn btn-default" onclick="downloadModel();">模板下载</button>
+				   </form>
 	            </div>
             </div>
 			<h2 class="sub-header"></h2>

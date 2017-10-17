@@ -146,27 +146,44 @@ function compareDep(vaule,row,index){
 		}else{
 			return temp1;
 		}
-	}  
+	} 
+
+
+
+function isNull(value){
+    if(value == "" || value == undefined || value == null){
+        return true;
+    }else{
+        return false;
+    }
+}
+
 /**
  * 岗位工资
  * */
 function comparePositionSalary(vaule,row,index){
 	var temp1=row.POSITION_SALARY;
 	var temp2=row.POSITION_SALARY1;
-	if(temp2==null){
-		temp2="0";
-	}
 	if(row.SUBMIT_TYPE!=0){
 		if(temp1!=temp2){
-			return temp2+"/<span style='color:red;'>"+temp1+"</span>";
+			if(isNull(temp2)){
+				return "<span style='color:red;'>"+temp1+"</span>";
+			}else{
+				if(isNull(temp1)){
+					temp1 = "-";
+				}
+				return temp2+"/<span style='color:red;'>"+temp1+"</span>";
+			}
+		}else{
+				if(isNull(temp2)){
+					temp2="-";
+				}
+					return temp2;
 		}
-		else{
-			return temp2;
-		}
-	 }else{
-			return temp1;
-		}
-	} 
+	}
+	return temp1;
+}  
+
 /**
  * 技能工资
  * 
@@ -174,21 +191,25 @@ function comparePositionSalary(vaule,row,index){
 function compareSkillSalary(vaule,row,index){
 	var temp1=row.SKILL_SALARY;
 	var temp2=row.SKILL_SALARY1;
-	if(temp1==temp2&&temp2==null){
-		temp1="-";
-		temp2="-";
-	}
 	if(row.SUBMIT_TYPE!=0){
 		if(temp1!=temp2){
-			return temp2+"/<span style='color:red;'>"+temp1+"</span>";
-		}
-		else{
-			return temp2;
-		}
+			if(isNull(temp2)){
+				return "<span style='color:red;'>"+temp1+"</span>";
+			}else{
+				if(isNull(temp1)){
+					temp1 = "-";
+				}
+				return temp2+"/<span style='color:red;'>"+temp1+"</span>";
+			}
 		}else{
-			return temp1;
+				if(isNull(temp2)){
+					temp2="-";
+				}
+					return temp2;
 		}
-	}  
+	}
+	return temp1;
+}  
 
 /**
  * 司龄工资
@@ -196,63 +217,75 @@ function compareSkillSalary(vaule,row,index){
 function compareWorkYears(vaule,row,index){
 	var temp1=row.WORK_YEARS;
 	var temp2=row.WORK_YEARS1;
-	if(temp1==temp2&&temp2==null){
-		temp1="-";
-		temp2="-";
-	}
 	if(row.SUBMIT_TYPE!=0){
 		if(temp1!=temp2){
-			return temp2+"/<span style='color:red;'>"+temp1+"</span>";
-		}
-		else{
-			return temp2;
-		}
+			if(isNull(temp2)){
+				return "<span style='color:red;'>"+temp1+"</span>";
+			}else{
+				if(isNull(temp1)){
+					temp1 = "-";
+				}
+				return temp2+"/<span style='color:red;'>"+temp1+"</span>";
+			}
 		}else{
-			return temp1;
+				if(isNull(temp2)){
+					temp2="-";
+				}
+					return temp2;
 		}
-	}  
+	}
+	return temp1;
+}  
 /**
  * 试用期起始日期
  * */
 function compareProbationDateStart(vaule,row,index){
 	var temp1=row.PROBATION_DATE_START;
 	var temp2=row.PROBATION_DATE_START1;
-	if(temp1==temp2&&temp2==null){
-		temp1="-";
-		temp2="-";
-	}
 	if(row.SUBMIT_TYPE!=0){
 		if(temp1!=temp2){
-			return temp2+"/<span style='color:red;'>"+temp1+"</span>";
-		}
-		else{
-			return temp2;
-		}
+			if(isNull(temp2)){
+				return "<span style='color:red;'>"+temp1+"</span>";
+			}else{
+				if(isNull(temp1)){
+					temp1 = "-";
+				}
+				return temp2+"/<span style='color:red;'>"+temp1+"</span>";
+			}
 		}else{
-			return temp1;
+				if(isNull(temp2)){
+					temp2="-";
+				}
+					return temp2;
 		}
-	}  
+	}
+	return temp1;
+}  
 /**
  * 判断转正日期
  * */
 function compareFormalDateStart(vaule,row,index){
 	var temp1=row.FORMAL_DATE_START;
 	var temp2=row.FORMAL_DATE_START1;
-	if(temp1==temp2&&temp2==null){
-		temp1="-";
-		temp2="-";
-	}
 	if(row.SUBMIT_TYPE!=0){
 		if(temp1!=temp2){
-			return temp2+"/<span style='color:red;'>"+temp1+"</span>";
-		}
-		else{
-			return temp2;
-		}
+			if(isNull(temp2)){
+				return "<span style='color:red;'>"+temp1+"</span>";
+			}else{
+				if(isNull(temp1)){
+					temp1 = "-";
+				}
+				return temp2+"/<span style='color:red;'>"+temp1+"</span>";
+			}
 		}else{
-			return temp1;
+				if(isNull(temp2)){
+					temp2="-";
+				}
+					return temp2;
 		}
-	}  
+	}
+	return temp1;
+}  
 /**
   * 员工类型及状态字符判断
   */
@@ -330,9 +363,8 @@ function compareFormalDateStart(vaule,row,index){
 		else{
 			return temp2;
 		}
-		}else{
-			return temp1;
 		}
+	return temp1;
   
   }
   /**
@@ -343,16 +375,23 @@ function compareFormalDateStart(vaule,row,index){
 	var temp2=row.LEAVE_DATE1;
 	if(row.SUBMIT_TYPE!=0){
 		if(temp1!=temp2){
-			return temp2+"/<span style='color:red;'>"+temp1+"</span>";
-		}
-		else{
-			return temp2;
-		}
+			if(isNull(temp2)){
+				return "<span style='color:red;'>"+temp1+"</span>";
+			}else{
+				if(isNull(temp1)){
+					temp1 = "-";
+				}
+				return temp2+"/<span style='color:red;'>"+temp1+"</span>";
+			}
 		}else{
-			return temp1;
+				if(isNull(temp2)){
+					temp2="-";
+				}
+					return temp2;
 		}
-  }
-  
+	}
+	return temp1;
+}  
   /**
    * 比较邮箱
    * */
@@ -361,15 +400,23 @@ function compareFormalDateStart(vaule,row,index){
 	  var temp2=row.EMAIL1;
 	  if(row.SUBMIT_TYPE!=0){
 			if(temp1!=temp2){
-				return temp2+"/<span style='color:red;'>"+temp1+"</span>";
-			}
-			else{
-				return temp2;
-			}
+				if(isNull(temp2)){
+					return "<span style='color:red;'>"+temp1+"</span>";
+				}else{
+					if(isNull(temp1)){
+						temp1 = "-";
+					}
+					return temp2+"/<span style='color:red;'>"+temp1+"</span>";
+				}
 			}else{
-				return temp1;
+					if(isNull(temp2)){
+						temp2="-";
+					}
+						return temp2;
 			}
-  }
+		}
+		return temp1;
+	}  
   /**
    * 比较备注
    * */
@@ -378,15 +425,24 @@ function compareFormalDateStart(vaule,row,index){
 	  var temp2=row.REMARK1;
 	  if(row.SUBMIT_TYPE!=0){
 			if(temp1!=temp2){
-				return temp2+"/<span style='color:red;'>"+temp1+"</span>";
-			}
-			else{
-				return temp2;
-			}
+				if(isNull(temp2)){
+					return "<span style='color:red;'>"+temp1+"</span>";
+				}else{
+					if(isNull(temp1)){
+						temp1 = "-";
+					}
+					return temp2+"/<span style='color:red;'>"+temp1+"</span>";
+				}
 			}else{
-				return temp1;
+					if(isNull(temp2)){
+						temp2="-";
+					}
+						return temp2;
 			}
-  }
+		}
+		return temp1;
+	}  
+  
   function submitTypeFormatter(vaule,row,index){
 	  var result=row.SUBMIT_TYPE;
 	  if(result=="0"){

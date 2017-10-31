@@ -103,44 +103,56 @@ public class StaffInfoUploadServiceImpl implements FileUploadService{
 							//试用期起始日期
 							if (staffSheet.getRow(i).getCell(7)!=null) {
 								String startDateStr=staffSheet.getRow(i).getCell(7).getStringCellValue();
-								 
-								try {
-									Date startDate=sdf.parse(startDateStr);
-									checkMessage.setProbationDateStart(startDate);
-								} catch (ParseException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-									message.append(checkMessage.getStaffNumber()).append(":").append(checkMessage.getName()).append("试用日期格式不正确，未能导入，时间必须是'2017-10-31'这种文本形式</br>");
-									continue;
+								
+								if (StringUtils.isNotEmpty(startDateStr.trim())) {
+									
+									try {
+										Date startDate=sdf.parse(startDateStr);
+										checkMessage.setProbationDateStart(startDate);
+									} catch (ParseException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+										message.append(checkMessage.getStaffNumber()).append(":").append(checkMessage.getName()).append("试用日期格式不正确，未能导入，时间必须是'2017-10-31'这种文本形式</br>");
+										continue;
+									}
 								}
+								 
 
 							}
 							//转正日期
 							if (staffSheet.getRow(i).getCell(8)!=null) {
 								String formalDateStr=staffSheet.getRow(i).getCell(8).getStringCellValue();
-								try {
-									Date formalDate=sdf.parse(formalDateStr);
-									checkMessage.setFormalDateStart(formalDate);
-								} catch (ParseException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-									message.append(checkMessage.getStaffNumber()).append(":").append(checkMessage.getName()).append("转正日期格式不正确，未能导入，时间必须是'2017-10-31'这种文本形式</br>");
-									continue;
+								
+								if (StringUtils.isNotEmpty(formalDateStr.trim())) {
+									
+									try {
+										Date formalDate=sdf.parse(formalDateStr);
+										checkMessage.setFormalDateStart(formalDate);
+									} catch (ParseException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+										message.append(checkMessage.getStaffNumber()).append(":").append(checkMessage.getName()).append("转正日期格式不正确，未能导入，时间必须是'2017-10-31'这种文本形式</br>");
+										continue;
+									}
 								}
 							}
 							//离职日期
 							if (staffSheet.getRow(i).getCell(9)!=null) {
 								String leaveDateStr=staffSheet.getRow(i).getCell(9).getStringCellValue();
-								try {
-									Date leaveDate=sdf.parse(leaveDateStr);
-									checkMessage.setLeaveDate(leaveDate);
-									
-								} catch (ParseException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-									message.append(checkMessage.getStaffNumber()).append(":").append(checkMessage.getName()).append("离职日期格式不正确，未能导入，时间必须是'2017-10-31'这种文本形式</br>");
-								    continue;
+								
+								if (StringUtils.isNotEmpty(leaveDateStr.trim())) {
+									try {
+										Date leaveDate=sdf.parse(leaveDateStr);
+										checkMessage.setLeaveDate(leaveDate);
+										
+									} catch (ParseException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+										message.append(checkMessage.getStaffNumber()).append(":").append(checkMessage.getName()).append("离职日期格式不正确，未能导入，时间必须是'2017-10-31'这种文本形式</br>");
+									    continue;
+									}
 								}
+								
 							}
 							//邮箱
 							if (staffSheet.getRow(i).getCell(10)!=null) {

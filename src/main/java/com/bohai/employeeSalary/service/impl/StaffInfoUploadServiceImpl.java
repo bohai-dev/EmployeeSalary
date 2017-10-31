@@ -172,13 +172,18 @@ public class StaffInfoUploadServiceImpl implements FileUploadService{
 					        String userName=((SysUser)currentUser.getSession().getAttribute("user")).getFullName();
 					        checkMessage.setSubmitter(userName);
 					        
-					        //审核类型
+					       
 					         List checkMessageList=checkMessageMapper.selectByStaffNumber(number);
 					         StaffInfo staffInfo=this.staffInfoMapper.selectByPrimaryKey(number);
 					         
 					         if (staffInfo!=null) {
-								 message.append("已存在 ").append(checkMessage.getStaffNumber()).append(":").append(checkMessage.getName()).append("员工信息，未能导入</br>");
-								 continue;
+								// message.append("已存在 ").append(checkMessage.getStaffNumber()).append(":").append(checkMessage.getName()).append("员工信息，未能导入</br>");
+								// continue;
+					        	 checkMessage.setSubmitType("1");  //修改
+								 //审核信息提交时间
+								 checkMessage.setSubmitTime(new Date());
+									
+								 checkMessageMapper.insert(checkMessage);
 							}
 					         
 					         if (checkMessageList.size()>0) {  //已存在

@@ -550,7 +550,11 @@ function agree(){
 	         data: JSON.stringify(param),
 	         success: function (data,status) {
 	             $('#allMessageModal').modal('hide');
-	             alert("信息已通过审核!");
+	             if(data.responseCode == '00000'){
+	                 alert("信息已通过审核!");
+	             }else{
+	                 alert("审核失败！</br>错误信息："+data.message);
+	             }
 	             $('#checkMessageTable').bootstrapTable('refresh');
 	         }
 	    });

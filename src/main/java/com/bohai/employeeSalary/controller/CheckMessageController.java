@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.bohai.employeeSalary.dao.CheckMessageMapper;
 import com.bohai.employeeSalary.entity.CheckMessage;
 import com.bohai.employeeSalary.service.CheckMessageService;
+import com.bohai.employeeSalary.vo.CommonResponseHead;
 import com.bohai.employeeSalary.vo.QueryCheckMessageParamVO;
 
 @Controller
@@ -42,8 +43,16 @@ public class CheckMessageController {
 	 * */
 	@RequestMapping(value="agreeStaffInfo")
 	@ResponseBody
-	public void agreeStaffInfo(@RequestBody(required=true) CheckMessage paramVO){
-		checkMessageService.agreeStaffInfo(paramVO);
+	public CommonResponseHead agreeStaffInfo(@RequestBody(required=true) CheckMessage paramVO){
+	    
+	    CommonResponseHead commonResponseHead = new CommonResponseHead();
+		try {
+            checkMessageService.agreeStaffInfo(paramVO);
+        } catch (Exception e) {
+            commonResponseHead.setResponseCode("00001");
+            commonResponseHead.setMessage(e.getMessage());
+        }
+		return commonResponseHead;
 	}
 	
 	/**

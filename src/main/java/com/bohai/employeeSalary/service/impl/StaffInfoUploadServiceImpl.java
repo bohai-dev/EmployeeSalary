@@ -18,7 +18,9 @@ import org.springframework.web.multipart.MultipartFile;
 import com.alibaba.dubbo.common.utils.StringUtils;
 import com.bohai.employeeSalary.controller.exception.BohaiException;
 import com.bohai.employeeSalary.dao.CheckMessageMapper;
+import com.bohai.employeeSalary.dao.StaffInfoMapper;
 import com.bohai.employeeSalary.entity.CheckMessage;
+import com.bohai.employeeSalary.entity.StaffInfo;
 import com.bohai.employeeSalary.entity.SysUser;
 import com.bohai.employeeSalary.service.FileUploadService;
 
@@ -28,8 +30,10 @@ public class StaffInfoUploadServiceImpl implements FileUploadService{
 	
 	 
 	@Autowired
-	private CheckMessageMapper checkMessageMapper;
-	 
+	private CheckMessageMapper checkMessageMapper;	
+	@Autowired
+	private StaffInfoMapper staffInfoMapper;	 
+	
 	@Override
 	public String upload(MultipartFile file, Object... objects) throws BohaiException {
 		 StringBuilder message=new StringBuilder();
@@ -106,6 +110,8 @@ public class StaffInfoUploadServiceImpl implements FileUploadService{
 								} catch (ParseException e) {
 									// TODO Auto-generated catch block
 									e.printStackTrace();
+									message.append(checkMessage.getStaffNumber()).append(":").append(checkMessage.getName()).append("试用日期格式不正确，未能导入，时间必须是'2017-10-31'这种文本形式</br>");
+									continue;
 								}
 
 							}
@@ -118,6 +124,8 @@ public class StaffInfoUploadServiceImpl implements FileUploadService{
 								} catch (ParseException e) {
 									// TODO Auto-generated catch block
 									e.printStackTrace();
+									message.append(checkMessage.getStaffNumber()).append(":").append(checkMessage.getName()).append("转正日期格式不正确，未能导入，时间必须是'2017-10-31'这种文本形式</br>");
+									continue;
 								}
 							}
 							//离职日期
@@ -130,6 +138,8 @@ public class StaffInfoUploadServiceImpl implements FileUploadService{
 								} catch (ParseException e) {
 									// TODO Auto-generated catch block
 									e.printStackTrace();
+									message.append(checkMessage.getStaffNumber()).append(":").append(checkMessage.getName()).append("离职日期格式不正确，未能导入，时间必须是'2017-10-31'这种文本形式</br>");
+								    continue;
 								}
 							}
 							//邮箱
@@ -152,9 +162,17 @@ public class StaffInfoUploadServiceImpl implements FileUploadService{
 					        
 					        //审核类型
 					         List checkMessageList=checkMessageMapper.selectByStaffNumber(number);
+					         StaffInfo staffInfo=this.staffInfoMapper.selectByPrimaryKey(number);
+					         
+					         if (staffInfo!=null) {
+								 message.append("已存在 ").append(checkMessage.getStaffNumber()).append(":").append(checkMessage.getName()).append("员工信息，未能导入</br>");
+								 continue;
+							}
+					         
 					         if (checkMessageList.size()>0) {  //已存在
 					        	 //checkMessage.setSubmitType("1"); //修改
-					        	 message.append("已存在 ").append(checkMessage.getStaffNumber()).append(":").append(checkMessage.getName()).append(" 未能导入</br>");
+					        	 message.append("已存在 ").append(checkMessage.getStaffNumber()).append(":").append(checkMessage.getName()).append("审核信息，未能导入</br>");
+					        	 continue;
 							}else {
 								checkMessage.setSubmitType("0");  //新增
 								//审核信息提交时间

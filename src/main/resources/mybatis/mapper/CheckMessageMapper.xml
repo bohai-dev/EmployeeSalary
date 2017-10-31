@@ -593,7 +593,7 @@ on c.STAFF_NUMBER=f.STAFF_NUMBER1
     ,b.DEP_NAME 
   FROM CHECK_MESSAGE a LEFT JOIN DEPARTMENT b ON a.DEPARTMENT_ID=b.DEP_NUMBER 
   <where>
-   a.STAFF_NUMBER=#{staffNumber}
+   a.STAFF_NUMBER=#{staffNumber} and a.TAGE='0'
    </where>
    
    ORDER BY a.TAGE

@@ -166,6 +166,7 @@
                 <tr>
                     <th data-field="state" data-checkbox="true" data-formatter="checkFormatter" ></th> 
                     <th data-field="id" data-align="center" data-formatter="idFormatter">序号</th>
+                    <th data-field="SUBMIT_TIME" data-align="center" data-sortable="true">提交时间</th>
                     <th data-field="STAFF_NUMBER" data-align="center" >员工编号</th>
                     <th data-field="NAME" data-align="center" data-formatter="compareName" id="name">员工姓名</th>
                     <th data-field="DEP_NAME" data-align="center" data-formatter="compareDep">所属部门</th>

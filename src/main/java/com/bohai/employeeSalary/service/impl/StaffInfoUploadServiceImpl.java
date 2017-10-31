@@ -176,14 +176,12 @@ public class StaffInfoUploadServiceImpl implements FileUploadService{
 					         List checkMessageList=checkMessageMapper.selectByStaffNumber(number);
 					         StaffInfo staffInfo=this.staffInfoMapper.selectByPrimaryKey(number);
 					         
+					         String submitType = "0";
+					         
 					         if (staffInfo!=null) {
 								// message.append("已存在 ").append(checkMessage.getStaffNumber()).append(":").append(checkMessage.getName()).append("员工信息，未能导入</br>");
 								// continue;
-					        	 checkMessage.setSubmitType("1");  //修改
-								 //审核信息提交时间
-								 checkMessage.setSubmitTime(new Date());
-									
-								 checkMessageMapper.insert(checkMessage);
+					        	 submitType = "1";
 							}
 					         
 					         if (checkMessageList.size()>0) {  //已存在
@@ -191,7 +189,7 @@ public class StaffInfoUploadServiceImpl implements FileUploadService{
 					        	 message.append("已存在 ").append(checkMessage.getStaffNumber()).append(":").append(checkMessage.getName()).append("审核信息，未能导入</br>");
 					        	 continue;
 							}else {
-								checkMessage.setSubmitType("0");  //新增
+								checkMessage.setSubmitType(submitType);  //新增
 								//审核信息提交时间
 							    checkMessage.setSubmitTime(new Date());
 								

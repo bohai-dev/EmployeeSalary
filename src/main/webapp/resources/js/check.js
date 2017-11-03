@@ -121,7 +121,7 @@ function compareName(vaule,row,index){
 	if(row.SUBMIT_TYPE!=0){
 	if(temp1!=temp2){
 //		document.getElementById("name").style.color="red"; 
-		return temp2+"/<span style='color:red;'>"+temp1+"</span>";
+		return temp2+"<br><span style='color:red;'>"+temp1+"</span>";
 	}
 	else{
 		return temp2;
@@ -138,7 +138,7 @@ function compareDep(vaule,row,index){
 	var temp2=row.DEP_NAME1;
 	if(row.SUBMIT_TYPE!=0){
 		if(temp1!=temp2){
-			return temp2+"/<span style='color:red;'>"+temp1+"</span>";
+			return temp2+"<br><span style='color:red;'>"+temp1+"</span>";
 		}
 		else{
 			return temp2;
@@ -172,7 +172,7 @@ function comparePositionSalary(vaule,row,index){
 				if(isNull(temp1)){
 					temp1 = "-";
 				}
-				return temp2+"/<span style='color:red;'>"+temp1+"</span>";
+				return temp2+"<br><span style='color:red;'>"+temp1+"</span>";
 			}
 		}else{
 				if(isNull(temp2)){
@@ -199,7 +199,7 @@ function compareSkillSalary(vaule,row,index){
 				if(isNull(temp1)){
 					temp1 = "-";
 				}
-				return temp2+"/<span style='color:red;'>"+temp1+"</span>";
+				return temp2+"<br><span style='color:red;'>"+temp1+"</span>";
 			}
 		}else{
 				if(isNull(temp2)){
@@ -225,7 +225,7 @@ function compareWorkYears(vaule,row,index){
 				if(isNull(temp1)){
 					temp1 = "-";
 				}
-				return temp2+"/<span style='color:red;'>"+temp1+"</span>";
+				return temp2+"<br><span style='color:red;'>"+temp1+"</span>";
 			}
 		}else{
 				if(isNull(temp2)){
@@ -250,7 +250,7 @@ function compareProbationDateStart(vaule,row,index){
 				if(isNull(temp1)){
 					temp1 = "-";
 				}
-				return temp2+"/<span style='color:red;'>"+temp1+"</span>";
+				return temp2+"<br><span style='color:red;'>"+temp1+"</span>";
 			}
 		}else{
 				if(isNull(temp2)){
@@ -275,7 +275,7 @@ function compareFormalDateStart(vaule,row,index){
 				if(isNull(temp1)){
 					temp1 = "-";
 				}
-				return temp2+"/<span style='color:red;'>"+temp1+"</span>";
+				return temp2+"<br><span style='color:red;'>"+temp1+"</span>";
 			}
 		}else{
 				if(isNull(temp2)){
@@ -310,7 +310,7 @@ function compareFormalDateStart(vaule,row,index){
 
 	if(row.SUBMIT_TYPE!=0){
 		if(temp1!=temp2){
-			return temp2+"/<span style='color:red;'>"+temp1+"</span>";
+			return temp2+"<br><span style='color:red;'>"+temp1+"</span>";
 		}
 		else{
 			return temp2;
@@ -328,7 +328,7 @@ function compareFormalDateStart(vaule,row,index){
 	  var temp2=row.COEFFICEIENT1;
 	  if(row.SUBMIT_TYPE!=0){
 			if(temp1!=temp2){
-				return temp2+"/<span style='color:red;'>"+temp1+"</span>";
+				return temp2+"<br><span style='color:red;'>"+temp1+"</span>";
 			}
 			else{
 				return temp2;
@@ -358,7 +358,7 @@ function compareFormalDateStart(vaule,row,index){
   	}
   	if(row.SUBMIT_TYPE!=0){
 		if(temp1!=temp2){
-			return temp2+"/<span style='color:red;'>"+temp1+"</span>";
+			return temp2+"<br><span style='color:red;'>"+temp1+"</span>";
 		}
 		else{
 			return temp2;
@@ -381,7 +381,7 @@ function compareFormalDateStart(vaule,row,index){
 				if(isNull(temp1)){
 					temp1 = "-";
 				}
-				return temp2+"/<span style='color:red;'>"+temp1+"</span>";
+				return temp2+"<br><span style='color:red;'>"+temp1+"</span>";
 			}
 		}else{
 				if(isNull(temp2)){
@@ -406,7 +406,7 @@ function compareFormalDateStart(vaule,row,index){
 					if(isNull(temp1)){
 						temp1 = "-";
 					}
-					return temp2+"/<span style='color:red;'>"+temp1+"</span>";
+					return temp2+"<br><span style='color:red;'>"+temp1+"</span>";
 				}
 			}else{
 					if(isNull(temp2)){
@@ -431,7 +431,7 @@ function compareFormalDateStart(vaule,row,index){
 					if(isNull(temp1)){
 						temp1 = "-";
 					}
-					return temp2+"/<span style='color:red;'>"+temp1+"</span>";
+					return temp2+"<br><span style='color:red;'>"+temp1+"</span>";
 				}
 			}else{
 					if(isNull(temp2)){

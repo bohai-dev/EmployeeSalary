@@ -142,7 +142,8 @@
 			<h2 class="sub-header">申报信息</h2>
            <div class="table-responsive">
             <div id="toolbar" >
-                <button type="button" class="btn btn-info" onclick="checkSome()">批量审核 </button>          
+                <button type="button" class="btn btn-info" onclick="checkSome()">批量审核 </button>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: red;">红色代表修改后的最新值,黑色代表原值，如果没有黑色值则代表是新添加的值</span>          
                 
                 
             </div>
@@ -174,7 +175,7 @@
                     <th data-field="SKILL_SALARY" data-align="center" data-formatter="compareSkillSalary">技能工资</th>
                     <th data-field="WORK_YEARS" data-align="center" data-formatter="compareWorkYears">司龄工资</th>
                     <th data-field="PROBATION_DATE_START" data-align="center" data-formatter="compareProbationDateStart">试用期起始日期</th>
-                    <th data-field="FORMAL_DATE_START" data-align="center" data-formatter="compareFormalDateStart">转正日期</th>
+                    <th data-field="FORMAL_DATE_START" data-align="center" data-formatter="compareFormalDateStart">&nbsp;&nbsp;&nbsp;转正日期&nbsp;&nbsp;&nbsp;</th>
                     <th data-field="IS_PROBATION" data-align="center" data-formatter="probationFormatter">员工类型</th>
                     <th data-field="COEFFICEIENT" data-align="center" data-formatter="compareCoefficeient">工资系数</th>
                     <th data-field="IS_LEAVE" data-align="center" data-formatter="LeaveFormatter">员工状态</th>
@@ -277,7 +278,7 @@
                   </div>
                   
                    <div class="form-group">
-                    <label for="formalDateStart2" class="col-sm-3 control-label">正式工作起始日期</label>
+                    <label for="formalDateStart2" class="col-sm-3 control-label">转正日期</label>
                     <div class="col-sm-8">
                         <input type="text" class="form-control" id="formalDateStart2" placeholder="" disabled>
                     </div>

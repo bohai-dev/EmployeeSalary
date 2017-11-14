@@ -114,7 +114,7 @@ public class StaffSalaryService {
                 
                 Date  formalDate=salary.getFormalDateStart();  //正式工作的起始日期                
                 
-                if(salary.getPayDate().equals(CommonUtils.getYearMonth(formalDate))) {  //试用期员工转正当月就离职
+                if(salary.getPayDate().equals(CommonUtils.getYearMonth(formalDate))) {  //其他类型员工、试用期员工转正当月就离职
                      String tempDate=CommonUtils.getYearMonthDay(formalDate);   //正式工作的起始日期
                      String formalDay=tempDate.split("-")[2];  //正式工作的day                    
                      String leaveDay=CommonUtils.getYearMonthDay(leaveDate).split("-")[2];  //离职日期的day
@@ -139,7 +139,7 @@ public class StaffSalaryService {
                 }
                 
             }
-            if ("1".equals(isProbation)) {   //试用期员工离职
+            else {   //试用期员工、其他类型员工离职
                 String startDay="01";
                 String proDate=CommonUtils.getYearMonthDay(salary.getProbationDateStart());  //试用期起始日期
                 String leaDate=CommonUtils.getYearMonthDay(leaveDate);
@@ -156,6 +156,7 @@ public class StaffSalaryService {
                 posSalary=posSalary.multiply(new BigDecimal(workDays)).divide(new BigDecimal("21.75"),2,RoundingMode.HALF_UP);
                 
             }
+            
         
         }//end 离职员工
         

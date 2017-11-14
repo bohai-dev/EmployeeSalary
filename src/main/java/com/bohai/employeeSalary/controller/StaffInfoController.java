@@ -85,7 +85,7 @@ public class StaffInfoController {
 		Map<String,String> map=new HashMap<String,String>();
 		List<CheckMessage> cm=this.checkMessageMapper.selectByStaffNumber(paramVO.getStaffNumber());
 		StaffInfo cm2=this.staffInfoMapper.selectByPrimaryKey(paramVO.getStaffNumber());
-		if(cm!=null || cm2!=null){
+		if((cm!=null && cm.size()>0) || cm2!=null){
 			map.put("status", "false");
 			return  map;
 		}

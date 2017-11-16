@@ -15,61 +15,61 @@ $(function(){
 	   	$('#tree').treeview({data: treeObj,enableLinks: true});
 	   
 	    $('#probationDateStart1').datepicker({
-	        format: "yyyy-mm-dd",
+	        format: "yyyy—mm—dd",
 	          startView: 0,
 	          minViewMode: 0,
 	          maxViewMode: 2,
 	          todayBtn: "linked",
 	          clearBtn: true,
-	          language: "zh-CN",
+	          language: "zh—CN",
 	          autoclose: true,
 	          todayHighlight: true
 	    });
 
 	    $('#formalDateStart1').datepicker({
-	        format: "yyyy-mm-dd",
+	        format: "yyyy—mm—dd",
 	          startView: 0,
 	          minViewMode: 0,
 	          maxViewMode: 2,
 	          todayBtn: "linked",
 	          clearBtn: true,
-	          language: "zh-CN",
+	          language: "zh—CN",
 	          autoclose: true,
 	          todayHighlight: true
 	    });
 	    
 	    $('#probationDateStart2').datepicker({
-	        format: "yyyy-mm-dd",
+	        format: "yyyy—mm—dd",
 	          startView: 0,
 	          minViewMode: 0,
 	          maxViewMode: 2,
 	          todayBtn: "linked",
 	          clearBtn: true,
-	          language: "zh-CN",
+	          language: "zh—CN",
 	          autoclose: true,
 	          todayHighlight: true
 	    });
 
 	    $('#formalDateStart2').datepicker({
-	        format: "yyyy-mm-dd",
+	        format: "yyyy—mm—dd",
 	          startView: 0,
 	          minViewMode: 0,
 	          maxViewMode: 2,
 	          todayBtn: "linked",
 	          clearBtn: true,
-	          language: "zh-CN",
+	          language: "zh—CN",
 	          autoclose: true,
 	          todayHighlight: true
 	    });
 	    
 	    $('#leaveDate2').datepicker({
-	        format: "yyyy-mm-dd",
+	        format: "yyyy—mm—dd",
 	          startView: 0,
 	          minViewMode: 0,
 	          maxViewMode: 2,
 	          todayBtn: "linked",
 	          clearBtn: true,
-	          language: "zh-CN",
+	          language: "zh—CN",
 	          autoclose: true,
 	          todayHighlight: true
 	    });
@@ -111,7 +111,7 @@ $(function(){
        });
    });
    
-/*------------------------------------------------------------------------------------------------*/ 
+/*————————————————————————————————————————————————————————————————————————————————————————————————*/ 
 /**
  * 判断姓名是否更改
  * */
@@ -170,13 +170,38 @@ function comparePositionSalary(vaule,row,index){
 				return "<span style='color:red;'>"+temp1+"</span>";
 			}else{
 				if(isNull(temp1)){
-					temp1 = "-";
+					temp1 = "—";
 				}
 				return temp2+"<br><span style='color:red;'>"+temp1+"</span>";
 			}
 		}else{
 				if(isNull(temp2)){
-					temp2="-";
+					temp2="—";
+				}
+					return temp2;
+		}
+	}
+	return temp1;
+}  
+/**
+ * 试用期工资
+ * */
+function compareProbationSalary(vaule,row,index){
+	var temp1=row.PROBATION_SALARY;
+	var temp2=row.PROBATION_SALARY1;
+	if(row.SUBMIT_TYPE!=0){
+		if(temp1!=temp2){
+			if(isNull(temp2)){
+				return "<span style='color:red;'>"+temp1+"</span>";
+			}else{
+				if(isNull(temp1)){
+					temp1 = "—";
+				}
+				return temp2+"<br><span style='color:red;'>"+temp1+"</span>";
+			}
+		}else{
+				if(isNull(temp2)){
+					temp2="—";
 				}
 					return temp2;
 		}
@@ -197,13 +222,13 @@ function compareSkillSalary(vaule,row,index){
 				return "<span style='color:red;'>"+temp1+"</span>";
 			}else{
 				if(isNull(temp1)){
-					temp1 = "-";
+					temp1 = "—";
 				}
 				return temp2+"<br><span style='color:red;'>"+temp1+"</span>";
 			}
 		}else{
 				if(isNull(temp2)){
-					temp2="-";
+					temp2="—";
 				}
 					return temp2;
 		}
@@ -223,13 +248,13 @@ function compareWorkYears(vaule,row,index){
 				return "<span style='color:red;'>"+temp1+"</span>";
 			}else{
 				if(isNull(temp1)){
-					temp1 = "-";
+					temp1 = "—";
 				}
 				return temp2+"<br><span style='color:red;'>"+temp1+"</span>";
 			}
 		}else{
 				if(isNull(temp2)){
-					temp2="-";
+					temp2="—";
 				}
 					return temp2;
 		}
@@ -248,13 +273,13 @@ function compareProbationDateStart(vaule,row,index){
 				return "<span style='color:red;'>"+temp1+"</span>";
 			}else{
 				if(isNull(temp1)){
-					temp1 = "-";
+					temp1 = "—";
 				}
 				return temp2+"<br><span style='color:red;'>"+temp1+"</span>";
 			}
 		}else{
 				if(isNull(temp2)){
-					temp2="-";
+					temp2="—";
 				}
 					return temp2;
 		}
@@ -273,13 +298,13 @@ function compareFormalDateStart(vaule,row,index){
 				return "<span style='color:red;'>"+temp1+"</span>";
 			}else{
 				if(isNull(temp1)){
-					temp1 = "-";
+					temp1 = "—";
 				}
 				return temp2+"<br><span style='color:red;'>"+temp1+"</span>";
 			}
 		}else{
 				if(isNull(temp2)){
-					temp2="-";
+					temp2="—";
 				}
 					return temp2;
 		}
@@ -379,13 +404,13 @@ function compareFormalDateStart(vaule,row,index){
 				return "<span style='color:red;'>"+temp1+"</span>";
 			}else{
 				if(isNull(temp1)){
-					temp1 = "-";
+					temp1 = "—";
 				}
 				return temp2+"<br><span style='color:red;'>"+temp1+"</span>";
 			}
 		}else{
 				if(isNull(temp2)){
-					temp2="-";
+					temp2="—";
 				}
 					return temp2;
 		}
@@ -404,13 +429,13 @@ function compareFormalDateStart(vaule,row,index){
 					return "<span style='color:red;'>"+temp1+"</span>";
 				}else{
 					if(isNull(temp1)){
-						temp1 = "-";
+						temp1 = "—";
 					}
 					return temp2+"<br><span style='color:red;'>"+temp1+"</span>";
 				}
 			}else{
 					if(isNull(temp2)){
-						temp2="-";
+						temp2="—";
 					}
 						return temp2;
 			}
@@ -429,13 +454,13 @@ function compareFormalDateStart(vaule,row,index){
 					return "<span style='color:red;'>"+temp1+"</span>";
 				}else{
 					if(isNull(temp1)){
-						temp1 = "-";
+						temp1 = "—";
 					}
 					return temp2+"<br><span style='color:red;'>"+temp1+"</span>";
 				}
 			}else{
 					if(isNull(temp2)){
-						temp2="-";
+						temp2="—";
 					}
 						return temp2;
 			}
@@ -466,7 +491,7 @@ function compareFormalDateStart(vaule,row,index){
 */
 	function operationFormatter(value, row, index) {
 		if(row.TAGE=="0"){
-		var html = '<button type="button" id="cog'+index+'" class="btn btn-info" title="查看详情">'
+		var html = '<button type="button" id="cog'+index+'" class="btn btn—info" title="查看详情">'
 				+ '审批'
 				+ '</button>';
 		}else if(row.TAGE=="1"){
@@ -522,7 +547,7 @@ function compareFormalDateStart(vaule,row,index){
   				}
   		);
   }
-/*------------------------------------------------------------------------------------------*/   
+/*——————————————————————————————————————————————————————————————————————————————————————————*/   
 
 function agree(){
 	if(confirm("同意通过本条待审核信息,确定吗？")){

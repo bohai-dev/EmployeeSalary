@@ -717,7 +717,7 @@
 
 	<footer class="footer">
 	<div class="container">
-		<p class="text-muted">Place sticky footer content here.</p>
+		<p class="text-muted text-center">渤海期货 版权所有</p>
 	</div>
 	</footer>
 

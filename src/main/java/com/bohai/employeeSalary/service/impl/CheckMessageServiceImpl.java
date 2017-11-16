@@ -35,6 +35,7 @@ public class CheckMessageServiceImpl implements CheckMessageService{
 		return checkMessageList;
 	}
 	
+	@Transactional
 	@Override
 	public void agreeStaffInfo(CheckMessage paramVO) {
 		// TODO Auto-generated method stub
@@ -48,8 +49,6 @@ public class CheckMessageServiceImpl implements CheckMessageService{
 				long date=Calendar.getInstance().getTimeInMillis();
 				checkmessage.setCheckTime(new Date(date));
 		this.checkMessageMapper.updateByPrimaryKeySelective(checkmessage);
-		
-		
 		StaffInfo staffInfo=new StaffInfo();
 		staffInfo.setProbationDateStart(checkmessage.getProbationDateStart());
 		staffInfo.setFormalDateStart(checkmessage.getFormalDateStart());

@@ -135,27 +135,43 @@ public class StaffInfoController {
 	 * */
 	@RequestMapping(value="submitUpdateStaffInfo")
 	@ResponseBody
-	public void submitUpdateStaffInfo(@RequestBody(required=true) CheckMessage paramVO){
-		//获取当前系统时间
-				long date=Calendar.getInstance().getTimeInMillis();
-				paramVO.setCreateTime(new Date(date));
-				paramVO.setUpdateTime(new Date(date));
-				//获取当前登录用户姓名
-				Subject currentUser = SecurityUtils.getSubject();
-		        String userName=((SysUser)currentUser.getSession().getAttribute("user")).getFullName();
-				paramVO.setSubmitter(userName);
-				//
-				paramVO.setSubmitTime(new Date(date));
-				paramVO.setTage("0");
-				if(paramVO.getIsLeave().equals("0")){
-					paramVO.setSubmitType("1");
-				}else if(paramVO.getIsLeave().equals("1")){
-					paramVO.setSubmitType("2");
-				}
-				 this.checkMessageMapper.insert(paramVO);
-				 StaffInfo staff=this.staffInfoMapper.selectByPrimaryKey(paramVO.getStaffNumber());
-				 staff.setSubmitStatus("0");
-				 this.staffInfoMapper.updateByPrimaryKey(staff);
+	public Map<String,String> submitUpdateStaffInfo(@RequestBody(required=true) CheckMessage paramVO){
+		Map<String,String> map=new HashMap<String,String>();
+		
+		List<CheckMessage> cmList=this.checkMessageMapper.selectByStaffNumber(paramVO.getStaffNumber());
+		if (cmList!=null&&cmList.size()>0) {
+			
+			map.put("status", "false");
+			return map;
+			
+		}
+		
+		else {
+			//获取当前系统时间
+			long date=Calendar.getInstance().getTimeInMillis();
+			paramVO.setCreateTime(new Date(date));
+			paramVO.setUpdateTime(new Date(date));
+			//获取当前登录用户姓名
+			Subject currentUser = SecurityUtils.getSubject();
+	        String userName=((SysUser)currentUser.getSession().getAttribute("user")).getFullName();
+			paramVO.setSubmitter(userName);
+			//
+			paramVO.setSubmitTime(new Date(date));
+			paramVO.setTage("0");
+			if(paramVO.getIsLeave().equals("0")){
+				paramVO.setSubmitType("1");
+			}else if(paramVO.getIsLeave().equals("1")){
+				paramVO.setSubmitType("2");
+			}
+			 this.checkMessageMapper.insert(paramVO);
+			 StaffInfo staff=this.staffInfoMapper.selectByPrimaryKey(paramVO.getStaffNumber());
+			 staff.setSubmitStatus("0");
+			 this.staffInfoMapper.updateByPrimaryKey(staff);
+			 
+			 map.put("status", "success");
+			 return map;
+		}
+		
 	}
 	
 	@RequestMapping("queryCheckMessagesBySubmitter")

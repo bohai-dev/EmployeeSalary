@@ -138,7 +138,7 @@
                       	   	 			<option value=""> </option>
                           				<option value="0">正式员工</option>
                           				<option value="1">试用期员工</option>
-                          				<option value="2">其他类型</option>
+                          				
                       				</select>
                                 </div>
                                 
@@ -378,7 +378,7 @@
     
     <footer class="footer">
       <div class="container">
-        <p class="text-muted">Place sticky footer content here.</p>
+        <p class="text-muted text-center">渤海期货  版权所有</p>
       </div>
     </footer>
 

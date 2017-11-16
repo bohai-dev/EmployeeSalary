@@ -169,7 +169,7 @@ public class SalaryController{
 	 * */
 	@RequestMapping(value="sendMail")
 	@ResponseBody
-	public void sendMail(@RequestBody(required = true) QueryStaffSalaryParamVO paramVO) throws BohaiException, MessagingException, IOException{
+	public void sendMail(@RequestBody(required = true) QueryStaffSalaryParamVO paramVO,HttpServletRequest request) throws BohaiException, MessagingException, IOException{
 		XSSFWorkbook wb=new XSSFWorkbook();
 		
 		XSSFCellStyle style = wb.createCellStyle();
@@ -298,11 +298,12 @@ public class SalaryController{
 		}
 		
 		
-		String FileName = new String(salaryList.get(0).getStaffNumber()+"号员工工资条信息.xlsx");
-		String FileUrl=new String("D:\\"+FileName);
+		String FileName = new String(salaryList.get(0).getName()+"-"+salaryList.get(0).getPayDate()+"工资条.xlsx");
+		String FileUrl=request.getSession().getServletContext().getRealPath("/WEB-INF/classes/email/"+FileName);
+		//String FileUrl=new String("D:\\"+FileName);
 		OutputStream outputStream =new FileOutputStream(new File(FileUrl));
 		wb.write(outputStream);
-		String subject=new String(salaryList.get(0).getStaffNumber()+"号"+salaryList.get(0).getName()+salaryList.get(0).getPayDate()+"工资条信息");
+		String subject=new String(salaryList.get(0).getName()+salaryList.get(0).getPayDate()+"工资条信息");
 		String content=new String(salaryList.get(0).getName()+"员工  ,您好!"
 				+ "———" +salaryList.get(0).getPayDate()+"工资条信息，请查看!");
 		mailUtil.send(salaryList.get(0).getEmail(),subject,content,FileName,FileUrl);
@@ -317,7 +318,7 @@ public class SalaryController{
 	 * */
 	@RequestMapping(value="sendMails")
 	@ResponseBody
-	public void sendMails(@RequestBody(required = true) QueryStaffSalaryParamVO paramVO) throws BohaiException, MessagingException, IOException{
+	public void sendMails(@RequestBody(required = true) QueryStaffSalaryParamVO paramVO,HttpServletRequest request) throws BohaiException, MessagingException, IOException{
 		//根据时间查询多用户数据
 				List<StaffSalary> salaryList=StaffSalaryMapper.queryStaffSalaryByParams(paramVO);
 				String[] FileNames=new String[salaryList.size()];
@@ -450,11 +451,12 @@ public class SalaryController{
 						}
 						
 				
-						FileNames[i]=salaryList.get(i).getStaffNumber()+"号员工"+salaryList.get(i).getPayDate()+"工资条信息.xlsx";
-						FileUrls[i]="D:\\"+FileNames[i];
+						FileNames[i]=salaryList.get(i).getName()+"-"+salaryList.get(i).getPayDate()+"工资条.xlsx";
+						//FileUrls[i]="D:\\"+FileNames[i];
+						FileUrls[i]=request.getSession().getServletContext().getRealPath("/WEB-INF/classes/email/"+FileNames[i]);
 						OutputStream outputStream =new FileOutputStream(new File(FileUrls[i]));
 						wb.write(outputStream);
-						subjects[i]=salaryList.get(i).getStaffNumber()+"号"+salaryList.get(i).getName()+salaryList.get(i).getPayDate()+"工资条信息";
+						subjects[i]=salaryList.get(i).getName()+salaryList.get(i).getPayDate()+"工资条信息";
 						contents[i]=salaryList.get(i).getName()+"员工  ,您好!"
 								+ "———" +salaryList.get(i).getPayDate()+"工资条信息，请查看!";
 						recipients[i]=salaryList.get(i).getEmail();

@@ -539,9 +539,15 @@ function submitStaffInfo(){
             contentType: "application/json;charset=UTF-8",
             data: JSON.stringify(param),
             success: function (data,status) {
-                $('#editModal').modal('hide');
-                alert("信息已提交审核，请等待!");
-                $('#staffInfoTable').bootstrapTable('refresh');
+            	if(data["status"]=="false"){
+           		 alert("该员工的修改信息正在审核中，请勿重复提交！");
+           	    }else if(data["status"]=="success"){
+           		    alert("信息已提交审核，请等待!");
+           		    $('#editModal').modal('hide'); 
+                   
+   	        	 }
+               
+               
             }
        });
    }

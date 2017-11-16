@@ -172,6 +172,7 @@
                     <th data-field="NAME" data-align="center" data-formatter="compareName" id="name">员工姓名</th>
                     <th data-field="DEP_NAME" data-align="center" data-formatter="compareDep">所属部门</th>
                     <th data-field="POSITION_SALARY" data-align="center" data-formatter="comparePositionSalary">正式工资</th>
+                    <th data-field="PROBATION_SALARY" data-align="center" data-formatter="compareProbationSalary">试用期工资</th>
                     <th data-field="SKILL_SALARY" data-align="center" data-formatter="compareSkillSalary">技能工资</th>
                     <th data-field="WORK_YEARS" data-align="center" data-formatter="compareWorkYears">司龄工资</th>
                     <th data-field="PROBATION_DATE_START" data-align="center" data-formatter="compareProbationDateStart">试用期起始日期</th>
@@ -200,7 +201,7 @@
     
     <footer class="footer">
       <div class="container">
-        <p class="text-muted">Place sticky footer content here.</p>
+        <p class="text-muted text-center">渤海期货 版权所有</p>
       </div>
     </footer>
  

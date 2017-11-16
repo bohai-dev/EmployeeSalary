@@ -134,8 +134,20 @@ public class StaffSalary {
     private String skillsSalary;
     
     private String yearsSalary;
+    
+    private String  probationSalary;
+    
+    
    
-    public String getPostionsSalary() {
+    public String getProbationSalary() {
+		return probationSalary;
+	}
+
+	public void setProbationSalary(String probationSalary) {
+		this.probationSalary = probationSalary;
+	}
+
+	public String getPostionsSalary() {
 		return postionsSalary;
 	}
 

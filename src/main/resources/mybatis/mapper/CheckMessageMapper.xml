@@ -33,6 +33,7 @@
     <result column="CHECK_TIME" property="checkTime" jdbcType="TIMESTAMP"/>
     <result column="SUBMIT_TYPE" property="submitType" jdbcType="VARCHAR"/>
     <result column="APPROVAL_OPINION" property="approvalOpinion" jdbcType="VARCHAR"/>
+    <result column="PROBATION_SALARY" property="probationSalary" jdbcType="VARCHAR"/>
   </resultMap>
   <sql id="Base_Column_List" >
     <!--
@@ -43,7 +44,7 @@
     ID, PROBATION_DATE_START, FORMAL_DATE_START, LEAVE_DATE, NAME, ID_NUMBER, STAFF_NUMBER, 
     POSITION_SALARY, WORK_YEARS, EMAIL, REMARK, DEPARTMENT_ID, IS_LEAVE, CREATE_TIME, 
     UPDATE_TIME, IS_PROBATION, COEFFICEIENT, SKILL_SALARY, TAGE ,SUBMITTER ,CHECKER ,SUBMIT_TIME ,CHECK_TIME ,SUBMIT_TYPE,
-    APPROVAL_OPINION
+    APPROVAL_OPINION,PROBATION_SALARY
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     <!--
@@ -76,8 +77,8 @@
       STAFF_NUMBER, POSITION_SALARY, WORK_YEARS, 
       EMAIL, REMARK, DEPARTMENT_ID, 
       IS_LEAVE, CREATE_TIME, UPDATE_TIME, 
-      IS_PROBATION, COEFFICEIENT, SKILL_SALARY, 
-      TAGE,SUBMITTER,CHECKER,SUBMIT_TIME,CHECK_TIME,SUBMIT_TYPE,APPROVAL_OPINION)
+      IS_PROBATION, COEFFICEIENT, SKILL_SALARY,
+      TAGE,SUBMITTER,CHECKER,SUBMIT_TIME,CHECK_TIME,SUBMIT_TYPE,APPROVAL_OPINION,PROBATION_SALARY)
     values (#{id,jdbcType=VARCHAR}, #{probationDateStart,jdbcType=TIMESTAMP}, #{formalDateStart,jdbcType=TIMESTAMP}, 
       #{leaveDate,jdbcType=TIMESTAMP}, #{name,jdbcType=VARCHAR}, #{idNumber,jdbcType=VARCHAR}, 
       #{staffNumber,jdbcType=VARCHAR}, #{positionSalary,jdbcType=VARCHAR}, #{workYears,jdbcType=VARCHAR}, 
@@ -85,7 +86,8 @@
       #{isLeave,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
       #{isProbation,jdbcType=VARCHAR}, #{coefficeient,jdbcType=VARCHAR}, #{skillSalary,jdbcType=VARCHAR}, 
       #{tage,jdbcType=VARCHAR},#{submitter,jdbcType=VARCHAR},#{checker,jdbcType=VARCHAR},#{submitTime,jdbcType=TIMESTAMP},
-      #{checkTime,jdbcType=TIMESTAMP},#{submitType,jdbcType=VARCHAR},#{approvalOpinion,jdbcType=VARCHAR})
+      #{checkTime,jdbcType=TIMESTAMP},#{submitType,jdbcType=VARCHAR},#{approvalOpinion,jdbcType=VARCHAR},
+      #{probationSalary,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.bohai.employeeSalary.entity.CheckMessage" >
     <!--
@@ -152,6 +154,9 @@
       <if test="tage != null" >
         TAGE,
       </if>
+      <if test="probationSalary != null" >
+        PROBATION_SALARY,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -210,6 +215,9 @@
       </if>
       <if test="tage != null" >
         #{tage,jdbcType=VARCHAR},
+      </if>
+      <if test="probationSalary != null" >
+        #{probationSalary,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -291,7 +299,10 @@
       SUBMIT_TYPE = #{submitType,jdbcType=VARCHAR},
       </if>
       <if test="approvalOpinion != null" >
-      APPROVAL_OPINION = #{approvalOpinion,jdbcType=VARCHAR}
+      APPROVAL_OPINION = #{approvalOpinion,jdbcType=VARCHAR},
+      </if>
+      <if test="probationSalary != null" >
+       PROBATION_SALARY= #{probationSalary,jdbcType=VARCHAR},
       </if>
     </set>
     where ID = #{id,jdbcType=VARCHAR}
@@ -326,229 +337,239 @@
       SUBMIT_TIME = #{submitTime,jdbcType=TIMESTAMP},
       CHECK_TIME = #{checkTime,jdbcType=TIMESTAMP},
       SUBMIT_TYPE = #{submitType,jdbcType=VARCHAR},
-      APPROVAL_OPINION = #{approvalOpinion,jdbcType=VARCHAR}
+      APPROVAL_OPINION = #{approvalOpinion,jdbcType=VARCHAR},
+      PROBATION_SALARY= #{probationSalary,jdbcType=VARCHAR}
     where ID = #{id,jdbcType=VARCHAR}
   </update>
-  
-  <select id="queryCheckMessages" parameterType="java.util.Map" resultType="java.util.Map">
-  select 
-c.DEP_NAME,
-to_char(c.PROBATION_DATE_START,'yyyy-mm-dd') as PROBATION_DATE_START,
-to_char(c.FORMAL_DATE_START,'yyyy-mm-dd') as FORMAL_DATE_START,
-to_char(c.LEAVE_DATE,'yyyy-mm-dd') as LEAVE_DATE,
-c.NAME ,
-c.ID_NUMBER ,
-c.STAFF_NUMBER ,
-c.POSITION_SALARY ,
-c.WORK_YEARS ,
-c.EMAIL ,
-c.REMARK ,
-c.DEPARTMENT_ID ,
-c.IS_LEAVE ,
-to_char(c.CREATE_TIME,'yyyy-mm-dd') as CREATE_TIME,
-to_char(c.UPDATE_TIME,'yyyy-mm-dd') as UPDATE_TIME,
-c.IS_PROBATION ,
-c.COEFFICEIENT ,
-c.SKILL_SALARY ,
-c.ID ,
-c.TAGE ,
-c.SUBMITTER ,
-c.CHECKER ,
-to_char(c.SUBMIT_TIME,'yyyy-mm-dd HH24:mi:ss') as SUBMIT_TIME,
-c.CHECK_TIME ,
-c.SUBMIT_TYPE ,
-c.APPROVAL_OPINION,
-to_char(f.PROBATION_DATE_START1,'yyyy-mm-dd') as PROBATION_DATE_START1,
-to_char(f.FORMAL_DATE_START1,'yyyy-mm-dd') as FORMAL_DATE_START1,
-to_char(f.LEAVE_DATE1,'yyyy-mm-dd') as LEAVE_DATE1,
-f.NAME1,
-f.ID_NUMBER1,
-f.STAFF_NUMBER1,
-f.POSITION_SALARY1,
-f.WORK_YEARS1,
-f.EMAIL1,
-f.REMARK1,
-f.DEPARTMENT_ID1,
-f.IS_LEAVE1,
-to_char(f.CREATE_TIME1,'yyyy-mm-dd') as CREATE_TIME1,
-to_char(f.UPDATE_TIME1,'yyyy-mm-dd') as UPDATE_TIME1,
-f.IS_PROBATION1,
-f.COEFFICEIENT1,
-f.SKILL_SALARY1,
-f.DEP_NAME1
-from
-(select a.PROBATION_DATE_START ,
-a.FORMAL_DATE_START ,
-a.LEAVE_DATE ,
-a.NAME ,
-a.ID_NUMBER ,
-a.STAFF_NUMBER ,
-a.POSITION_SALARY ,
-a.WORK_YEARS ,
-a.EMAIL ,
-a.REMARK ,
-a.DEPARTMENT_ID ,
-a.IS_LEAVE ,
-a.CREATE_TIME ,
-a.UPDATE_TIME ,
-a.IS_PROBATION ,
-a.COEFFICEIENT ,
-a.SKILL_SALARY ,
-a.ID ,
-a.TAGE ,
-a.SUBMITTER ,
-a.CHECKER ,
-a.SUBMIT_TIME ,
-a.CHECK_TIME ,
-a.SUBMIT_TYPE ,
-a.APPROVAL_OPINION,
-b.DEP_NAME from
-CHECK_MESSAGE a left join DEPARTMENT b on a.DEPARTMENT_ID=b.DEP_NUMBER)c 
 
-left join 
+	<select id="queryCheckMessages" parameterType="java.util.Map"
+		resultType="java.util.Map">
+		select
+		c.DEP_NAME,
+		to_char(c.PROBATION_DATE_START,'yyyy-mm-dd') as PROBATION_DATE_START,
+		to_char(c.FORMAL_DATE_START,'yyyy-mm-dd') as FORMAL_DATE_START,
+		to_char(c.LEAVE_DATE,'yyyy-mm-dd') as LEAVE_DATE,
+		c.NAME ,
+		c.ID_NUMBER ,
+		c.STAFF_NUMBER ,
+		c.POSITION_SALARY ,
+		c.WORK_YEARS ,
+		c.EMAIL ,
+		c.REMARK ,
+		c.DEPARTMENT_ID ,
+		c.IS_LEAVE ,
+		to_char(c.CREATE_TIME,'yyyy-mm-dd') as CREATE_TIME,
+		to_char(c.UPDATE_TIME,'yyyy-mm-dd') as UPDATE_TIME,
+		c.IS_PROBATION ,
+		c.COEFFICEIENT ,
+		c.SKILL_SALARY ,
+		c.ID ,
+		c.TAGE ,
+		c.SUBMITTER ,
+		c.CHECKER ,
+		to_char(c.SUBMIT_TIME,'yyyy-mm-dd HH24:mi:ss') as SUBMIT_TIME,
+		c.CHECK_TIME ,
+		c.SUBMIT_TYPE ,
+		c.APPROVAL_OPINION,
+		c.PROBATION_SALARY,
+		to_char(f.PROBATION_DATE_START1,'yyyy-mm-dd') as PROBATION_DATE_START1,
+		to_char(f.FORMAL_DATE_START1,'yyyy-mm-dd') as FORMAL_DATE_START1,
+		to_char(f.LEAVE_DATE1,'yyyy-mm-dd') as LEAVE_DATE1,
+		f.NAME1,
+		f.ID_NUMBER1,
+		f.STAFF_NUMBER1,
+		f.POSITION_SALARY1,
+		f.WORK_YEARS1,
+		f.EMAIL1,
+		f.REMARK1,
+		f.DEPARTMENT_ID1,
+		f.IS_LEAVE1,
+		to_char(f.CREATE_TIME1,'yyyy-mm-dd') as CREATE_TIME1,
+		to_char(f.UPDATE_TIME1,'yyyy-mm-dd') as UPDATE_TIME1,
+		f.IS_PROBATION1,
+		f.COEFFICEIENT1,
+		f.SKILL_SALARY1,
+		f.DEP_NAME1
+		from
+		(select a.PROBATION_DATE_START ,
+		a.FORMAL_DATE_START ,
+		a.LEAVE_DATE ,
+		a.NAME ,
+		a.ID_NUMBER ,
+		a.STAFF_NUMBER ,
+		a.POSITION_SALARY ,
+		a.WORK_YEARS ,
+		a.EMAIL ,
+		a.REMARK ,
+		a.DEPARTMENT_ID ,
+		a.IS_LEAVE ,
+		a.CREATE_TIME ,
+		a.UPDATE_TIME ,
+		a.IS_PROBATION ,
+		a.COEFFICEIENT ,
+		a.SKILL_SALARY ,
+		a.ID ,
+		a.TAGE ,
+		a.SUBMITTER ,
+		a.CHECKER ,
+		a.SUBMIT_TIME ,
+		a.CHECK_TIME ,
+		a.SUBMIT_TYPE ,
+		a.APPROVAL_OPINION,
+		a.PROBATION_SALARY,
+		b.DEP_NAME from
+		CHECK_MESSAGE a left join DEPARTMENT b on a.DEPARTMENT_ID=b.DEP_NUMBER)c
 
-(select d.PROBATION_DATE_START as PROBATION_DATE_START1,
-d.FORMAL_DATE_START as FORMAL_DATE_START1,
-d.LEAVE_DATE as LEAVE_DATE1,
-d.NAME as NAME1,
-d.ID_NUMBER as ID_NUMBER1,
-d.STAFF_NUMBER as STAFF_NUMBER1,
-d.POSITION_SALARY as POSITION_SALARY1,
-d.WORK_YEARS as WORK_YEARS1,
-d.EMAIL as EMAIL1,
-d.REMARK as REMARK1,
-d.DEPARTMENT_ID as DEPARTMENT_ID1,
-d.IS_LEAVE as IS_LEAVE1,
-d.CREATE_TIME as CREATE_TIME1,
-d.UPDATE_TIME as UPDATE_TIME1,
-d.IS_PROBATION as IS_PROBATION1,
-d.COEFFICEIENT as COEFFICEIENT1,
-d.SKILL_SALARY as SKILL_SALARY1,
-e.DEP_NAME as DEP_NAME1 from
-STAFF_INFO d left join DEPARTMENT e on d.DEPARTMENT_ID=e.DEP_NUMBER)f 
+		left join
 
-on c.STAFF_NUMBER=f.STAFF_NUMBER1
+		(select d.PROBATION_DATE_START as PROBATION_DATE_START1,
+		d.FORMAL_DATE_START as FORMAL_DATE_START1,
+		d.LEAVE_DATE as LEAVE_DATE1,
+		d.NAME as NAME1,
+		d.ID_NUMBER as ID_NUMBER1,
+		d.STAFF_NUMBER as STAFF_NUMBER1,
+		d.POSITION_SALARY as POSITION_SALARY1,
+		d.WORK_YEARS as WORK_YEARS1,
+		d.EMAIL as EMAIL1,
+		d.REMARK as REMARK1,
+		d.DEPARTMENT_ID as DEPARTMENT_ID1,
+		d.IS_LEAVE as IS_LEAVE1,
+		d.CREATE_TIME as CREATE_TIME1,
+		d.UPDATE_TIME as UPDATE_TIME1,
+		d.IS_PROBATION as IS_PROBATION1,
+		d.COEFFICEIENT as COEFFICEIENT1,
+		d.SKILL_SALARY as SKILL_SALARY1,
+		d. PROBATION_SALARY as PROBATION_SALARY1,
+		e.DEP_NAME as DEP_NAME1 from
+		STAFF_INFO d left join DEPARTMENT e on d.DEPARTMENT_ID=e.DEP_NUMBER)f
 
-where c.TAGE=0
-  </select>
-  
-  <select id="selectByCheckCondition" parameterType="com.bohai.employeeSalary.vo.QueryCheckMessageParamVO" resultType="java.util.Map">
-     select 
-c.DEP_NAME,
-to_char(c.PROBATION_DATE_START,'yyyy-mm-dd') as PROBATION_DATE_START,
-to_char(c.FORMAL_DATE_START,'yyyy-mm-dd') as FORMAL_DATE_START,
-to_char(c.LEAVE_DATE,'yyyy-mm-dd') as LEAVE_DATE,
-c.NAME ,
-c.ID_NUMBER ,
-c.STAFF_NUMBER ,
-c.POSITION_SALARY ,
-c.WORK_YEARS ,
-c.EMAIL ,
-c.REMARK ,
-c.DEPARTMENT_ID ,
-c.IS_LEAVE ,
-to_char(c.CREATE_TIME,'yyyy-mm-dd') as CREATE_TIME,
-to_char(c.UPDATE_TIME,'yyyy-mm-dd') as UPDATE_TIME,
-c.IS_PROBATION ,
-c.COEFFICEIENT ,
-c.SKILL_SALARY ,
-c.ID ,
-c.TAGE ,
-c.SUBMITTER ,
-c.CHECKER ,
-c.SUBMIT_TIME ,
-c.CHECK_TIME ,
-c.SUBMIT_TYPE ,
-c.APPROVAL_OPINION,
-to_char(f.PROBATION_DATE_START1,'yyyy-mm-dd') as PROBATION_DATE_START1,
-to_char(f.FORMAL_DATE_START1,'yyyy-mm-dd') as FORMAL_DATE_START1,
-to_char(f.LEAVE_DATE1,'yyyy-mm-dd') as LEAVE_DATE1,
-f.NAME1,
-f.ID_NUMBER1,
-f.STAFF_NUMBER1,
-f.POSITION_SALARY1,
-f.WORK_YEARS1,
-f.EMAIL1,
-f.REMARK1,
-f.DEPARTMENT_ID1,
-f.IS_LEAVE1,
-to_char(f.CREATE_TIME1,'yyyy-mm-dd') as CREATE_TIME1,
-to_char(f.UPDATE_TIME1,'yyyy-mm-dd') as UPDATE_TIME1,
-f.IS_PROBATION1,
-f.COEFFICEIENT1,
-f.SKILL_SALARY1,
-f.DEP_NAME1
-from
-(select a.PROBATION_DATE_START ,
-a.FORMAL_DATE_START ,
-a.LEAVE_DATE ,
-a.NAME ,
-a.ID_NUMBER ,
-a.STAFF_NUMBER ,
-a.POSITION_SALARY ,
-a.WORK_YEARS ,
-a.EMAIL ,
-a.REMARK ,
-a.DEPARTMENT_ID ,
-a.IS_LEAVE ,
-a.CREATE_TIME ,
-a.UPDATE_TIME ,
-a.IS_PROBATION ,
-a.COEFFICEIENT ,
-a.SKILL_SALARY ,
-a.ID ,
-a.TAGE ,
-a.SUBMITTER ,
-a.CHECKER ,
-a.SUBMIT_TIME ,
-a.CHECK_TIME ,
-a.SUBMIT_TYPE ,
-a.APPROVAL_OPINION,
-b.DEP_NAME from
-CHECK_MESSAGE a left join DEPARTMENT b on a.DEPARTMENT_ID=b.DEP_NUMBER)c 
+		on c.STAFF_NUMBER=f.STAFF_NUMBER1
 
-left join 
+		where c.TAGE=0
+	</select>
 
-(select d.PROBATION_DATE_START as PROBATION_DATE_START1,
-d.FORMAL_DATE_START as FORMAL_DATE_START1,
-d.LEAVE_DATE as LEAVE_DATE1,
-d.NAME as NAME1,
-d.ID_NUMBER as ID_NUMBER1,
-d.STAFF_NUMBER as STAFF_NUMBER1,
-d.POSITION_SALARY as POSITION_SALARY1,
-d.WORK_YEARS as WORK_YEARS1,
-d.EMAIL as EMAIL1,
-d.REMARK as REMARK1,
-d.DEPARTMENT_ID as DEPARTMENT_ID1,
-d.IS_LEAVE as IS_LEAVE1,
-d.CREATE_TIME as CREATE_TIME1,
-d.UPDATE_TIME as UPDATE_TIME1,
-d.IS_PROBATION as IS_PROBATION1,
-d.COEFFICEIENT as COEFFICEIENT1,
-d.SKILL_SALARY as SKILL_SALARY1,
-e.DEP_NAME as DEP_NAME1 from
-STAFF_INFO d left join DEPARTMENT e on d.DEPARTMENT_ID=e.DEP_NUMBER)f 
+	<select id="selectByCheckCondition"
+		parameterType="com.bohai.employeeSalary.vo.QueryCheckMessageParamVO"
+		resultType="java.util.Map">
+		select
+		c.DEP_NAME,
+		to_char(c.PROBATION_DATE_START,'yyyy-mm-dd') as PROBATION_DATE_START,
+		to_char(c.FORMAL_DATE_START,'yyyy-mm-dd') as FORMAL_DATE_START,
+		to_char(c.LEAVE_DATE,'yyyy-mm-dd') as LEAVE_DATE,
+		c.NAME ,
+		c.ID_NUMBER ,
+		c.STAFF_NUMBER ,
+		c.POSITION_SALARY ,
+		c.WORK_YEARS ,
+		c.EMAIL ,
+		c.REMARK ,
+		c.DEPARTMENT_ID ,
+		c.IS_LEAVE ,
+		to_char(c.CREATE_TIME,'yyyy-mm-dd') as CREATE_TIME,
+		to_char(c.UPDATE_TIME,'yyyy-mm-dd') as UPDATE_TIME,
+		c.IS_PROBATION ,
+		c.COEFFICEIENT ,
+		c.SKILL_SALARY ,
+		c.ID ,
+		c.TAGE ,
+		c.SUBMITTER ,
+		c.CHECKER ,
+		c.SUBMIT_TIME ,
+		c.CHECK_TIME ,
+		c.SUBMIT_TYPE ,
+		c.APPROVAL_OPINION,
+		c.PROBATION_SALARY,
+		to_char(f.PROBATION_DATE_START1,'yyyy-mm-dd') as PROBATION_DATE_START1,
+		to_char(f.FORMAL_DATE_START1,'yyyy-mm-dd') as FORMAL_DATE_START1,
+		to_char(f.LEAVE_DATE1,'yyyy-mm-dd') as LEAVE_DATE1,
+		f.NAME1,
+		f.ID_NUMBER1,
+		f.STAFF_NUMBER1,
+		f.POSITION_SALARY1,
+		f.WORK_YEARS1,
+		f.EMAIL1,
+		f.REMARK1,
+		f.DEPARTMENT_ID1,
+		f.IS_LEAVE1,
+		to_char(f.CREATE_TIME1,'yyyy-mm-dd') as CREATE_TIME1,
+		to_char(f.UPDATE_TIME1,'yyyy-mm-dd') as UPDATE_TIME1,
+		f.IS_PROBATION1,
+		f.COEFFICEIENT1,
+		f.SKILL_SALARY1,
+		f.DEP_NAME1
+		from
+		(select a.PROBATION_DATE_START ,
+		a.FORMAL_DATE_START ,
+		a.LEAVE_DATE ,
+		a.NAME ,
+		a.ID_NUMBER ,
+		a.STAFF_NUMBER ,
+		a.POSITION_SALARY ,
+		a.WORK_YEARS ,
+		a.EMAIL ,
+		a.REMARK ,
+		a.DEPARTMENT_ID ,
+		a.IS_LEAVE ,
+		a.CREATE_TIME ,
+		a.UPDATE_TIME ,
+		a.IS_PROBATION ,
+		a.COEFFICEIENT ,
+		a.SKILL_SALARY ,
+		a.ID ,
+		a.TAGE ,
+		a.SUBMITTER ,
+		a.CHECKER ,
+		a.SUBMIT_TIME ,
+		a.CHECK_TIME ,
+		a.SUBMIT_TYPE ,
+		a.APPROVAL_OPINION,
+		a.PROBATION_SALARY,
+		b.DEP_NAME from
+		CHECK_MESSAGE a left join DEPARTMENT b on a.DEPARTMENT_ID=b.DEP_NUMBER)c
 
-on c.STAFF_NUMBER=f.STAFF_NUMBER1
-  <where>
-   <if test="departmentId !=null and departmentId !=''">
-    c.DEPARTMENT_ID=#{departmentId} 
-   </if>
-   <if test="staffNumber !=null and staffNumber !=''">
-    AND c.STAFF_NUMBER=#{staffNumber} 
-   </if>
-   <if test="name !=null and name !=''">
-    AND c.NAME=#{name}   
-   </if>
-   <if test="tage !=null and tage !=''">
-    AND c.TAGE=#{tage}   
-   </if>
-   <if test="submitType !=null and submitType !=''">
-    AND c.SUBMIT_TYPE=#{submitType}   
-   </if>
-   </where>
-   ORDER BY c.STAFF_NUMBER
- </select>
+		left join
+
+		(select d.PROBATION_DATE_START as PROBATION_DATE_START1,
+		d.FORMAL_DATE_START as FORMAL_DATE_START1,
+		d.LEAVE_DATE as LEAVE_DATE1,
+		d.NAME as NAME1,
+		d.ID_NUMBER as ID_NUMBER1,
+		d.STAFF_NUMBER as STAFF_NUMBER1,
+		d.POSITION_SALARY as POSITION_SALARY1,
+		d.WORK_YEARS as WORK_YEARS1,
+		d.EMAIL as EMAIL1,
+		d.REMARK as REMARK1,
+		d.DEPARTMENT_ID as DEPARTMENT_ID1,
+		d.IS_LEAVE as IS_LEAVE1,
+		d.CREATE_TIME as CREATE_TIME1,
+		d.UPDATE_TIME as UPDATE_TIME1,
+		d.IS_PROBATION as IS_PROBATION1,
+		d.COEFFICEIENT as COEFFICEIENT1,
+		d.SKILL_SALARY as SKILL_SALARY1,
+		d.PROBATION_SALARY as PROBATION_SALARY1,
+		e.DEP_NAME as DEP_NAME1 from
+		STAFF_INFO d left join DEPARTMENT e on d.DEPARTMENT_ID=e.DEP_NUMBER)f
+
+		on c.STAFF_NUMBER=f.STAFF_NUMBER1
+		<where>
+			<if test="departmentId !=null and departmentId !=''">
+				c.DEPARTMENT_ID=#{departmentId}
+			</if>
+			<if test="staffNumber !=null and staffNumber !=''">
+				AND c.STAFF_NUMBER=#{staffNumber}
+			</if>
+			<if test="name !=null and name !=''">
+				AND c.NAME=#{name}
+			</if>
+			<if test="tage !=null and tage !=''">
+				AND c.TAGE=#{tage}
+			</if>
+			<if test="submitType !=null and submitType !=''">
+				AND c.SUBMIT_TYPE=#{submitType}
+			</if>
+		</where>
+		ORDER BY c.STAFF_NUMBER
+	</select>
  
  <select id="queryCheckMessageByCondition" parameterType="com.bohai.employeeSalary.vo.QueryCheckMessageParamVO" resultMap="BaseResultMap">
   SELECT 

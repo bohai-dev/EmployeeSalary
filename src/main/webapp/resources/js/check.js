@@ -499,6 +499,7 @@ function compareFormalDateStart(vaule,row,index){
 		$('#leaveDate2').selectpicker('val',row.LEAVE_DATE);
 		$('#email2').val(row.EMAIL);
 		$('#remark2').val(row.REMARK);
+		$('#probationSalary2').val(row.PROBATION_SALARY);
 
 		$("#allMessageModal").modal('show');
 

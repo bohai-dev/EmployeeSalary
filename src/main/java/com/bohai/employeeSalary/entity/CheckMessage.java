@@ -36,8 +36,18 @@ public class CheckMessage {
     private String departmentName;
     
     private String isLeave;
+    private String probationSalary;
+    
+    
+    public String getProbationSalary() {
+		return probationSalary;
+	}
 
-    @JsonFormat(pattern="yyyy-MM-dd",timezone="GMT+8")
+	public void setProbationSalary(String probationSalary) {
+		this.probationSalary = probationSalary;
+	}
+
+	@JsonFormat(pattern="yyyy-MM-dd",timezone="GMT+8")
     private Date createTime;
 
     @JsonFormat(pattern="yyyy-MM-dd",timezone="GMT+8")

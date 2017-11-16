@@ -26,6 +26,7 @@
     <result column="COEFFICEIENT" property="coefficeient" jdbcType="VARCHAR"/>
     <result column="SKILL_SALARY" property="skillSalary" jdbcType="VARCHAR"/>
     <result column="SUBMIT_STATUS" property="submitStatus" jdbcType="VARCHAR"/>
+    <result column="PROBATION_SALARY" property="probationSalary" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     <!--
@@ -35,7 +36,7 @@
     -->
     STAFF_NUMBER, PROBATION_DATE_START, FORMAL_DATE_START, LEAVE_DATE, NAME, ID_NUMBER, 
     POSITION_SALARY, WORK_YEARS, EMAIL, REMARK, DEPARTMENT_ID, IS_LEAVE, CREATE_TIME, 
-    UPDATE_TIME, IS_PROBATION , COEFFICEIENT ,SKILL_SALARY,SUBMIT_STATUS
+    UPDATE_TIME, IS_PROBATION , COEFFICEIENT ,SKILL_SALARY,SUBMIT_STATUS,PROBATION_SALARY
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     <!--
@@ -68,14 +69,14 @@
       ID_NUMBER, POSITION_SALARY, WORK_YEARS, 
       EMAIL, REMARK, DEPARTMENT_ID, 
       IS_LEAVE, CREATE_TIME, UPDATE_TIME, 
-      IS_PROBATION,COEFFICEIENT,SKILL_SALARY,SUBMIT_STATUS)
+      IS_PROBATION,COEFFICEIENT,SKILL_SALARY,SUBMIT_STATUS,PROBATION_SALARY)
     values (#{staffNumber,jdbcType=VARCHAR}, #{probationDateStart,jdbcType=TIMESTAMP}, 
       #{formalDateStart,jdbcType=TIMESTAMP}, #{leaveDate,jdbcType=TIMESTAMP}, #{name,jdbcType=VARCHAR}, 
       #{idNumber,jdbcType=VARCHAR}, #{positionSalary,jdbcType=VARCHAR}, #{workYears,jdbcType=VARCHAR}, 
       #{email,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{departmentId,jdbcType=VARCHAR}, 
       #{isLeave,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
       #{isProbation,jdbcType=VARCHAR},#{coefficeient,jdbcType=VARCHAR},#{skillSalary,jdbcType=VARCHAR},
-      #{submitStatus,jdbcType=VARCHAR})
+      #{submitStatus,jdbcType=VARCHAR},#{probationSalary,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.bohai.employeeSalary.entity.StaffInfo" >
     <!--
@@ -130,6 +131,9 @@
       <if test="isProbation != null" >
         IS_PROBATION,
       </if>
+      <if test="probationSalary != null" >
+        PROBATION_SALARY,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="staffNumber != null" >
@@ -176,6 +180,9 @@
       </if>
       <if test="isProbation != null" >
         #{isProbation,jdbcType=VARCHAR},
+      </if>
+      <if test="probationSalary != null" >
+        #{probationSalary,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -229,6 +236,9 @@
       <if test="isProbation != null" >
         IS_PROBATION = #{isProbation,jdbcType=VARCHAR},
       </if>
+      <if test="probationSalary != null" >
+        PROBATION_SALARY =#{probationSalary,jdbcType=VARCHAR}
+      </if>
     </set>
     where STAFF_NUMBER = #{staffNumber,jdbcType=VARCHAR}
   </update>
@@ -255,7 +265,8 @@
       IS_PROBATION = #{isProbation,jdbcType=VARCHAR},
       COEFFICEIENT =#{coefficeient,jdbcType=VARCHAR},
       SKILL_SALARY =#{skillSalary,jdbcType=VARCHAR},
-      SUBMIT_STATUS=#{submitStatus,jdbcType=VARCHAR}
+      SUBMIT_STATUS=#{submitStatus,jdbcType=VARCHAR},
+      PROBATION_SALARY=#{probationSalary,jdbcType=VARCHAR}
     where STAFF_NUMBER = #{staffNumber,jdbcType=VARCHAR}
   </update>
   

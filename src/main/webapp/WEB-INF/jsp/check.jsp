@@ -171,13 +171,13 @@
                     <th data-field="STAFF_NUMBER" data-align="center" >员工编号</th>
                     <th data-field="NAME" data-align="center" data-formatter="compareName" id="name">员工姓名</th>
                     <th data-field="DEP_NAME" data-align="center" data-formatter="compareDep">所属部门</th>
-                    <th data-field="POSITION_SALARY" data-align="center" data-formatter="comparePositionSalary">岗位工资</th>
+                    <th data-field="POSITION_SALARY" data-align="center" data-formatter="comparePositionSalary">正式工资</th>
                     <th data-field="SKILL_SALARY" data-align="center" data-formatter="compareSkillSalary">技能工资</th>
                     <th data-field="WORK_YEARS" data-align="center" data-formatter="compareWorkYears">司龄工资</th>
                     <th data-field="PROBATION_DATE_START" data-align="center" data-formatter="compareProbationDateStart">试用期起始日期</th>
                     <th data-field="FORMAL_DATE_START" data-align="center" data-formatter="compareFormalDateStart">&nbsp;&nbsp;&nbsp;转正日期&nbsp;&nbsp;&nbsp;</th>
                     <th data-field="IS_PROBATION" data-align="center" data-formatter="probationFormatter">员工类型</th>
-                    <th data-field="COEFFICEIENT" data-align="center" data-formatter="compareCoefficeient">工资系数</th>
+                    <!-- <th data-field="COEFFICEIENT" data-align="center" data-formatter="compareCoefficeient">工资系数</th> -->
                     <th data-field="IS_LEAVE" data-align="center" data-formatter="LeaveFormatter">员工状态</th>
                     <th data-field="LEAVE_DATE" data-align="center" data-formatter="compareLeaveDate">离职日期</th>
                     <th data-field="EMAIL" data-align="center" data-formatter="compareEmail">邮箱</th>
@@ -247,12 +247,7 @@
                   
                   <hr>
                   
-                  <div class="form-group">
-                    <label for="positionSalary2" class="col-sm-3 control-label">岗位工资</label>
-                    <div class="col-sm-8">
-                      <input type="text" class="form-control" id="positionSalary2" placeholder="" disabled>         
-                    </div>    
-                  </div>
+                 
                   
                   <div class="form-group">
                     <label for="skillSalary2" class="col-sm-3 control-label">技能工资</label>
@@ -287,7 +282,7 @@
                   <hr>
                   
                   <div class="form-group">
-                    <label for="isProbation2" class="col-sm-3 control-label">员工属性</label>
+                    <label for="isProbation2" class="col-sm-3 control-label">员工类型</label>
                     <div class="col-sm-8">
                      <select class="selectpicker form-control" id="isProbation2" onchange="changeCoefficeient2()" disabled>
                           <option value=""> </option>
@@ -297,13 +292,24 @@
                       </select>
                     </div>
                   </div>
-                 
                   <div class="form-group">
+                    <label for="positionSalary2" class="col-sm-3 control-label">正式工资</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" id="positionSalary2" placeholder="" disabled>         
+                    </div>    
+                  </div>
+                   <div class="form-group">
+                    <label for="probationSalary2" class="col-sm-3 control-label">试用期工资</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" id="probationSalary2" placeholder="" disabled>         
+                    </div>    
+                  </div>
+                 <!--  <div class="form-group">
                     <label for="coefficeient2" class="col-sm-3 control-label">工资系数</label>
                     <div class="col-sm-8">
                        <input type="text" class="form-control" id="coefficeient2"  placeholder="" disabled>          
                     </div>
-                  </div>
+                  </div> -->
 				<hr>
                    <div class="form-group">
                     <label for="isLeave2" class="col-sm-3 control-label">员工状态</label>

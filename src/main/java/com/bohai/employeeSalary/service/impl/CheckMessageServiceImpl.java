@@ -9,6 +9,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.bohai.employeeSalary.dao.CheckMessageMapper;
 import com.bohai.employeeSalary.dao.StaffInfoMapper;
@@ -47,6 +48,8 @@ public class CheckMessageServiceImpl implements CheckMessageService{
 				long date=Calendar.getInstance().getTimeInMillis();
 				checkmessage.setCheckTime(new Date(date));
 		this.checkMessageMapper.updateByPrimaryKeySelective(checkmessage);
+		
+		
 		StaffInfo staffInfo=new StaffInfo();
 		staffInfo.setProbationDateStart(checkmessage.getProbationDateStart());
 		staffInfo.setFormalDateStart(checkmessage.getFormalDateStart());
@@ -65,13 +68,17 @@ public class CheckMessageServiceImpl implements CheckMessageService{
 		staffInfo.setIsProbation(checkmessage.getIsProbation());
 		staffInfo.setCoefficeient(checkmessage.getCoefficeient());
 		staffInfo.setSkillSalary(checkmessage.getSkillSalary());
+		staffInfo.setProbationSalary(checkmessage.getProbationSalary());
 		staffInfo.setSubmitStatus("1");
+		
 		
 		if(checkmessage.getSubmitType().equals("0")){
 		this.staffInfoMapper.insert(staffInfo);
 		}else{
 			this.staffInfoMapper.updateByPrimaryKey(staffInfo);
 		}
+		
+		//throw new RuntimeException();
 	}
 	
 	@Override

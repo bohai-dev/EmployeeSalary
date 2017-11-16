@@ -102,9 +102,11 @@ public class StaffSalaryService {
     /*计算某员工的工资*/
     public StaffSalary calculateSalary(StaffSalary salary) {
         
-        BigDecimal posSalary= new BigDecimal(Optional.ofNullable(salary.getPositionSalary()).orElse("0.00"))
-        		              .multiply(new BigDecimal(Optional.ofNullable(salary.getCoefficeient()).orElse("0.00"))); //岗位工资*系数
+      //  BigDecimal posSalary= new BigDecimal(Optional.ofNullable(salary.getPositionSalary()).orElse("0.00"))
+      //  		              .multiply(new BigDecimal(Optional.ofNullable(salary.getCoefficeient()).orElse("0.00"))); //岗位工资*系数
        
+    	BigDecimal posSalary=new BigDecimal("0.00");
+    	
         BigDecimal actualSalary=new BigDecimal("0.00");    //实发工资
         String isLeave=salary.getIsLeave();   //是否离职
         if("1".equals(isLeave)) {   //离职员工
@@ -114,7 +116,7 @@ public class StaffSalaryService {
                 
                 Date  formalDate=salary.getFormalDateStart();  //正式工作的起始日期                
                 
-                if(salary.getPayDate().equals(CommonUtils.getYearMonth(formalDate))) {  //其他类型员工、试用期员工转正当月就离职
+                if(salary.getPayDate().equals(CommonUtils.getYearMonth(formalDate))) {  //试用期员工转正当月就离职
                      String tempDate=CommonUtils.getYearMonthDay(formalDate);   //正式工作的起始日期
                      String formalDay=tempDate.split("-")[2];  //正式工作的day                    
                      String leaveDay=CommonUtils.getYearMonthDay(leaveDate).split("-")[2];  //离职日期的day
@@ -126,20 +128,23 @@ public class StaffSalaryService {
                      int proDays=dateMapper.countWorkDays(tempDate.split("-")[0], tempDate.split("-")[1], startDay,formalDay);
                      //正式工作的天数
                      int formalDays=dateMapper.countWorkDays(tempDate.split("-")[0], tempDate.split("-")[1], formalDay,leaveDay);
-                     //posSalary=posSalary*0.8*proDays/21.75+posSalary*formalDays/21.75;
-                     posSalary=(posSalary.multiply(new BigDecimal("0.8")).multiply(new BigDecimal(proDays)).divide(new BigDecimal("21.75"),2,RoundingMode.HALF_UP))
-                    		 .add(posSalary.multiply(new BigDecimal(formalDays)).divide(new BigDecimal("21.75"),2,RoundingMode.HALF_UP));
+                     //posSalary=试用期工资*proDays/21.75+正式工资*formalDays/21.75;
+                     BigDecimal probationSalary=new BigDecimal(Optional.ofNullable(salary.getProbationSalary()).orElse("0.00"));
+                     BigDecimal formalSalary=new BigDecimal(Optional.ofNullable(salary.getPositionSalary()).orElse("0.00"));
+                     posSalary=(probationSalary.multiply(new BigDecimal(proDays)).divide(new BigDecimal("21.75"),2,RoundingMode.HALF_UP))
+                    		 .add(formalSalary.multiply(new BigDecimal(formalDays)).divide(new BigDecimal("21.75"),2,RoundingMode.HALF_UP));
                     
                     
                 }else {   //普通正式员工离职
                      String[] dateArray=CommonUtils.getYearMonthDay(leaveDate).split("-");                    
                      int workDays=dateMapper.countWorkDays(dateArray[0], dateArray[1], "01", dateArray[2]);
                      //posSalary=posSalary*workDays/21.75;
-                     posSalary=posSalary.multiply(new BigDecimal(workDays)).divide(new BigDecimal("21.75"),2,RoundingMode.HALF_UP);
+                     BigDecimal formalSalary=new BigDecimal(Optional.ofNullable(salary.getPositionSalary()).orElse("0.00"));
+                     posSalary=formalSalary.multiply(new BigDecimal(workDays)).divide(new BigDecimal("21.75"),2,RoundingMode.HALF_UP);
                 }
                 
             }
-            else {   //试用期员工、其他类型员工离职
+            else {   //试用期员工员工离职
                 String startDay="01";
                 String proDate=CommonUtils.getYearMonthDay(salary.getProbationDateStart());  //试用期起始日期
                 String leaDate=CommonUtils.getYearMonthDay(leaveDate);
@@ -152,8 +157,9 @@ public class StaffSalaryService {
                 }
                 
                  int workDays=dateMapper.countWorkDays(leaDate.split("-")[0], leaDate.split("-")[1], startDay, leaDate.split("-")[2]);
-                // posSalary=posSalary*workDays/21.75;
-                posSalary=posSalary.multiply(new BigDecimal(workDays)).divide(new BigDecimal("21.75"),2,RoundingMode.HALF_UP);
+                // posSalary=试用期工资*workDays/21.75;
+                BigDecimal proSalary=new BigDecimal(Optional.ofNullable(salary.getProbationSalary()).orElse("0.00"));
+                posSalary=proSalary.multiply(new BigDecimal(workDays)).divide(new BigDecimal("21.75"),2,RoundingMode.HALF_UP);
                 
             }
             
@@ -187,13 +193,16 @@ public class StaffSalaryService {
                    
                     int formalDays=dateMapper.countWorkDays(year, month, day,"31");
                     
-                  //  posSalary=posSalary*0.8*probationDays/21.75+posSalary*formalDays/21.75;
-                    posSalary=posSalary.multiply(new BigDecimal("0.8")).multiply(new BigDecimal(probationDays)).divide(new BigDecimal("21.75"),2,RoundingMode.HALF_UP)
-                    		  .add(posSalary.multiply(new BigDecimal(formalDays)).divide(new BigDecimal("21.75"),2,RoundingMode.HALF_UP));
+                  //  posSalary=试用期工资*probationDays/21.75+正式工资*formalDays/21.75;
+                    BigDecimal probationSalary=new BigDecimal(Optional.ofNullable(salary.getProbationSalary()).orElse("0.00"));
+                    BigDecimal formalSalary=new BigDecimal(Optional.ofNullable(salary.getPositionSalary()).orElse("0.00"));
+                    posSalary=probationSalary.multiply(new BigDecimal(probationDays)).divide(new BigDecimal("21.75"),2,RoundingMode.HALF_UP)
+                    		  .add(formalSalary.multiply(new BigDecimal(formalDays)).divide(new BigDecimal("21.75"),2,RoundingMode.HALF_UP));
                     
                     
-                }else {      //普遍情况: 在职正式员工 不用处理
-                    //actualSalary=computeSalary(salary,posSalary);
+                }else {      //普遍情况: 在职正式员工 
+                	posSalary=new BigDecimal(Optional.ofNullable(salary.getPositionSalary()).orElse("0.00"));
+                	
                 }
                 
             }
@@ -206,13 +215,14 @@ public class StaffSalaryService {
                     String month=tempDate.split("-")[1];  //获取试用期起始日期的月份
                    
                     int countWorkDays=dateMapper.countWorkDays(year, month, startDay,"31");  //试用当月的工作天数                    
-                  //  posSalary=posSalary*countWorkDays/21.75;
-                    posSalary=posSalary.multiply(new BigDecimal(countWorkDays)).divide(new BigDecimal("21.75"),2,RoundingMode.HALF_UP);
-                //    actualSalary=computeSalary(salary, posSalary);
+                  //  posSalary=试用期工资*countWorkDays/21.75;
+                    BigDecimal probationSalary=new BigDecimal(Optional.ofNullable(salary.getProbationSalary()).orElse("0.00"));
+                    posSalary=probationSalary.multiply(new BigDecimal(countWorkDays)).divide(new BigDecimal("21.75"),2,RoundingMode.HALF_UP);
+                
                     
-                }else {  //非首月试用期   试用期员工正常情况 不用处理
+                }else {  //非首月试用期   试用期员工正常情况 
                     
-                    //actualSalary=computeSalary(salary, posSalary);
+                	posSalary=new BigDecimal(Optional.ofNullable(salary.getProbationSalary()).orElse("0.00"));
                 }
                 
             }
@@ -235,7 +245,6 @@ public class StaffSalaryService {
      * @return  实发工资
      */
     public StaffSalary  computeSalary(StaffSalary salary,BigDecimal modPosSalary) {
-    	//modPosSalary= CommonUtils.getRound(modPosSalary);
     	String sheBao="0.00";
     	String house="0.00";
     	QueryStaffSalaryParamVO vo=new QueryStaffSalaryParamVO();

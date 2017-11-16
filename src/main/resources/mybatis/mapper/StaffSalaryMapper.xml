@@ -71,8 +71,7 @@
      <result column="IS_PROBATION" jdbcType="VARCHAR" property="isProbation"  />   
      <result column="COEFFICEIENT" jdbcType="VARCHAR" property="coefficeient"  />   
      <result column="SKILL_SALARY" jdbcType="VARCHAR" property="skillSalary"  />             
-       
-       
+     <result column="PROBATION_SALARY"  jdbcType="VARCHAR" property="probationSalary"/>  
  </resultMap>
   <sql id="Base_Column_List">
    
@@ -96,7 +95,7 @@
     -->
     STAFF_NUMBER AS STAFF_NUM,PROBATION_DATE_START, FORMAL_DATE_START, LEAVE_DATE, NAME,
     POSITION_SALARY, WORK_YEARS, EMAIL,  IS_LEAVE,
-    IS_PROBATION , COEFFICEIENT
+    IS_PROBATION , COEFFICEIENT,PROBATION_SALARY
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     

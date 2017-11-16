@@ -9,6 +9,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.bohai.employeeSalary.dao.CheckMessageMapper;
 import com.bohai.employeeSalary.dao.StaffInfoMapper;
@@ -34,6 +35,7 @@ public class CheckMessageServiceImpl implements CheckMessageService{
 		return checkMessageList;
 	}
 	
+	@Transactional
 	@Override
 	public void agreeStaffInfo(CheckMessage paramVO) {
 		// TODO Auto-generated method stub
@@ -72,6 +74,7 @@ public class CheckMessageServiceImpl implements CheckMessageService{
 		}else{
 			this.staffInfoMapper.updateByPrimaryKey(staffInfo);
 		}
+		
 	}
 	
 	@Override

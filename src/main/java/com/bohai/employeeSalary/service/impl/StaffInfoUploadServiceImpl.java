@@ -1,6 +1,8 @@
 package com.bohai.employeeSalary.service.impl;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -67,7 +69,10 @@ public class StaffInfoUploadServiceImpl implements FileUploadService{
 							}
 							//岗位工资
 							if (staffSheet.getRow(i).getCell(2)!=null) {
-								checkMessage.setPositionSalary(staffSheet.getRow(i).getCell(2).getStringCellValue());
+								String salary=staffSheet.getRow(i).getCell(2).getStringCellValue();
+								BigDecimal probationSalary=new BigDecimal(salary).multiply(new BigDecimal("0.8")).setScale(2, RoundingMode.HALF_UP);
+								checkMessage.setPositionSalary(salary);
+								checkMessage.setProbationSalary(probationSalary.toString());
 							}
 							//技能工资
 							if (staffSheet.getRow(i).getCell(3)!=null) {
@@ -86,8 +91,6 @@ public class StaffInfoUploadServiceImpl implements FileUploadService{
 								}else if (staffType.equals("试用期员工")) {
 									checkMessage.setIsProbation("1");
 									checkMessage.setCoefficeient("0.8");
-								}else {
-									checkMessage.setIsProbation("2");
 								}
 								
 							}

@@ -356,7 +356,7 @@
                     <th data-field="staffNumber" data-align="center" data-sortable="true">员工编号</th>
                     <th data-field="name" data-align="center" >员工姓名</th>
                     <th data-field="departmentName" data-align="center">所属部门</th>
-                    <th data-field="positionSalary" data-align="center" >正式工资</th>
+                    <th data-field="positionSalary" data-align="center" >岗位工资</th>
                     <th data-field="skillSalary" data-align="center">技能工资</th>
                     <th data-field="workYears" data-align="center" >司龄工资</th>
                     <th data-field="isProbation" data-align="center" data-formatter="probationFormatter">员工类型</th>
@@ -493,7 +493,7 @@
                     </div>
                   </div> -->
                    <div class="form-group">
-                    <label for="positionSalary1" class="col-sm-3 control-label">正式工资</label>
+                    <label for="positionSalary1" class="col-sm-3 control-label">岗位工资</label>
                     <div class="col-sm-8">
                       <input type="text" class="form-control" id="positionSalary1" name="positionSalary1" placeholder="" onblur="positionSalary1Blur()" >         
                     </div>
@@ -635,7 +635,7 @@
                     </div>
                   </div>
                    <div class="form-group">
-                    <label for="positionSalary2" class="col-sm-3 control-label">正式工资</label>
+                    <label for="positionSalary2" class="col-sm-3 control-label">岗位工资</label>
                     <div class="col-sm-8">
                       <input type="text" class="form-control" id="positionSalary2" name="positionSalary2" placeholder="">         
                     </div> 

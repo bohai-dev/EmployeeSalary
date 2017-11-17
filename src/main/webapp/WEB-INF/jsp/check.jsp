@@ -171,7 +171,7 @@
                     <th data-field="STAFF_NUMBER" data-align="center" >员工编号</th>
                     <th data-field="NAME" data-align="center" data-formatter="compareName" id="name">员工姓名</th>
                     <th data-field="DEP_NAME" data-align="center" data-formatter="compareDep">所属部门</th>
-                    <th data-field="POSITION_SALARY" data-align="center" data-formatter="comparePositionSalary">正式工资</th>
+                    <th data-field="POSITION_SALARY" data-align="center" data-formatter="comparePositionSalary">岗位工资</th>
                     <th data-field="PROBATION_SALARY" data-align="center" data-formatter="compareProbationSalary">试用期工资</th>
                     <th data-field="SKILL_SALARY" data-align="center" data-formatter="compareSkillSalary">技能工资</th>
                     <th data-field="WORK_YEARS" data-align="center" data-formatter="compareWorkYears">司龄工资</th>
@@ -294,7 +294,7 @@
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="positionSalary2" class="col-sm-3 control-label">正式工资</label>
+                    <label for="positionSalary2" class="col-sm-3 control-label">岗位工资</label>
                     <div class="col-sm-8">
                       <input type="text" class="form-control" id="positionSalary2" placeholder="" disabled>         
                     </div>    

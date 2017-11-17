@@ -62,10 +62,16 @@ public class StaffInfoUploadServiceImpl implements FileUploadService{
 								checkMessage.setStaffNumber(number);
 								
 								checkMessage.setDepartmentId(number.substring(0,2));
+							}else {
+								message.append("第"+ (i+1) +"行员工编号为空，导入失败</br>");
+								continue;
 							}
 							//员工姓名
 							if (staffSheet.getRow(i).getCell(1)!=null) {
 								checkMessage.setName(staffSheet.getRow(i).getCell(1).getStringCellValue());
+							}else {
+								message.append("第"+ (i+1) +"行员工姓名为空，导入失败</br>");
+								continue;
 							}
 							//岗位工资
 							if (staffSheet.getRow(i).getCell(2)!=null) {
@@ -73,6 +79,9 @@ public class StaffInfoUploadServiceImpl implements FileUploadService{
 								BigDecimal probationSalary=new BigDecimal(salary).multiply(new BigDecimal("0.8")).setScale(2, RoundingMode.HALF_UP);
 								checkMessage.setPositionSalary(salary);
 								checkMessage.setProbationSalary(probationSalary.toString());
+							}else {
+								message.append("第"+ (i+1) +"行岗位工资为空，导入失败</br>");
+								continue;
 							}
 							//技能工资
 							if (staffSheet.getRow(i).getCell(3)!=null) {
@@ -91,8 +100,13 @@ public class StaffInfoUploadServiceImpl implements FileUploadService{
 								}else if (staffType.equals("试用期员工")) {
 									checkMessage.setIsProbation("1");
 									checkMessage.setCoefficeient("0.8");
+								}else {
+									message.append("第"+ (i+1) +"行员工类型非法，导入失败</br>");
+									continue;
 								}
-								
+							}else {
+								message.append("第"+ (i+1) +"行员工类型为空，导入失败</br>");
+								continue;
 							}
 							//员工状态
 							if (staffSheet.getRow(i).getCell(6)!=null) {

@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,8 @@ import com.bohai.employeeSalary.vo.PaginationParamVO;
 @Service("checkMessageService")
 public class CheckMessageServiceImpl implements CheckMessageService{
 
+    static Logger logger = Logger.getLogger(CheckMessageServiceImpl.class);
+            
 	@Autowired
 	private CheckMessageMapper checkMessageMapper;
 	
@@ -117,8 +120,7 @@ public class CheckMessageServiceImpl implements CheckMessageService{
 			try {
 				this.staffInfoMapper.insert(staffInfo);
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			    logger.error("保存员工信息失败",e);
 			}
 			}else{
 				this.staffInfoMapper.updateByPrimaryKey(staffInfo);
@@ -127,6 +129,7 @@ public class CheckMessageServiceImpl implements CheckMessageService{
 		
 	}
 
+	@Transactional
 	@Override
 	public void refuseStaffInfo(CheckMessage paramVO) {
 		// TODO Auto-generated method stub

@@ -137,10 +137,10 @@ $(function(){
 	                    },
 	                    threshold :  2 , // 有2字符以上才发送ajax请求，（input中输入一个字符，插件会向服务器发送一次，设置限制，2字符以上才开始）
 	                    remote: {// ajax验证。server result:{"valid",true or
-									// false} 向服务发送当前input
-									// name值，获得一个json数据。例表示正确：{"valid",true}
+									                      // false} 向服务发送当前input
+									                       // name值，获得一个json数据。例表示正确：{"valid",true}
 	                        url: 'checkStaffNumber',// 验证地址
-	                        delay :  1000,// 每输入一个字符，就发ajax请求，服务器压力还是太大，设置2秒发送一次ajax（默认输入一个字符，提交一次，服务器压力太大）
+	                        delay :  2000,// 每输入一个字符，就发ajax请求，服务器压力还是太大，设置2秒发送一次ajax（默认输入一个字符，提交一次，服务器压力太大）
 	                        type: 'POST'// 请求方式
 	                        /**
 							 * 自定义提交数据，默认值提交当前input value data:
@@ -199,8 +199,9 @@ $(function(){
 	            }
 	       
 	    }).on('success.form.bv', function(e) {// 点击提交之后
-	        // alert(123);
-	    	submitStaffInfo();
+	    	// Prevent form submission
+              e.preventDefault(); 
+	    	  submitStaffInfo();
 	    });
 	    
 	    $('#editForm').bootstrapValidator({
@@ -243,6 +244,7 @@ $(function(){
 	           }
 	        }).on('success.form.bv', function(e) {// 点击提交之后,提交更新信息
 		       //  alert(234);
+	           e.preventDefault(); 
 		       if($('#isLeave2').val()=="1"){
 		       		if($('#leaveDate2').val()==""){
 		       			alert("正在执行员工离职操作，请输入离职日期!");
@@ -505,6 +507,7 @@ function submitStaffInfo(){
          success: function (data,status) {
         	 if(data["status"]=="false"){
         		 alert("请勿重复提交新增员工申请信息");
+        		 console.log(123);
         	 }else if(data["status"]=="success"){
              $('#addModal').modal('hide');
              alert("信息已提交审核，请等待!");
@@ -603,11 +606,17 @@ function submitStaffInfo(){
   
   //positionSalary1的onblur事件
   function positionSalary1Blur(){
-	  if(!isNaN($('#positionSalary1').val())){
-		  var probationSalary=$('#positionSalary1').val()*0.8;
-		  //默认正式工资的80%	 
-		  $('#probationSalary1').val(probationSalary);  
+	  var f=parseFloat($('#positionSalary1').val());
+	  if(isNaN(f)){
+		  return;
+		  
+	  }else{
+		  
+		  //默认正式工资的80% 
+		  $('#probationSalary1').val((f*0.8).toFixed(2));  
+	     
 	  }
+		
 	  
   }
   

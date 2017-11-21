@@ -8,7 +8,7 @@ public class Test {
         
         
         String s = null;
-        new BigDecimal(s);
+        System.out.println(new BigDecimal("5000.00 ".trim()));
     }
 
 }

@@ -78,7 +78,7 @@ public class StaffInfoUploadServiceImpl implements FileUploadService{
 							//岗位工资
 							if (staffSheet.getRow(i).getCell(2)!=null) {
 								try {
-                                    String salary=staffSheet.getRow(i).getCell(2).getStringCellValue();
+                                    String salary=staffSheet.getRow(i).getCell(2).getStringCellValue().trim();
                                     BigDecimal probationSalary=new BigDecimal(salary).multiply(new BigDecimal("0.8")).setScale(2, RoundingMode.HALF_UP);
                                     checkMessage.setPositionSalary(salary);
                                     checkMessage.setProbationSalary(probationSalary.toString());

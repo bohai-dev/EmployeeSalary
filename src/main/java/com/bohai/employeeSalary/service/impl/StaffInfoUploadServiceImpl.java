@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -30,6 +31,7 @@ import com.bohai.employeeSalary.service.FileUploadService;
 @Service("staffInfoUploadService")
 public class StaffInfoUploadServiceImpl implements FileUploadService{
 	
+    static Logger logger = Logger.getLogger(StaffInfoUploadServiceImpl.class);
 	 
 	@Autowired
 	private CheckMessageMapper checkMessageMapper;	
@@ -75,10 +77,16 @@ public class StaffInfoUploadServiceImpl implements FileUploadService{
 							}
 							//岗位工资
 							if (staffSheet.getRow(i).getCell(2)!=null) {
-								String salary=staffSheet.getRow(i).getCell(2).getStringCellValue();
-								BigDecimal probationSalary=new BigDecimal(salary).multiply(new BigDecimal("0.8")).setScale(2, RoundingMode.HALF_UP);
-								checkMessage.setPositionSalary(salary);
-								checkMessage.setProbationSalary(probationSalary.toString());
+								try {
+                                    String salary=staffSheet.getRow(i).getCell(2).getStringCellValue();
+                                    BigDecimal probationSalary=new BigDecimal(salary).multiply(new BigDecimal("0.8")).setScale(2, RoundingMode.HALF_UP);
+                                    checkMessage.setPositionSalary(salary);
+                                    checkMessage.setProbationSalary(probationSalary.toString());
+                                } catch (Exception e) {
+                                    logger.error("解析岗位工资失败",e);
+                                    message.append("第"+ (i+1) +"行岗位工资解析错误，导入失败</br>");
+                                    continue;
+                                }
 							}else {
 								message.append("第"+ (i+1) +"行岗位工资为空，导入失败</br>");
 								continue;
@@ -127,8 +135,7 @@ public class StaffInfoUploadServiceImpl implements FileUploadService{
 										Date startDate=sdf.parse(startDateStr);
 										checkMessage.setProbationDateStart(startDate);
 									} catch (ParseException e) {
-										// TODO Auto-generated catch block
-										e.printStackTrace();
+									    logger.error("解析异常", e);
 										message.append(checkMessage.getStaffNumber()).append(":").append(checkMessage.getName()).append("试用日期格式不正确，未能导入，时间必须是'2017-10-31'这种文本形式</br>");
 										continue;
 									}
@@ -146,8 +153,7 @@ public class StaffInfoUploadServiceImpl implements FileUploadService{
 										Date formalDate=sdf.parse(formalDateStr);
 										checkMessage.setFormalDateStart(formalDate);
 									} catch (ParseException e) {
-										// TODO Auto-generated catch block
-										e.printStackTrace();
+									    logger.error("解析异常", e);
 										message.append(checkMessage.getStaffNumber()).append(":").append(checkMessage.getName()).append("转正日期格式不正确，未能导入，时间必须是'2017-10-31'这种文本形式</br>");
 										continue;
 									}
@@ -163,8 +169,7 @@ public class StaffInfoUploadServiceImpl implements FileUploadService{
 										checkMessage.setLeaveDate(leaveDate);
 										
 									} catch (ParseException e) {
-										// TODO Auto-generated catch block
-										e.printStackTrace();
+									    logger.error("解析异常", e);
 										message.append(checkMessage.getStaffNumber()).append(":").append(checkMessage.getName()).append("离职日期格式不正确，未能导入，时间必须是'2017-10-31'这种文本形式</br>");
 									    continue;
 									}
@@ -218,9 +223,8 @@ public class StaffInfoUploadServiceImpl implements FileUploadService{
 					}
 					
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					message.append("fail:"+e.getMessage());
-					e.printStackTrace();
+				    logger.error("解析异常", e);
+					message.append("上传失败："+e.getMessage());
 				}
 	       
 		return message.toString();

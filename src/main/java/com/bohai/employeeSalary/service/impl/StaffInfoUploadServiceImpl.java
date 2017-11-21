@@ -93,11 +93,31 @@ public class StaffInfoUploadServiceImpl implements FileUploadService{
 							}
 							//技能工资
 							if (staffSheet.getRow(i).getCell(3)!=null) {
-								checkMessage.setSkillSalary(staffSheet.getRow(i).getCell(3).getStringCellValue());
+							    String salary=staffSheet.getRow(i).getCell(3).getStringCellValue().trim();
+							    if(!salary.equals("")){
+							        try {
+							            new BigDecimal(salary);
+							        } catch (Exception e) {
+							            logger.error("解析技能工资失败",e);
+							            message.append("第"+ (i+1) +"行技能工资解析错误，导入失败</br>");
+							            continue;
+							        }
+							        checkMessage.setSkillSalary(salary);
+							    }
 							}
 							//司龄工资
 							if (staffSheet.getRow(i).getCell(4)!=null) {
-								checkMessage.setWorkYears(staffSheet.getRow(i).getCell(4).getStringCellValue());
+							    String salary=staffSheet.getRow(i).getCell(4).getStringCellValue().trim();
+							    if(!salary.equals("")){
+							        try {
+                                        new BigDecimal(salary);
+                                    } catch (Exception e) {
+                                        logger.error("解析司龄工资失败",e);
+                                        message.append("第"+ (i+1) +"行司龄工资解析错误，导入失败</br>");
+                                        continue;
+                                    }
+							        checkMessage.setWorkYears(salary);
+							    }
 							}
 							//员工类型、工资系数
 							if (staffSheet.getRow(i).getCell(5)!=null) {

@@ -200,7 +200,7 @@ $(function(){
 	       
 	    }).on('success.form.bv', function(e) {// 点击提交之后
 	    	// Prevent form submission
-              e.preventDefault(); 
+	    	  //e.preventDefault(); 
 	    	  submitStaffInfo();
 	    });
 	    
@@ -512,6 +512,21 @@ function submitStaffInfo(){
              $('#addModal').modal('hide');
              alert("信息已提交审核，请等待!");
 	        	 }
+        	 
+        	 $('#addForm').bootstrapValidator('disableSubmitButtons', false);
+        	 $('#staffNumber1').val(""),
+     		 $('#name1').val(""),
+     		 $('#depName1').val(""),
+     		 $('#positionSalary1').val(""),
+     		 $('#skillSalary1').val(""),
+     		 $('#workYears1').val(""),
+     		 $('#probationDateStart1').val(""),
+     		 $('#formalDateStart1').val(""),
+     		 $('#isProbation1').val(""),
+     		 $('#coefficeient1').val(""),
+             $('#email1').val(""),
+             $('#remark1').val(""),
+             $('#probationSalary1').val("")
          }
     });
 }
@@ -550,7 +565,20 @@ function submitStaffInfo(){
                    
    	        	 }
                
-               
+            	$('#editForm').bootstrapValidator('disableSubmitButtons', false);  
+            	$('#staffNumber1').val(""),
+        		$('#name1').val(""),
+        		$('#depName1').val(""),
+        		$('#positionSalary1').val(""),
+        		$('#skillSalary1').val(""),
+        		$('#workYears1').val(""),
+        		$('#probationDateStart1').val(""),
+        		$('#formalDateStart1').val(""),
+        		$('#isProbation1').val(""),
+        		$('#coefficeient1').val(""),
+                $('#email1').val(""),
+                $('#remark1').val(""),
+                $('#probationSalary1').val("")
             }
        });
    }

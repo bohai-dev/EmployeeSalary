@@ -138,13 +138,15 @@ public class CheckMessageServiceImpl implements CheckMessageService{
 			    String userName=((SysUser)currentUser.getSession().getAttribute("user")).getFullName();
 		paramVO.setChecker(userName);
 		//获取当前系统时间
-				long date=Calendar.getInstance().getTimeInMillis();
+		long date=Calendar.getInstance().getTimeInMillis();
 		paramVO.setCheckTime(new Date(date));
 		paramVO.setTage("2");
 		this.checkMessageMapper.updateByPrimaryKeySelective(paramVO);
 		StaffInfo staff=this.staffInfoMapper.selectByPrimaryKey(paramVO.getStaffNumber());
-		staff.setSubmitStatus("1");
-		 this.staffInfoMapper.updateByPrimaryKey(staff);
+		if(staff != null) {
+			staff.setSubmitStatus("1");
+			this.staffInfoMapper.updateByPrimaryKey(staff);
+		}
 	}
 
 }

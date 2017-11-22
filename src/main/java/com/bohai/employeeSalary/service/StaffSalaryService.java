@@ -34,7 +34,7 @@ import com.bohai.employeeSalary.vo.QueryStaffSalaryParamVO;
 @Service("salaryService")
 public class StaffSalaryService {
 
-	static Logger logger = Logger.getLogger(SalaryUploadServiceImpl.class);
+	static Logger logger = Logger.getLogger(StaffSalaryService.class);
 	
 	@Autowired
 	StaffSalaryMapper   staffSalaryMapper;

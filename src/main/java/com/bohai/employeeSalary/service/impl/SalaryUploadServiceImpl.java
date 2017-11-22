@@ -165,6 +165,7 @@ public class SalaryUploadServiceImpl implements FileUploadService {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			logger.error("解析社保公积金表失败",e);
 			message=e.getMessage();
 			
 		}

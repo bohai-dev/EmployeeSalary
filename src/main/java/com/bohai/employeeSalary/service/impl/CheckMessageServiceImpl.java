@@ -104,6 +104,7 @@ public class CheckMessageServiceImpl implements CheckMessageService{
 			staffInfo.setIdNumber(checkmessage.getIdNumber());
 			staffInfo.setStaffNumber(checkmessage.getStaffNumber());
 			staffInfo.setPositionSalary(checkmessage.getPositionSalary());
+			staffInfo.setProbationSalary(checkmessage.getProbationSalary());
 			staffInfo.setWorkYears(checkmessage.getWorkYears());
 			staffInfo.setEmail(checkmessage.getEmail());
 			staffInfo.setRemark(checkmessage.getRemark());

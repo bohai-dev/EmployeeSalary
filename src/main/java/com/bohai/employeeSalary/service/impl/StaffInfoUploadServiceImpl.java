@@ -75,12 +75,16 @@ public class StaffInfoUploadServiceImpl implements FileUploadService{
 								message.append("第"+ (i+1) +"行员工姓名为空，导入失败</br>");
 								continue;
 							}
-							//岗位工资
+							//岗位工资、试用期工资
 							if (staffSheet.getRow(i).getCell(2)!=null) {
 								try {
+									//岗位工资
                                     String salary=staffSheet.getRow(i).getCell(2).getStringCellValue().trim();
+                                    //试用期工资
                                     BigDecimal probationSalary=new BigDecimal(salary).multiply(new BigDecimal("0.8")).setScale(2, RoundingMode.HALF_UP);
+                                    //设置岗位工资
                                     checkMessage.setPositionSalary(salary);
+                                    //设置试用期工资
                                     checkMessage.setProbationSalary(probationSalary.toString());
                                 } catch (Exception e) {
                                     logger.error("解析岗位工资失败",e);

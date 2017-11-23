@@ -23,6 +23,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -298,14 +299,19 @@ public class SalaryController{
 		}
 		
 		
-		String FileName = new String(salaryList.get(0).getName()+"-"+salaryList.get(0).getPayDate()+"工资条.xlsx");
+		String month = "";
+        if(!StringUtils.isEmpty(salaryList.get(0).getPayDate())){
+            month = salaryList.get(0).getPayDate().replaceAll("-", "年")+"月";
+        }
+        
+		String FileName = salaryList.get(0).getName()+"-"+month+"工资条.xlsx";
 		String FileUrl=request.getSession().getServletContext().getRealPath("/WEB-INF/classes/email/"+FileName);
 		//String FileUrl=new String("D:\\"+FileName);
 		OutputStream outputStream =new FileOutputStream(new File(FileUrl));
 		wb.write(outputStream);
-		String subject=new String(salaryList.get(0).getName()+salaryList.get(0).getPayDate()+"工资条信息");
-		String content=new String(salaryList.get(0).getName()+"员工  ,您好!"
-				+ "———" +salaryList.get(0).getPayDate()+"工资条信息，请查看!");
+		
+		String subject=month +"工资条";
+		String content="您好,"+month+"工资条，请注意查收，谢谢！";
 		mailUtil.send(salaryList.get(0).getEmail(),subject,content,FileName,FileUrl);
 		outputStream.close();
 	}
@@ -450,15 +456,19 @@ public class SalaryController{
 							row2.getCell(k).setCellStyle(style1);
 						}
 						
+						
+						String month = "";
+				        if(!StringUtils.isEmpty(salaryList.get(i).getPayDate())){
+				            month = salaryList.get(i).getPayDate().replaceAll("-", "年")+"月";
+				        }
 				
-						FileNames[i]=salaryList.get(i).getName()+"-"+salaryList.get(i).getPayDate()+"工资条.xlsx";
+						FileNames[i]=salaryList.get(i).getName()+"-"+month+"工资条.xlsx";
 						//FileUrls[i]="D:\\"+FileNames[i];
 						FileUrls[i]=request.getSession().getServletContext().getRealPath("/WEB-INF/classes/email/"+FileNames[i]);
 						OutputStream outputStream =new FileOutputStream(new File(FileUrls[i]));
 						wb.write(outputStream);
-						subjects[i]=salaryList.get(i).getName()+salaryList.get(i).getPayDate()+"工资条信息";
-						contents[i]=salaryList.get(i).getName()+"员工  ,您好!"
-								+ "———" +salaryList.get(i).getPayDate()+"工资条信息，请查看!";
+						subjects[i]=month +"工资条";
+						contents[i]="您好,"+month+"工资条，请注意查收，谢谢！";
 						recipients[i]=salaryList.get(i).getEmail();
 						System.out.println(recipients[i]);
 						outputStream.close();

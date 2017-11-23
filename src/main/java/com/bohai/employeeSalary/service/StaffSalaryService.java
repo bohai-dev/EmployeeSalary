@@ -14,6 +14,7 @@ import java.util.Optional;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.bohai.employeeSalary.dao.SalaryDateMapper;
 import com.bohai.employeeSalary.dao.StaffInfoMapper;
@@ -255,7 +256,9 @@ public class StaffSalaryService {
 				//社保
     			   sheBao=staffSalary.getPersonalTotal();  
     			//公积金
-    			   house=staffSalary.getHousePersonalTotal();
+    			   if(!StringUtils.isEmpty(staffSalary.getHousePersonalTotal())) {
+    				   house=staffSalary.getHousePersonalTotal();
+    			   }
     			   
     			   salary.setPayBase(staffSalary.getPayBase());
     			   salary.setPensionPersonal(staffSalary.getPensionPersonal());

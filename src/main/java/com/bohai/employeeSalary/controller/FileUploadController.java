@@ -34,20 +34,22 @@ public class FileUploadController {
 	@ResponseBody
 	public Map<String, String> fileUpload(@RequestParam("file_data") MultipartFile file, HttpServletRequest request) throws BohaiException {
 		logger.debug("文件上传");
+		String message="";
 		
 		String fileName;
 		try {
 			fileName = new String(file.getOriginalFilename().getBytes("ISO-8859-1"),"UTF-8");
 			fileName = file.getOriginalFilename();
 			logger.debug(fileName);
-			String message=salaryUploadService.upload(file);
+		    message=salaryUploadService.upload(file);
 			logger.debug(message);
 			
 		} catch (UnsupportedEncodingException e1) {
 			logger.error("格式不支持",e1);
+			message="格式不支持";
 		}
 		Map<String,String> map = new HashMap<String,String>();
-		map.put("status", "success");
+		map.put("message", message);
 		return map;
 	}
 	

@@ -130,6 +130,8 @@
                     }); 
                     
                     $("#finput1").on("fileuploaded", function (event, data, previewId, index) {
+                    	 alert(data["response"]["message"]);
+                    	 
                     	 $('#salaryTable').bootstrapTable('refresh');
                     });
                  </script>

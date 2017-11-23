@@ -111,7 +111,7 @@ public class SalaryUploadServiceImpl implements FileUploadService {
 
 						staffSalary.setCreateTime(CommonUtils.getTime());
 
-					//	message = salaryService.saveOrUpdate(staffSalary);
+						salaryService.saveOrUpdate(staffSalary);
 					}
 
 				}
@@ -155,7 +155,7 @@ public class SalaryUploadServiceImpl implements FileUploadService {
 						staffSalary.setHouseCompanyTotal(houseSheet.getRow(i).getCell(11).getStringCellValue());
 						staffSalary.setHouseToatal(houseSheet.getRow(i).getCell(12).getStringCellValue());
 
-					//	message = salaryService.saveOrUpdate(staffSalary);
+						salaryService.saveOrUpdate(staffSalary);
 
 					}
 				}

@@ -76,11 +76,11 @@ public class StaffSalaryService {
         /*查询该部门该月份所有员工的信息*/
         List<StaffSalary> salaryList=staffSalaryMapper.queryStaffSalaryByParams(paramVo);
         
-        if (salaryList==null||salaryList.size()<=0) {     //没有该月份信息
+        if (salaryList==null||salaryList.size()<=0) {     //工资表中还没有该月份信息，要先生成
         	QueryStaffInfoParamVO vo=new QueryStaffInfoParamVO();
         	vo.setDepartmentId(paramVo.getDepNum());
         	vo.setLeaveDate(paramVo.getPayDate());
-        	List<String>  staffnums=staffInfoMapper.selectByDepartmentId(vo);    //查询该部门所有的员工编号
+        	List<String>  staffnums=staffInfoMapper.selectByDepartmentId(vo);    //查询[x部门]所有的员工编号
         	for(int i=0;i<staffnums.size();i++) {
         		StaffSalary staffSalary=new StaffSalary();
         		staffSalary.setStaffNumber(staffnums.get(i));
@@ -250,7 +250,7 @@ public class StaffSalaryService {
     	String house="0.00";
     	QueryStaffSalaryParamVO vo=new QueryStaffSalaryParamVO();
     	vo.setStaffNum(salary.getStaffNumber());
-    	List<StaffSalary> salaryList=staffSalaryMapper.queryStaffSalaryByParams(vo);   //查询到最近月份的工资信息
+    	List<StaffSalary> salaryList=staffSalaryMapper.queryStaffSalaryByParams(vo);   //查询最近月份的工资信息
     	for(StaffSalary staffSalary : salaryList) {
     		 if (staffSalary.getPersonalTotal()!=null) {
 				//社保
@@ -298,7 +298,7 @@ public class StaffSalaryService {
     			   salary.setHouseToatal(staffSalary.getHouseToatal());
     			   salary.setStaffDepartmentId(staffSalary.getStaffDepartmentId());
     			   
-    			   break;
+    			   break;    //getPersonalTotal不为null，就跳出循环
 			}
     		
     		

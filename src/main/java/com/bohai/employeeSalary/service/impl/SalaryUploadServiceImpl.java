@@ -46,7 +46,7 @@ public class SalaryUploadServiceImpl implements FileUploadService {
 			String regEx = "[^0-9]";
 			Pattern p = Pattern.compile(regEx);
 			Matcher m = p.matcher(fileName);
-			String payDate = new StringBuilder(m.replaceAll("").trim()).insert(4, "-").toString();
+			String payDate = new StringBuilder(m.replaceAll("").trim()).insert(4, "-").toString();  //2017-07
 
 			String pensionPersonalPercent = Double.toString(salarySheet.getRow(5).getCell(6).getNumericCellValue());
 			String medicalPersonalPercent = Double.toString(salarySheet.getRow(5).getCell(7).getNumericCellValue());

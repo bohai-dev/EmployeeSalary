@@ -506,6 +506,9 @@
                     <div class="col-sm-8">
                       <input type="text" class="form-control" id="probationSalary1" name="probationSalary1" placeholder="">         
                     </div>
+                    <div>
+                    		<p style="padding-top: 5px;">★</p>
+                    </div>
                   </div>
                   <hr>
  

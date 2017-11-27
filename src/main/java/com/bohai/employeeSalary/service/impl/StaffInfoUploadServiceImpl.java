@@ -16,6 +16,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.alibaba.dubbo.common.utils.StringUtils;
@@ -26,6 +27,7 @@ import com.bohai.employeeSalary.entity.CheckMessage;
 import com.bohai.employeeSalary.entity.StaffInfo;
 import com.bohai.employeeSalary.entity.SysUser;
 import com.bohai.employeeSalary.service.FileUploadService;
+import com.bohai.employeeSalary.service.SalaryDetailService;
 
 
 @Service("staffInfoUploadService")
@@ -36,8 +38,11 @@ public class StaffInfoUploadServiceImpl implements FileUploadService{
 	@Autowired
 	private CheckMessageMapper checkMessageMapper;	
 	@Autowired
-	private StaffInfoMapper staffInfoMapper;	 
+	private StaffInfoMapper staffInfoMapper;	
+	@Autowired
+	private SalaryDetailService salaryDetailService;
 	
+	@Transactional
 	@Override
 	public String upload(MultipartFile file, Object... objects) throws BohaiException {
 		 StringBuilder message=new StringBuilder();
@@ -58,6 +63,7 @@ public class StaffInfoUploadServiceImpl implements FileUploadService{
 						}
 						
 							CheckMessage checkMessage=new CheckMessage();
+							checkMessage.setId(checkMessageMapper.generateCheckMessageId());
 							//员工编号、部门
 							if (staffSheet.getRow(i).getCell(0)!=null) {
 								number=staffSheet.getRow(i).getCell(0).getStringCellValue();
@@ -234,19 +240,20 @@ public class StaffInfoUploadServiceImpl implements FileUploadService{
 					        	 //checkMessage.setSubmitType("1"); //修改
 					        	 message.append("已存在 ").append(checkMessage.getStaffNumber()).append(":").append(checkMessage.getName()).append("审核信息，未能导入</br>");
 					        	 continue;
-							}else {
+							 }else {
 								checkMessage.setSubmitType(submitType);  //新增
 								//审核信息提交时间
 							    checkMessage.setSubmitTime(new Date());
 								
 								checkMessageMapper.insert(checkMessage);
+								salaryDetailService.insertByCheckMessage(checkMessage);
 							}
 					       
 					        
 						
-					}
+					    }
 					
-				} catch (Exception e) {
+				     } catch (Exception e) {
 				    logger.error("解析异常", e);
 					message.append("上传失败："+e.getMessage());
 				}

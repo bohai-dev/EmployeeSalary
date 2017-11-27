@@ -119,91 +119,8 @@ $(function(){
 	           }
 	       });
 	    
-	    
-	    $('#addForm').bootstrapValidator({
-	        message: 'This value is not valid',
-	        feedbackIcons: {
-	            valid: 'glyphicon glyphicon-ok',
-	            invalid: 'glyphicon glyphicon-remove',
-	            validating: 'glyphicon glyphicon-refresh'
-	        },
-	        fields: {
-	           
-	        	
-	        	staffNumber1: {
-	                validators: {
-	                    notEmpty: {
-	                        message: '员工编号不能为空'
-	                    },
-	                    threshold :  2 , // 有2字符以上才发送ajax请求，（input中输入一个字符，插件会向服务器发送一次，设置限制，2字符以上才开始）
-	                    remote: {// ajax验证。server result:{"valid",true or
-									                      // false} 向服务发送当前input
-									                       // name值，获得一个json数据。例表示正确：{"valid",true}
-	                        url: 'checkStaffNumber',// 验证地址
-	                        delay :  2000,// 每输入一个字符，就发ajax请求，服务器压力还是太大，设置2秒发送一次ajax（默认输入一个字符，提交一次，服务器压力太大）
-	                        type: 'POST'// 请求方式
-	                        /**
-							 * 自定义提交数据，默认值提交当前input value data:
-							 * function(validator) { return { password:
-							 * $('[name="passwordNameAttributeInYourForm"]').val(),
-							 * whatever:
-							 * $('[name="whateverNameAttributeInYourForm"]').val() }; }
-							 */
-	                    },
-	                   
-	                   
-	                }
-	            },
-	            
-	            name1: {
-	            	  validators: {
-	                      notEmpty: {
-	                          message: '姓名不能为空'
-	                      }
-	                      
-	                  }
-	              },
-	             
-	              depName1: {
-	            	  validators: {
-	                      notEmpty: {
-	                          message: '部门不能为空'
-	                      }
-	               
-	                  }
-	              	},
-	              positionSalary1: {
-	               	  validators: {
-	                      notEmpty: {
-	                             message: '正式工资不能为空'
-	                         },                      
-	                      numeric: {message: '工资只能输入数字'}     
-	                     }
-	                 	},
-	                probationSalary1: {
-	                     	  validators: {
-	                            notEmpty: {
-	                                   message: '试用期工资不能为空'
-	                               },                      
-	                            numeric: {message: '工资只能输入数字'}     
-	                           }
-	                      },   	
-	              isProbation1: {
-	               	  validators: {
-	                       notEmpty: {
-	                             message: '员工类型不能为空'
-	                         }
-	                     }
-	                 	}            
-	               
-	            }
-	       
-	    }).on('success.form.bv', function(e) {// 点击提交之后
-	    	// Prevent form submission
-	    	  //e.preventDefault(); 
-	    	  submitStaffInfo();
-	    });
-	    
+	    checkAddForm(); //输入表单验证
+	 
 	    $('#editForm').bootstrapValidator({
 	        message: 'This value is not valid',
 	        feedbackIcons: {
@@ -257,8 +174,96 @@ $(function(){
 		       	}
 		    });
    });
-   
-/*------------------------------------------------------------------------------------------------*/ 
+ 
+
+//输入表单验证
+function checkAddForm(){	
+	   
+    $('#addForm').bootstrapValidator({
+        message: 'This value is not valid',
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+           
+        	
+        	staffNumber1: {
+                validators: {
+                    notEmpty: {
+                        message: '员工编号不能为空'
+                    },
+                    threshold :  2 , // 有2字符以上才发送ajax请求，（input中输入一个字符，插件会向服务器发送一次，设置限制，2字符以上才开始）
+                    remote: {// ajax验证。server result:{"valid",true or
+								                      // false} 向服务发送当前input
+								                       // name值，获得一个json数据。例表示正确：{"valid",true}
+                        url: 'checkStaffNumber',// 验证地址
+                        delay :  2000,// 每输入一个字符，就发ajax请求，服务器压力还是太大，设置2秒发送一次ajax（默认输入一个字符，提交一次，服务器压力太大）
+                        type: 'POST'// 请求方式
+                        /**
+						 * 自定义提交数据，默认值提交当前input value data:
+						 * function(validator) { return { password:
+						 * $('[name="passwordNameAttributeInYourForm"]').val(),
+						 * whatever:
+						 * $('[name="whateverNameAttributeInYourForm"]').val() }; }
+						 */
+                    },
+                   
+                   
+                }
+            },
+            
+            name1: {
+            	  validators: {
+                      notEmpty: {
+                          message: '姓名不能为空'
+                      }
+                      
+                  }
+              },
+             
+              depName1: {
+            	  validators: {
+                      notEmpty: {
+                          message: '部门不能为空'
+                      }
+               
+                  }
+              	},
+              positionSalary1: {
+               	  validators: {
+                      notEmpty: {
+                             message: '正式工资不能为空'
+                         },                      
+                      numeric: {message: '工资只能输入数字'}     
+                     }
+                 	},
+                probationSalary1: {
+                     	  validators: {
+                            notEmpty: {
+                                   message: '试用期工资不能为空'
+                               },                      
+                            numeric: {message: '工资只能输入数字'}     
+                           }
+                      },   	
+              isProbation1: {
+               	  validators: {
+                       notEmpty: {
+                             message: '员工类型不能为空'
+                         }
+                     }
+                 	}            
+               
+            }
+       
+    }).on('success.form.bv', function(e) {// 点击提交之后
+    	// Prevent form submission
+    	  e.preventDefault(); 
+    	  submitStaffInfo();
+    });
+    
+}
   
 /**
   * 员工类型及状态字符判断
@@ -390,46 +395,7 @@ $(function(){
 		$("#editModal").modal('show');
 
 	}
-/*---------------------------------------------------------------------------------------------*/	
-  
-  /**
-  *检查输入数据合法性
-  */
-  /*function checkData(){
-  	if(($('#staffNumber1').val()=="")||($('#name1').val()=="")
-  			||($('#idNumber1').val()=="")||($('#depName1').val()=="")
-  			||($('#positionSalary1').val()=="")||($('#isProbation1').val()=="")){
-  		
-  		alert("标★为必填项，请重新填写!");
-  	}else{
-  		submitStaffInfo();
-  	}
-  		
-  }*/
-  
-  
- /* function checkData2(){
-  	if($('#isLeave2').val()=="1"){
-  		if($('#leaveDate').val()==""){
-  			alert("正在执行员工离职操作，请输入离职日期!");
-  		}else{
-  		submitUpdateStaffInfo();
-  		}
-  	}
-  	else{
-  	if(($('#name2').val()=="")||($('#depName2').val()=="")
-  			||($('#positionSalary2').val()=="")
-  			||($('#isProbation2').val()=="")||($('#coefficeient2').val()=="")
-  	){
-  		alert("标★为必填项，请重新填写!");
-  	}else{
-  		submitUpdateStaffInfo();
-  	}
-  	}
-  }
-  */
- /*-------------------------------------------------------------------------------*/  
- 
+
   
   
  /**
@@ -452,34 +418,7 @@ $(function(){
   		);
   }
 
-// //保存员工信息事件
-//  function saveStaffInfo(){
-//      var param = {
-//      		staffNumber:$('#staffNumber1').val(),
-//      		name:$('#name1').val(),
-//      		departmentId:$('#depName1').val(),
-//      		positionSalary:$('#positionSalary1').val(),
-//      		skillSalary:$('#skillSalary1').val(),
-//      		workYears:$('#workYears1').val(),
-//      		probationDateStart:$('#probationDateStart1').val(),
-//      		formalDateStart:$('#formalDateStart1').val(),
-//      		isProbation:$('#isProbation1').val(),
-//      		coefficeient:$('#coefficeient1').val(),
-//              email:$('#email1').val(),
-//              remark:$('#remark1').val()
-//              }
-//       $.ajax({
-//           url: 'saveStaffInfo',
-//           type: 'post',
-//           contentType: "application/json;charset=UTF-8",
-//           data: JSON.stringify(param),
-//           success: function (data,status) {
-//               $('#addModal').modal('hide');
-//               $('#staffInfoTable').bootstrapTable('refresh');
-//           }
-//      });
-//  }
-//  
+
   
 //提交审核信息事件
 function submitStaffInfo(){
@@ -505,28 +444,28 @@ function submitStaffInfo(){
          contentType: "application/json;charset=UTF-8",
          data: JSON.stringify(param),
          success: function (data,status) {
-        	 if(data["status"]=="false"){
-        		 alert("请勿重复提交新增员工申请信息");
-        		 console.log(123);
-        	 }else if(data["status"]=="success"){
-             $('#addModal').modal('hide');
-             alert("信息已提交审核，请等待!");
-	        	 }
         	 
-        	 $('#addForm').bootstrapValidator('disableSubmitButtons', false);
-        	 $('#staffNumber1').val(""),
-     		 $('#name1').val(""),
-     		 $('#depName1').val(""),
-     		 $('#positionSalary1').val(""),
-     		 $('#skillSalary1').val(""),
-     		 $('#workYears1').val(""),
-     		 $('#probationDateStart1').val(""),
-     		 $('#formalDateStart1').val(""),
-     		 $('#isProbation1').val(""),
-     		 $('#coefficeient1').val(""),
-             $('#email1').val(""),
-             $('#remark1').val(""),
-             $('#probationSalary1').val("")
+        	 alert(data['message']);
+             $('#addModal').modal('hide');
+             //重新加载验证
+             $("#addForm").data('bootstrapValidator').destroy();
+             $('#addForm').data('bootstrapValidator', null);
+             checkAddForm();
+             
+        	// $('#addForm').bootstrapValidator('disableSubmitButtons', false);
+        	 $('#staffNumber1').val("");
+     		 $('#name1').val("");
+     		 $('#depName1').selectpicker('val','');
+     		 $('#positionSalary1').val("");
+     		 $('#skillSalary1').val("");
+     		 $('#workYears1').val("");
+     		 $('#probationDateStart1').val("");
+     		 $('#formalDateStart1').val("");
+     		 $('#isProbation1').selectpicker('val','');
+     		 $('#coefficeient1').val("");
+             $('#email1').val("");
+             $('#remark1').val("");
+             $('#probationSalary1').val("");
          }
     });
 }

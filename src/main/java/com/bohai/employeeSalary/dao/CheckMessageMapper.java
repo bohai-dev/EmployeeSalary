@@ -3,6 +3,8 @@ package com.bohai.employeeSalary.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Select;
+
 import com.bohai.employeeSalary.entity.CheckMessage;
 import com.bohai.employeeSalary.entity.StaffInfo;
 import com.bohai.employeeSalary.vo.QueryCheckMessageParamVO;
@@ -71,4 +73,7 @@ public interface CheckMessageMapper {
 	List<CheckMessage> selectByStaffNumber(String staffNumber);
 
 	List<CheckMessage> queryCheckMessageByCondition(QueryCheckMessageParamVO paramVO);
+	
+	@Select("SELECT CHECK_MESSAGE_SEQ.NEXTVAL from dual")
+	String generateCheckMessageId();
 }

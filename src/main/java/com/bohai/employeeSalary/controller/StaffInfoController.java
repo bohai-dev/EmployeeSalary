@@ -19,6 +19,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,8 +29,10 @@ import com.bohai.employeeSalary.controller.exception.BohaiException;
 import com.bohai.employeeSalary.dao.CheckMessageMapper;
 import com.bohai.employeeSalary.dao.StaffInfoMapper;
 import com.bohai.employeeSalary.entity.CheckMessage;
+import com.bohai.employeeSalary.entity.SalaryDetail;
 import com.bohai.employeeSalary.entity.StaffInfo;
 import com.bohai.employeeSalary.entity.SysUser;
+import com.bohai.employeeSalary.service.SalaryDetailService;
 import com.bohai.employeeSalary.service.StaffInfoService;
 import com.bohai.employeeSalary.vo.QueryCheckMessageParamVO;
 import com.bohai.employeeSalary.vo.QueryStaffInfoParamVO;
@@ -54,7 +57,8 @@ public class StaffInfoController {
 	@Autowired
 	private CheckMessageMapper checkMessageMapper;
 	
-	
+	@Autowired
+	private SalaryDetailService salaryDetailService;
 	@RequestMapping("tochangePw")
 	public String tochangePW(){
 		return "changePw";
@@ -79,34 +83,18 @@ public class StaffInfoController {
 	/**
 	 * 提交审核信息
 	 * */
-	@RequestMapping(value="submitStaffInfo")   
+	 @RequestMapping(value="submitStaffInfo")   
 	 @ResponseBody
-	public Map<String,String> submitStaffInfo(@RequestBody(required = true) CheckMessage paramVO) throws BohaiException{		
-		Map<String,String> map=new HashMap<String,String>();
-		List<CheckMessage> cm=this.checkMessageMapper.selectByStaffNumber(paramVO.getStaffNumber());
-		StaffInfo cm2=this.staffInfoMapper.selectByPrimaryKey(paramVO.getStaffNumber());
-		if((cm!=null && cm.size()>0) || cm2!=null){
-			map.put("status", "false");
-			return  map;
+	public Map<String,String> submitStaffInfo(@RequestBody(required = true) CheckMessage paramVO) {		
+		
+		 Map<String,String> result = new HashMap<String,String>();
+		 try {
+			result = staffInfoService.submitStaffInfo(paramVO);
+		} catch (BohaiException e) {
+			logger.error("提交审核信息失败");
+			result.put("message", e.toString());
 		}
-		else{
-		//获取当前系统时间
-		long date=Calendar.getInstance().getTimeInMillis();
-		paramVO.setCreateTime(new Date(date));
-		paramVO.setUpdateTime(new Date(date));
-		paramVO.setIsLeave("0");
-		//获取当前登录用户姓名
-		Subject currentUser = SecurityUtils.getSubject();
-        String userName=((SysUser)currentUser.getSession().getAttribute("user")).getFullName();
-		paramVO.setSubmitter(userName);
-		//
-		paramVO.setSubmitTime(new Date(date));
-		paramVO.setTage("0");
-		paramVO.setSubmitType("0");
-	    this.checkMessageMapper.insert(paramVO);
-	    map.put("status", "success");
-	    return map;
-		}
+		 return result;
 	}
 	/**
 	 * 分页查询所有用户信息

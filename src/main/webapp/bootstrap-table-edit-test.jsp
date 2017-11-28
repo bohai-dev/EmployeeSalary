@@ -16,33 +16,44 @@
 <link href="resources/css/dashboard.css" rel="stylesheet">
 <link href="resources/css/sticky-footer.css" rel="stylesheet">
 <link href="resources/favicon.ico" rel="shortcut icon" />
-<!-- datepicker -->
-<link
-	href="resources/bootstrap-datepicker/css/bootstrap-datepicker3.css"
-	rel="stylesheet">
+
+
 <!-- table -->
 <link rel="stylesheet"
 	href="resources/bootstrap-table/bootstrap-table.css">
-<link rel="stylesheet"
-	href="resources/bootstrap3-editable/css/bootstrap-editable.css">
+	
+<!-- editable -->	
+<!-- <link rel="stylesheet"
+	href="resources/bootstrap3-editable/css/bootstrap-editable.css"> -->
+	
+<!-- datepicker -->	
+<link
+    href="resources/bootstrap-datepicker/css/bootstrap-datepicker3.css"
+    rel="stylesheet">
+
 
 <script type="text/javascript"
 	src="resources/tree/bootstrap-treeview.min.js"></script>
+	
+	
 
+    
 <script src="resources/bootstrap-table/bootstrap-table.js"></script>
 <script src="resources/bootstrap-table/locale/bootstrap-table-zh-CN.js"></script>
 <script type="text/javascript" src="resources/bootstrap-table/extensions/editable/bootstrap-table-editable.js"></script>
 <script type="text/javascript" src="resources/bootstrap3-editable/js/bootstrap-editable.js"></script>
+<script
+    src="resources/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js"></script>
+<!-- datepicker -->
+<script src="resources/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+<script
+    src="resources/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js"></script>
 
 <!-- bootstrap-select -->
 <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script> -->
 
 
-<!-- datepicker -->
-<script src="resources/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
-<script
-	src="resources/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js"></script>
 <!-- 文件上传 -->
 <link href="resources/fileInput/css/fileinput.min.css" media="all"
 	rel="stylesheet" type="text/css" />
@@ -74,7 +85,7 @@
 
 <script type="text/javascript">
 	$(function () {
-	    $('#table').bootstrapTable({  
+	    $('#table').bootstrapTable({
 	        url: 'queryStaffInfos',  
 	        method: 'post',  
 	        toolbar: '#toolbar',  
@@ -92,8 +103,13 @@
 	        height: 600,  
 	        uniqueId: 'Id',  
 	        cardView: false,  
-	        detailView: false,  
-	        columns: [{  
+	        detailView: false,
+            
+	        columns: [
+	                  {  
+                field: 'rownum',  
+                title: 'rownum'
+            },{  
 	            field: 'staffNumber',  
 	            title: '编号',  
 	            sortable: true  
@@ -110,25 +126,35 @@
 	            }  
 	        }, {  
 	            field: 'departmentName',  
-	            title: '部门',  
-	            editable: {  
-	                type: 'text',  
+	            title: '部门',
+                editable: {
+	                type: 'date', 
+	                datepicker:{
+	                    format: "yyyy-mm-dd",
+	                    startView: 0,
+	                    minViewMode: 0,
+	                    maxViewMode: 2,
+	                    todayBtn: "linked",
+	                    language: "zh-CN",
+	                    autoclose: true,
+	                    todayHighlight: true
+			                    },
 	                validate: function (value) {  
 	                    if ($.trim(value) == '') {  
 	                        return '名称不能为空!';  
 	                    }  
 	                }  
-	            }  
+	            }
 	        }, {  
 	            field: 'positionSalary',  
 	            title: '岗位工资',  
 	            editable: {  
 	                type: 'text',  
-	                validate: function (value) {  
+	                /* validate: function (value) {
 	                    if ($.trim(value) == '') {  
 	                        return '岗位工资不能为空!';  
 	                    }  
-	                }  
+	                }   */
 	            }  
 	        }, {  
 	            field: 'operation',  
@@ -142,19 +168,19 @@
 	            events: 'operateEvents'  
 	        }]  
 	    });  
-	    window.operateEvents = {  
-	        'click .save': function (e, value, row, index) {  
+	    window.operateEvents = {
+	        'click .save': function (e, value, row, index) {
 	            $.ajax({  
 	                type: "post",  
 	                data: row,  
-	                url: 'Webservice.asmx/ModifyResourceList',  
+	                url: 'Webservice.asmx/ModifyResourceList',
 	                success: function (data) {  
 	                    alert('修改成功');  
 	                }  
 	            });  
 	        },  
-	        'click .remove': function (e, value, row, index) {  
-	            $.ajax({  
+	        'click .remove': function (e, value, row, index) {
+	            /* $.ajax({  
 	                type: "post",  
 	                data: row,  
 	                url: 'Webservice.asmx/RemoveResourceList',  
@@ -165,17 +191,73 @@
 	                        values: [row.Id]  
 	                    });  
 	                }  
-	            });  
+	            });   */
+	            $('#table').bootstrapTable('remove', {
+	                field: 'rownum',
+	                values: [row.rownum]
+	            });
+	            
 	        }  
-	    };  //
+	    };
+	    
+	    
+	    $('#probationDateStart1').datepicker({
+	        format: "yyyy-mm-dd",
+            startView: 0,
+            minViewMode: 0,
+            maxViewMode: 2,
+            todayBtn: "linked",
+            clearBtn: true,
+            language: "zh-CN",
+            autoclose: true,
+            todayHighlight: true
+        });
+	   
+	    
+	    var rownum ;
+	    
+	    //动态添加
+	    $('#addSalaryBtn').click(function () {
+            
+	        if(rownum == null){
+	            rownum = $('#table').bootstrapTable('getOptions').totalRows+1;
+	        }
+	        
+            $('#table').bootstrapTable('insertRow', {
+                index: 0,
+                row: {
+                    rownum: rownum++,
+                    name:'',
+                    positionSalary:''
+                }
+            });
+        });
+	    
 	});  
+	
+	
 </script>
 </head>
 <body>
 
+
+    <div id="toolbar" >
+                <button type="button" id="addSalaryBtn" class="btn btn-default" title="添加">
+                    <i class="glyphicon glyphicon-plus">添加</i>
+                </button>&nbsp;&nbsp;&nbsp;&nbsp;             
+                
+                
+    </div>
+            
     <table id="table">
-        
     </table>  
+        
+    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="probationDateStart1" placeholder="">
+    </div>
+    
+    
+    
     
 
 

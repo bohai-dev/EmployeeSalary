@@ -175,7 +175,7 @@ $(function(){
 		    });
    });
  
-
+var rownum;
 //输入表单验证
 function checkAddForm(){	
 	   
@@ -604,7 +604,8 @@ function setSalaryDetail(staffNumber){
 	$('#editTable').bootstrapTable('destroy');
 		 $('#editTable').bootstrapTable({  
 		        url: 'salaryDetail/queryByStaffNumber/'+staffNumber,  	        
-		        method: 'get',	     
+		        method: 'get',
+		        toolbar: '#addToolbar',  
 		        pagination: true,  
 		        sidePagination: 'client',  
 		        pageNumber: 1,  
@@ -648,7 +649,11 @@ function setSalaryDetail(staffNumber){
 		           }, 
 		           {  
 		            field: 'endTime',  
-		            title: '结束时间',  
+		            title: '结束时间',
+		            editable: {  
+		                type: 'date',  
+		                
+		                }  
 		          },
 		          {  
 		            field: 'operation',  
@@ -662,15 +667,35 @@ function setSalaryDetail(staffNumber){
 		         }]  
 		    });  
 		 
+		 
 		 window.operateEvents = {  
 			        
 			'click .remove': function (e, value, row, index) {  
-			         console.log('remove a row'); 
-			           }  // remove end 
-			    }; 
-		   
+				 $('#editTable').bootstrapTable('remove', {
+		                field: 'rownum',
+		                values: [row.rownum]
+		            });
+			     }  // remove end 
+			}; 
+		
 		
 	}
+
+
+function addSalaryDetail(){
+	  if(rownum == null){
+          rownum = $('#editTable').bootstrapTable('getOptions').totalRows+1;
+      }
+      
+      $('#editTable').bootstrapTable('insertRow', {
+          index: 0,
+          row: {
+              rownum: rownum++,
+              startTime:'',
+              endTime:''
+          }
+      });   //
+}  
   
   
   

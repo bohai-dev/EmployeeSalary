@@ -661,6 +661,13 @@
                     <label for="probationSalary2" class="col-sm-3 control-label">工资变动</label>
                     <div class="col-sm-8">
                      <a onclick="showSalaryDetail()">查看详情</a>
+                     <div id="addToolbar" >
+                          <button type="button" id="addSalaryBtn" class="btn btn-default" title="添加" onclick="addSalaryDetail();">
+                               <i class="glyphicon glyphicon-plus">添加</i>
+                          </button>&nbsp;&nbsp;&nbsp;&nbsp;             
+                
+                
+                      </div>
                       <div id="editDiv" >
                           <table id="editTable"></table>
                       </div>       

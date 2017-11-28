@@ -25,8 +25,19 @@ public class SalaryDetail {
     private Date createTime;
 
     private Date updateTime;
+    
+    private String rownum;
+    
 
-    public String getCheckMessageId() {
+    public String getRownum() {
+		return rownum;
+	}
+
+	public void setRownum(String rownum) {
+		this.rownum = rownum;
+	}
+
+	public String getCheckMessageId() {
         return checkMessageId;
     }
 

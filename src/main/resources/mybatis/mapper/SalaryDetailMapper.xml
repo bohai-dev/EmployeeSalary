@@ -18,7 +18,13 @@
     <result column="CHECK_PERSON" property="checkPerson" jdbcType="VARCHAR" />
     <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
     <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="ROWNUM" property="rownum" jdbcType="VARCHAR" />
   </resultMap>
+  <sql id="Base_Column_List">
+     CHECK_MESSAGE_ID,STAFF_NUMBER,SALARY,START_TIME,END_TIME,REMARK
+  
+  </sql>
+  
   <insert id="insert" parameterType="com.bohai.employeeSalary.entity.SalaryDetail" >
     <!--
       WARNING - @mbggenerated
@@ -107,4 +113,48 @@
       sysdate
     </trim>
   </insert>
+  
+ <select id="selectByCheckmessageId" parameterType="java.lang.String" resultMap="BaseResultMap">
+ 
+    select  ROWNUM,<include refid="Base_Column_List" />
+    from SALARY_DETAIL
+    where CHECK_MESSAGE_ID = #{id,jdbcType=VARCHAR}
+    order by START_TIME desc
+ 
+ </select>
+ <select id="selectByStaffNumber" parameterType="java.lang.String" resultMap="BaseResultMap">
+ 
+    select  ROWNUM,<include refid="Base_Column_List" />
+    from SALARY_DETAIL
+    where  STAFF_NUMBER= #{number,jdbcType=VARCHAR}
+    order by START_TIME desc
+ 
+ </select>
+ 
+ 
+ <update id="updateByCheckMessageId" parameterType="com.bohai.employeeSalary.entity.SalaryDetail">
+  update SALARY_DETAIL
+  <set>
+   
+      <if test="salary != null" >
+        SALARY=#{salary,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null" >
+        START_TIME=#{startTime,jdbcType=VARCHAR},
+      </if>
+      <if test="endTime != null" >
+        END_TIME=#{endTime,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        REMARK=#{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="checkState != null" >
+        CHECK_STATE=#{checkState,jdbcType=VARCHAR}
+      </if>
+      
+   </set>   
+   where CHECK_MESSAGE_ID=#{checkMessageId,jdbcType=VARCHAR}
+ 
+ </update>
+  
 </mapper>

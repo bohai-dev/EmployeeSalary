@@ -33,12 +33,17 @@
     <!-- datepicker -->
     <script src="resources/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
     <script src="resources/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js"></script>
+    
+    <!-- editTable -->
+    <link rel="stylesheet"	href="resources/bootstrap3-editable/css/bootstrap-editable.css">
+    <script type="text/javascript" src="resources/bootstrap-table/extensions/editable/bootstrap-table-editable.js"></script>
+    <script type="text/javascript" src="resources/bootstrap3-editable/js/bootstrap-editable.js"></script>
    
     <script type="text/javascript" src="resources/js/check.js?<%=Math.random()%>"></script>
     <script type="text/javascript">
     var userLocked = ${sessionScope.user["locked"]}
     </script>
-<body>
+ <body>
 
   <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container-fluid">
@@ -305,12 +310,17 @@
                       <input type="text" class="form-control" id="probationSalary2" placeholder="" disabled>         
                     </div>    
                   </div>
-                 <!--  <div class="form-group">
-                    <label for="coefficeient2" class="col-sm-3 control-label">工资系数</label>
+                 <div class="form-group">
+                    <label for="coefficeient2" class="col-sm-3 control-label">工资变动</label>
                     <div class="col-sm-8">
-                       <input type="text" class="form-control" id="coefficeient2"  placeholder="" disabled>          
+                      <!--  <input type="button" class="form-control" id="coefficeient2"  placeholder="" >       -->  
+                      <a onclick="showSalaryDetail()">查看详情</a>
+                      <div id="tableDiv" >
+                          <table id="salaryDetail"></table>
+                      </div>  
+                      
                     </div>
-                  </div> -->
+                  </div>
 				<hr>
                    <div class="form-group">
                     <label for="isLeave2" class="col-sm-3 control-label">员工状态</label>

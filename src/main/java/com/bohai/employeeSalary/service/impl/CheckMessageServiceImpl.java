@@ -13,8 +13,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.bohai.employeeSalary.dao.CheckMessageMapper;
+import com.bohai.employeeSalary.dao.SalaryDetailMapper;
 import com.bohai.employeeSalary.dao.StaffInfoMapper;
 import com.bohai.employeeSalary.entity.CheckMessage;
+import com.bohai.employeeSalary.entity.SalaryDetail;
 import com.bohai.employeeSalary.entity.StaffInfo;
 import com.bohai.employeeSalary.entity.SysUser;
 import com.bohai.employeeSalary.service.CheckMessageService;
@@ -30,6 +32,8 @@ public class CheckMessageServiceImpl implements CheckMessageService{
 	
 	@Autowired
 	private StaffInfoMapper staffInfoMapper;
+	@Autowired
+	private SalaryDetailMapper slaryDetailMapper;
 
 	@Override
 	public List<Map> queryCheckMessages(PaginationParamVO paramVO) {
@@ -79,8 +83,12 @@ public class CheckMessageServiceImpl implements CheckMessageService{
 		}else{
 			this.staffInfoMapper.updateByPrimaryKey(staffInfo);
 		}
+		//更新工资变动
+        SalaryDetail salaryDetail=new SalaryDetail();
+        salaryDetail.setCheckMessageId(paramVO.getId());
+        salaryDetail.setCheckState("1"); //1、可用
+		slaryDetailMapper.updateByCheckMessageId(salaryDetail);
 		
-		//throw new RuntimeException();
 	}
 	
 	@Override

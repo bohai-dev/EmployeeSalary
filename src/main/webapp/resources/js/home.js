@@ -371,7 +371,12 @@ function checkAddForm(){
 	}
 	/* 修改任务模态框 */
 	function config(row) {
-		// 	console.log('456');
+		console.log(row.staffNumber);
+		
+		
+		
+		setSalaryDetail(row.staffNumber);		
+		
 		$('#staffNumber2').val(row.staffNumber);
 		$('#name2').val(row.name);
 		$('#depName2').selectpicker('val',row.departmentId);
@@ -583,9 +588,89 @@ function submitStaffInfo(){
 		  $('#probationSalary1').val((f*0.8).toFixed(2));  
 	     
 	  }
+   }
+  
+  function showSalaryDetail(){
+	    
+	    $("#editDiv").fadeToggle();
 		
-	  
-  }
+	}
+
+
+
+function setSalaryDetail(staffNumber){
+	console.log(staffNumber);
+			
+	$('#editTable').bootstrapTable('destroy');
+		 $('#editTable').bootstrapTable({  
+		        url: 'salaryDetail/queryByStaffNumber/'+staffNumber,  	        
+		        method: 'get',	     
+		        pagination: true,  
+		        sidePagination: 'client',  
+		        pageNumber: 1,  
+		        pageSize: 5,  	        
+		        pageList: [5, 10, 20, 40],  
+		        clickToSelect: true,       
+		        
+		        columns: [
+		        	{  
+			            field: 'rownum',  
+			            title: '编号', 
+			            visible:false
+			            
+			        },
+			        {  
+		            field: 'salary',  
+		            title: '工资', 
+		            editable: {  
+		                type: 'text',  
+		                validate: function (value) {  
+		                    if ($.trim(value) == '') {  
+		                        return '工资不能为空!';  
+		                        }  
+		                    }  
+		                }  
+		            
+		            }, 
+		            {  
+		            field: 'startTime',  
+		            title: '开始时间', 
+		            editable: {  
+		                type: 'date', 
+		                datepicker:{language:'zh-CN'},
+		                validate: function (value) {  
+		                    if ($.trim(value) == '') {  
+		                        return '开始时间不能为空!';  
+		                       }  
+		                   } 
+		               } ,
+		                 
+		           }, 
+		           {  
+		            field: 'endTime',  
+		            title: '结束时间',  
+		          },
+		          {  
+		            field: 'operation',  
+		            title: '操作',  
+		            width: 100,  
+		            formatter: function (value, row, index) { 		           
+		                var d = '<a class = "remove" href="javascript:void(0)">删除</a>';  
+		                return  d;  
+		            },  
+		            events: 'operateEvents'  
+		         }]  
+		    });  
+		 
+		 window.operateEvents = {  
+			        
+			'click .remove': function (e, value, row, index) {  
+			         console.log('remove a row'); 
+			           }  // remove end 
+			    }; 
+		   
+		
+	}
   
   
   

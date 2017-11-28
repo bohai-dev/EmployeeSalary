@@ -525,7 +525,7 @@ function compareFormalDateStart(vaule,row,index){
 		$('#email2').val(row.EMAIL);
 		$('#remark2').val(row.REMARK);
 		$('#probationSalary2').val(row.PROBATION_SALARY);
-
+		setSalaryDetail(row.ID);
 		$("#allMessageModal").modal('show');
 
 	}
@@ -686,4 +686,72 @@ function checkFormatter(value, row, index){
 		return {disabled:true};
 	}
 }
+
+function showSalaryDetail(){
+    
+    $("#tableDiv").fadeToggle();
+	
+}
+
+
+
+function setSalaryDetail(id){
+	 $('#salaryDetail').bootstrapTable({  
+	        url: 'salaryDetail/selectByCheckMessageId/'+id,  	        
+	        method: 'get',	     
+	        striped: true,  
+	        cache: false,  
+	        pagination: true,  
+	        sortName: 'createTime',  
+	        sortOrder: 'desc',  
+	        sidePagination: 'client',  
+	        pageNumber: 1,  
+	        pageSize: 5,  	        
+	        pageList: [5, 10, 20, 40],  
+	        clickToSelect: true,       
+	        
+	        columns: [
+	        	{  
+		            field: 'index',  
+		            title: '编号', 
+		            formatter: idFormatter
+		            
+		        },{  
+	            field: 'salary',  
+	            title: '工资',  
+	            
+	          }, {  
+	            field: 'startTime',  
+	            title: '开始时间',  
+	        }, {  
+	            field: 'endTime',  
+	            title: '结束时间',  
+	        }]  
+	    });  
+	   
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
    

@@ -29,10 +29,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
     
-    
-    <!-- datepicker -->
-    <script src="resources/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
-    <script src="resources/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js"></script>
     <!-- 文件上传 -->
    <link href="resources/fileInput/css/fileinput.min.css" media="all"
 	rel="stylesheet" type="text/css" />
@@ -51,10 +47,19 @@
   <!-- the main fileinput plugin file -->
   <script src="resources/fileInput/js/fileinput.min.js"></script>
   <!-- 文件上传插件fileInput -->
-<script src="resources/fileInput/themes/fa/theme.js"></script>
-<!-- optionally if you need translation for your language then include 
+  <script src="resources/fileInput/themes/fa/theme.js"></script>
+  <!-- optionally if you need translation for your language then include 
         locale file as mentioned below -->
-<script src="resources/fileInput/js/locales/zh.js"></script>
+ <script src="resources/fileInput/js/locales/zh.js"></script>
+
+ <!-- editTable -->
+    <!-- <link rel="stylesheet"	href="resources/bootstrap3-editable/css/bootstrap-editable.css"> -->
+    <script type="text/javascript" src="resources/bootstrap-table/extensions/editable/bootstrap-table-editable.js"></script>
+    <script type="text/javascript" src="resources/bootstrap3-editable/js/bootstrap-editable.js"></script>
+    <script src="resources/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js"></script>
+    <!-- datepicker -->
+    <script src="resources/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+    <script src="resources/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js"></script>
 
     <link rel="stylesheet" href="resources/dist/css/bootstrapValidator.css"/>
     <script type="text/javascript" src="resources/dist/js/bootstrapValidator.js"></script>
@@ -650,6 +655,15 @@
                     <label for="probationSalary2" class="col-sm-3 control-label">试用期工资</label>
                     <div class="col-sm-8">
                       <input type="text" class="form-control" id="probationSalary2" name="probationSalary2" placeholder="">         
+                    </div>          
+                  </div>
+                  <div class="form-group">
+                    <label for="probationSalary2" class="col-sm-3 control-label">工资变动</label>
+                    <div class="col-sm-8">
+                     <a onclick="showSalaryDetail()">查看详情</a>
+                      <div id="editDiv" >
+                          <table id="editTable"></table>
+                      </div>       
                     </div>          
                   </div>
 				<hr>

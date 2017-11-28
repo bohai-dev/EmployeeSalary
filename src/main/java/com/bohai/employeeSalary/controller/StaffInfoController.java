@@ -147,11 +147,12 @@ public class StaffInfoController {
 			paramVO.setSubmitTime(new Date(date));
 			paramVO.setTage("0");
 			if(paramVO.getIsLeave().equals("0")){
-				paramVO.setSubmitType("1");
+				paramVO.setSubmitType("1");  //修改员工信息
 			}else if(paramVO.getIsLeave().equals("1")){
-				paramVO.setSubmitType("2");
+				paramVO.setSubmitType("2");  //离职员工信息
 			}
 			 this.checkMessageMapper.insert(paramVO);
+			 //
 			 StaffInfo staff=this.staffInfoMapper.selectByPrimaryKey(paramVO.getStaffNumber());
 			 staff.setSubmitStatus("0");
 			 this.staffInfoMapper.updateByPrimaryKey(staff);

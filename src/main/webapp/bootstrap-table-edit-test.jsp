@@ -86,8 +86,8 @@
 <script type="text/javascript">
 	$(function () {
 	    $('#table').bootstrapTable({
-	        url: 'queryStaffInfos',  
-	        method: 'post',  
+	        url: 'salaryDetail/queryByStaffNumber/01160611',  
+	        method: 'get',  
 	        toolbar: '#toolbar',  
 	        striped: true,  
 	        cache: false,  
@@ -111,24 +111,25 @@
                 title: 'rownum'
             },{  
 	            field: 'staffNumber',  
-	            title: '编号',  
+	            title: '员工编号',  
 	            sortable: true  
 	        }, {  
-	            field: 'name',  
-	            title: '姓名',  
+	            field: 'salary',  
+	            title: '工资',  
 	            editable: {  
 	                type: 'text',  
 	                validate: function (value) {  
 	                    if ($.trim(value) == '') {  
-	                        return '单元编号不能为空!';  
+	                        return '工资不能为空!';  
 	                    }  
 	                }  
 	            }  
 	        }, {  
-	            field: 'departmentName',  
-	            title: '部门',
+	            field: 'startTime',
+	            title: '生效日期',
                 editable: {
-	                type: 'date', 
+	                type: 'date',
+	                placement:'bottom',
 	                datepicker:{
 	                    format: "yyyy-mm-dd",
 	                    startView: 0,
@@ -141,21 +142,27 @@
 			                    },
 	                validate: function (value) {  
 	                    if ($.trim(value) == '') {  
-	                        return '名称不能为空!';  
+	                        return '生效日期不能为空!';  
 	                    }  
 	                }  
 	            }
 	        }, {  
-	            field: 'positionSalary',  
-	            title: '岗位工资',  
-	            editable: {  
-	                type: 'text',  
-	                /* validate: function (value) {
-	                    if ($.trim(value) == '') {  
-	                        return '岗位工资不能为空!';  
-	                    }  
-	                }   */
-	            }  
+	            field: 'endTime',  
+	            title: '失效日期',
+	            editable: {
+                    type: 'date', 
+                    placement:'bottom',
+                    datepicker:{
+                        format: "yyyy-mm-dd",
+                        startView: 0,
+                        minViewMode: 0,
+                        maxViewMode: 2,
+                        todayBtn: "linked",
+                        language: "zh-CN",
+                        autoclose: true,
+                        todayHighlight: true
+                                }
+                }
 	        }, {  
 	            field: 'operation',  
 	            title: '操作',  
@@ -228,13 +235,29 @@
                 row: {
                     rownum: rownum++,
                     name:'',
-                    positionSalary:''
+                    salary:''
                 }
             });   //
         });
 	    
 	    $('#getDataBtn').click(function () {
             alert(JSON.stringify($('#table').bootstrapTable('getData')));
+        });
+	    
+	    $('#checkBtn').click(function () {
+            var datas = $('#table').bootstrapTable('getData');
+            for(var row in datas){
+                if(datas[row].salary == null || datas[row].salary == ''){
+                    alert("第"+(parseInt(row)+1)+"行工资不能为空");
+                    return;
+                }
+                if(datas[row].startTime == null ||datas[row].startTime == ''){
+                    alert("第"+(parseInt(row)+1)+"行生效时间不能为空");
+                    return;
+                }
+            }
+            
+            
         });
 	    
 	});  
@@ -250,6 +273,7 @@
                     <i class="glyphicon glyphicon-plus">添加</i>
                 </button>&nbsp;&nbsp;&nbsp;&nbsp;
                 <button id="getDataBtn" class="btn btn-default">getData</button>
+                <button id="checkBtn" class="btn btn-default">check</button>
                 
                 
     </div>

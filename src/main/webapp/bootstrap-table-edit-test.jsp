@@ -233,6 +233,10 @@
             });
         });
 	    
+	    $('#getDataBtn').click(function () {
+            alert(JSON.stringify($('#table').bootstrapTable('getData')));
+        });
+	    
 	});  
 	
 	
@@ -244,7 +248,8 @@
     <div id="toolbar" >
                 <button type="button" id="addSalaryBtn" class="btn btn-default" title="添加">
                     <i class="glyphicon glyphicon-plus">添加</i>
-                </button>&nbsp;&nbsp;&nbsp;&nbsp;             
+                </button>&nbsp;&nbsp;&nbsp;&nbsp;
+                <button id="getDataBtn" class="btn btn-default">getData</button>
                 
                 
     </div>

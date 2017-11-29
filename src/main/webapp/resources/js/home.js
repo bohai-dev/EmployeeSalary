@@ -120,59 +120,9 @@ $(function(){
 	       });
 	    
 	    checkAddForm(); //输入表单验证
+	    checkEditForm();//修改表单验证
 	 
-	    $('#editForm').bootstrapValidator({
-	        message: 'This value is not valid',
-	        feedbackIcons: {
-	            valid: 'glyphicon glyphicon-ok',
-	            invalid: 'glyphicon glyphicon-remove',
-	            validating: 'glyphicon glyphicon-refresh'
-	        },
-	        fields: {
-	        	name2: {
-	                  validators: {
-	                     notEmpty: {
-	                             message: '姓名不能为空'
-	                                  }
-	                              }
-	                              },
-	                              depName2: {
-	                            	  validators: {
-	                                      notEmpty: {
-	                                          message: '部门不能为空'
-	                                      }
-	                                  }
-	                              	},
-	                              positionSalary2: {
-	                               	  validators: {
-	                                      notEmpty: {
-	                                             message: '岗位工资不能为空'
-	                                         },
-	                                       numeric: {message: '工资只能输入数字'}    
-	                                     }
-	                                 	},
-	                              isProbation2: {
-	                               	  validators: {
-	                                       notEmpty: {
-	                                             message: '员工类型不能为空'
-	                                         }
-	                                     }
-	                                 	}
-	           }
-	        }).on('success.form.bv', function(e) {// 点击提交之后,提交更新信息
-		       //  alert(234);
-	           e.preventDefault(); 
-		       if($('#isLeave2').val()=="1"){
-		       		if($('#leaveDate2').val()==""){
-		       			alert("正在执行员工离职操作，请输入离职日期!");
-		       		}else{
-		       		     submitUpdateStaffInfo();
-		       		}
-		       	}
-		       	else{
-		       		submitUpdateStaffInfo();
-		       	}
-		    });
+
    });
  
 var rownum;
@@ -264,6 +214,65 @@ function checkAddForm(){
     });
     
 }
+
+//修改表单验证
+function checkEditForm(){
+	
+	
+    $('#editForm').bootstrapValidator({
+        message: 'This value is not valid',
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+        	name2: {
+                  validators: {
+                     notEmpty: {
+                             message: '姓名不能为空'
+                                  }
+                              }
+                              },
+                              depName2: {
+                            	  validators: {
+                                      notEmpty: {
+                                          message: '部门不能为空'
+                                      }
+                                  }
+                              	},
+                              positionSalary2: {
+                               	  validators: {
+                                      notEmpty: {
+                                             message: '岗位工资不能为空'
+                                         },
+                                       numeric: {message: '工资只能输入数字'}    
+                                     }
+                                 	},
+                              isProbation2: {
+                               	  validators: {
+                                       notEmpty: {
+                                             message: '员工类型不能为空'
+                                         }
+                                     }
+                                 	}
+           }
+        }).on('success.form.bv', function(e) {// 点击提交之后,提交更新信息
+        	
+           e.preventDefault();         
+	       if($('#isLeave2').val()=="1"){
+	       		if($('#leaveDate2').val()==""){
+	       			alert("正在执行员工离职操作，请输入离职日期!");
+	       		}else{
+	       		     submitUpdateStaffInfo();
+	       		}
+	       	}
+	       	else{
+	       		submitUpdateStaffInfo();
+	       	}
+	    });
+    
+}
   
 /**
   * 员工类型及状态字符判断
@@ -329,6 +338,17 @@ function checkAddForm(){
 		  result="离职员工信息审核";
 	  }
 	  return result;
+  }
+  function salaryFormatter(vaule,row,index){
+	  
+        var html='<a id="cog'+index+'"> 查看详情 </a>'
+        $("#submittercheckMessageTable").off("click", "#cog" + index);
+        $("#submittercheckMessageTable").on("click", "#cog" + index, row, function(event) {
+	       alert(123);
+       });
+
+      return html;
+	  
   }
   function tageFormatter(vaule,row,index){
 	  var result=row.tage;
@@ -396,7 +416,10 @@ function checkAddForm(){
 		$('#remark2').val(row.remark);
 		$('#probationSalary2').val(row.probationSalary);
 		
-
+		//重新加载验证
+	    $("#editForm").data('bootstrapValidator').destroy();
+	    $('#editForm').data('bootstrapValidator', null);
+	    checkEditForm();
 		$("#editModal").modal('show');
 
 	}
@@ -478,56 +501,87 @@ function submitStaffInfo(){
 
 	//提交更新员工审核信息事件
   function submitUpdateStaffInfo(){
-  	 var param = {
-       		staffNumber:$('#staffNumber2').val(),
-       		name:$('#name2').val(),      		
-       		departmentId:$('#depName2').val(),
-       		positionSalary:$('#positionSalary2').val(),
-       		skillSalary:$('#skillSalary2').val(),
-       		workYears:$('#workYears2').val(),
-       		probationDateStart:$('#probationDateStart2').val(),
-       		formalDateStart:$('#formalDateStart2').val(),
-       		isProbation:$('#isProbation2').val(),
-       		coefficeient:$('#coefficeient2').val(),
-       		isLeave:$('#isLeave2').val(),
-       		leaveDate:$('#leaveDate2').val(),
-            email:$('#email2').val(),
-            remark:$('#remark2').val(),
-            probationSalary:$('#probationSalary2').val(),
-            salaryDetails:$('#editTable').bootstrapTable('getData'),
-               }
-        $.ajax({
-            url: 'submitUpdateStaffInfo',
-            type: 'post',
-            contentType: "application/json;charset=UTF-8",
-            data: JSON.stringify(param),
-            success: function (data,status) {
-            	if(data["status"]=="false"){
-           		 alert("该员工的修改信息正在审核中，请勿重复提交！");
-           	    }else if(data["status"]=="success"){
-           		    alert("信息已提交审核，请等待!");
-           		    $('#editModal').modal('hide'); 
-                   
-   	        	 }
-               
-            	$('#editForm').bootstrapValidator('disableSubmitButtons', false);  
-            	$('#staffNumber1').val(""),
-        		$('#name1').val(""),
-        		$('#depName1').val(""),
-        		$('#positionSalary1').val(""),
-        		$('#skillSalary1').val(""),
-        		$('#workYears1').val(""),
-        		$('#probationDateStart1').val(""),
-        		$('#formalDateStart1').val(""),
-        		$('#isProbation1').val(""),
-        		$('#coefficeient1').val(""),
-                $('#email1').val(""),
-                $('#remark1').val(""),
-                $('#probationSalary1').val("")
-            }
-       });
+	  
+	
+	 //验证工资表格数据
+	 var vertifyResult=verifyTable();
+	 if(vertifyResult){
+	  	   var param = {
+	       		staffNumber:$('#staffNumber2').val(),
+	       		name:$('#name2').val(),      		
+	       		departmentId:$('#depName2').val(),
+	       		positionSalary:$('#positionSalary2').val(),
+	       		skillSalary:$('#skillSalary2').val(),
+	       		workYears:$('#workYears2').val(),
+	       		probationDateStart:$('#probationDateStart2').val(),
+	       		formalDateStart:$('#formalDateStart2').val(),
+	       		isProbation:$('#isProbation2').val(),
+	       		coefficeient:$('#coefficeient2').val(),
+	       		isLeave:$('#isLeave2').val(),
+	       		leaveDate:$('#leaveDate2').val(),
+	            email:$('#email2').val(),
+	            remark:$('#remark2').val(),
+	            probationSalary:$('#probationSalary2').val(),
+	            salaryDetails:$('#editTable').bootstrapTable('getData'),
+	               }
+	        $.ajax({
+	            url: 'submitUpdateStaffInfo',
+	            type: 'post',
+	            contentType: "application/json;charset=UTF-8",
+	            data: JSON.stringify(param),
+	            success: function (data,status) {
+	            	if(data["status"]=="false"){
+	           		 alert("该员工的修改信息正在审核中，请勿重复提交！");
+	           	    }else if(data["status"]=="success"){
+	           		    alert("信息已提交审核，请等待!");
+	           		    $('#editModal').modal('hide'); 
+	                   
+	   	        	 }
+	            	$('#staffInfoTable').bootstrapTable('refresh');
+	            	//重新加载验证
+	                $("#editForm").data('bootstrapValidator').destroy();
+	                $('#editForm').data('bootstrapValidator', null);
+	                checkEditForm();
+	                
+	            	$('#staffNumber2').val(""),
+	        		$('#name2').val(""),
+	        		$('#depName2').selectpicker('val','');	        		
+	        		$('#positionSalary2').val(""),
+	        		$('#skillSalary2').val(""),
+	        		$('#workYears2').val(""),
+	        		$('#probationDateStart2').val(""),
+	        		$('#formalDateStart2').val(""),
+	        		$('#isProbation2').selectpicker('val',''),
+	        		$('#coefficeient2').val(""),
+	                $('#email2').val(""),
+	                $('#remark2').val(""),
+	                $('#probationSalary2').val("")
+	            }
+	       });
+	   }	 
+	 
+ 	
    }
-  
+   //验证工资表格数据
+  function verifyTable(){
+  	 var datas = $('#editTable').bootstrapTable('getData');
+       for(var row in datas){
+           if(datas[row].salary == null || datas[row].salary == ''){
+               alert("第"+(parseInt(row)+1)+"行工资不能为空");
+               return false;
+           }
+           if(datas[row].startTime == null ||datas[row].startTime == ''){
+               alert("第"+(parseInt(row)+1)+"行生效时间不能为空");
+               return false;
+           }
+       }
+     //重新加载验证
+       $("#editForm").data('bootstrapValidator').destroy();
+       $('#editForm').data('bootstrapValidator', null);
+       checkEditForm();
+       return true;
+       
+  }
  	//查询所有员工信息事件
   function queryStaffInfos() {
 
@@ -600,7 +654,7 @@ function submitStaffInfo(){
 
 
 function setSalaryDetail(staffNumber){
-	console.log(staffNumber);
+	//console.log(staffNumber);
 			
 	$('#editTable').bootstrapTable('destroy');
 		 $('#editTable').bootstrapTable({  
@@ -697,6 +751,8 @@ function addSalaryDetail(){
           }
       });   //
 }  
+
+
   
   
   

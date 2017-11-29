@@ -267,6 +267,7 @@
                     <th data-field="name" data-align="center" >员工姓名</th>
                     <th data-field="departmentName" data-align="center">所属部门</th>
                     <th data-field="positionSalary" data-align="center" >岗位工资</th>
+                    <th data-align="center" data-formatter="salaryFormatter">工资变动</th>
                     <th data-field="skillSalary" data-align="center">技能工资</th>
                     <th data-field="workYears" data-align="center" >司龄工资</th>
                     <th data-field="isProbation" data-align="center" data-formatter="probationFormatter">员工类型</th>
@@ -737,12 +738,29 @@
 			</div>
 		</div>
 	</div>
+	
+	
+	<div class="modal fade" id="promptModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">提示</h4>
+				</div>
+				<div class="modal-body">
+				      <p id="errorMessage"></p>
+				</div>
+				<div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">确定</button>                 
+                </div>
+			</div>
+		</div>
+	</div>
 
 
-<script>
 
-
-</script>
 
 
 </body>

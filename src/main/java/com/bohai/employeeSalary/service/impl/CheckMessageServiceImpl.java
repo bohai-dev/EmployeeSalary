@@ -86,6 +86,9 @@ public class CheckMessageServiceImpl implements CheckMessageService{
 			this.staffInfoMapper.updateByPrimaryKey(staffInfo);
 		}
 		//更新工资变动
+		//先将该员工原来的可用状态的工资变动重置为不可用
+		this.slaryDetailMapper.updateStateByStaffNumber(paramVO.getStaffNumber());
+		//再重新插入
         SalaryDetail salaryDetail=new SalaryDetail();
         salaryDetail.setCheckMessageId(paramVO.getId());
         salaryDetail.setCheckState("1"); //1、可用
@@ -93,19 +96,32 @@ public class CheckMessageServiceImpl implements CheckMessageService{
 		
 	}
 	
+	//批量审核通过
 	@Override
 	public void agreeStaffInfoList(List<CheckMessage> checkMessageList) {
 		for(int i=0;i<checkMessageList.size();i++) {
 			CheckMessage checkmessage=this.checkMessageMapper.selectByPrimaryKey(checkMessageList.get(i).getId());
-			checkmessage.setTage("1");
+			checkmessage.setTage("1");   //1审核通过
 			//获取当前登录用户姓名
-					Subject currentUser = SecurityUtils.getSubject();
-				    String userName=((SysUser)currentUser.getSession().getAttribute("user")).getFullName();
-				    checkmessage.setChecker(userName);
-			//获取当前系统时间
-					long date=Calendar.getInstance().getTimeInMillis();
-					checkmessage.setCheckTime(new Date(date));
-			this.checkMessageMapper.updateByPrimaryKeySelective(checkmessage);
+			Subject currentUser = SecurityUtils.getSubject();
+		    String userName=((SysUser)currentUser.getSession().getAttribute("user")).getFullName();
+		    checkmessage.setChecker(userName);
+			//获取当前系统时间					
+			checkmessage.setCheckTime(new Date());
+			this.checkMessageMapper.updateByPrimaryKeySelective(checkmessage);  //更新checkMessage表
+			//更新工资变动表
+			//先将该员工原来的可用状态的工资变动重置为不可用
+			 this.slaryDetailMapper.updateStateByStaffNumber(checkmessage.getStaffNumber());
+			
+			
+		    //再重新插入
+	        SalaryDetail salaryDetail=new SalaryDetail();
+		    salaryDetail.setCheckMessageId(checkmessage.getId());
+	        salaryDetail.setCheckState("1"); //1、可用
+			slaryDetailMapper.updateByCheckMessageId(salaryDetail);
+	
+			 
+			
 			StaffInfo staffInfo=new StaffInfo();
 			staffInfo.setProbationDateStart(checkmessage.getProbationDateStart());
 			staffInfo.setFormalDateStart(checkmessage.getFormalDateStart());
@@ -120,7 +136,7 @@ public class CheckMessageServiceImpl implements CheckMessageService{
 			staffInfo.setRemark(checkmessage.getRemark());
 			staffInfo.setDepartmentId(checkmessage.getDepartmentId());
 			staffInfo.setIsLeave(checkmessage.getIsLeave());
-			staffInfo.setCreateTime(new Date(date));
+			staffInfo.setCreateTime(new Date());
 			staffInfo.setUpdateTime(checkmessage.getUpdateTime());
 			staffInfo.setIsProbation(checkmessage.getIsProbation());
 			staffInfo.setCoefficeient(checkmessage.getCoefficeient());
@@ -129,12 +145,12 @@ public class CheckMessageServiceImpl implements CheckMessageService{
 			
 			if(checkmessage.getSubmitType().equals("0")){
 			try {
-				this.staffInfoMapper.insert(staffInfo);
+				this.staffInfoMapper.insert(staffInfo);   //插入员工信息表
 			} catch (Exception e) {
 			    logger.error("保存员工信息失败",e);
 			}
 			}else{
-				this.staffInfoMapper.updateByPrimaryKey(staffInfo);
+				this.staffInfoMapper.updateByPrimaryKey(staffInfo);  //更新员工信息表
 			}
 		}
 		
@@ -200,10 +216,8 @@ public class CheckMessageServiceImpl implements CheckMessageService{
 					 SalaryDetail salaryDetail=salaryDetails.get(i);
 					 salaryDetail.setCheckMessageId(paramVO.getId());
 					 salaryDetail.setStaffNumber(paramVO.getStaffNumber());
-					 salaryDetail.setCheckState("0");  //状态不可用
-					 //先将该员工原来的可用状态的工资变动重置为不可用
-					 this.slaryDetailMapper.updateStateByStaffNumber(paramVO.getStaffNumber());
-					 //重新插入工资变动信息
+					 salaryDetail.setCheckState("0");  //状态不可用					 
+					 //插入工资变动信息
 					 this.slaryDetailMapper.insertSelective(salaryDetail);
 				 }
 			 }

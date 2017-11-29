@@ -156,6 +156,11 @@
    where CHECK_MESSAGE_ID=#{checkMessageId,jdbcType=VARCHAR}
  
  </update>
+ 
+ <select id="calcSalary" parameterType="java.util.Map" statementType="CALLABLE">
+     {call CALC_SALARY(#{IN_STAFF_NUMBER,mode=IN,jdbcType=VARCHAR},#{IN_PAY_MONTH,mode=IN,jdbcType=VARCHAR},
+     #{OUT_SALARY,mode=OUT,jdbcType=VARCHAR},#{OUT_STATUS,mode=OUT,jdbcType=VARCHAR})}
+ </select>
   
   <update id="updateStateByStaffNumber" parameterType="java.lang.String">
    update SALARY_DETAIL

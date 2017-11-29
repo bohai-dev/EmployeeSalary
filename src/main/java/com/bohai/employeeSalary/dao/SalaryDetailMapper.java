@@ -1,6 +1,9 @@
 package com.bohai.employeeSalary.dao;
 
 import java.util.List;
+
+import java.util.Map;
+
 import com.bohai.employeeSalary.entity.SalaryDetail;
 
 
@@ -16,6 +19,10 @@ public interface SalaryDetailMapper {
     
     List<SalaryDetail> selectByStaffNumber(String number);
     
+
     int updateStateByStaffNumber(String staffNumber);
+
+    String calcSalary(Map<String,String> map);
+
     
 }

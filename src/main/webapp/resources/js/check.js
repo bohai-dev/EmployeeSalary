@@ -696,6 +696,7 @@ function showSalaryDetail(){
 
 
 function setSalaryDetail(id){
+	 $('#salaryDetail').bootstrapTable('destroy');
 	 $('#salaryDetail').bootstrapTable({  
 	        url: 'salaryDetail/selectByCheckMessageId/'+id,  	        
 	        method: 'get',	     

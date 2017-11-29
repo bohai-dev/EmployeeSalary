@@ -158,7 +158,8 @@
  </update>
  
  <select id="calcSalary" parameterType="java.util.Map" statementType="CALLABLE">
-     {call CALC_SALARY(#{IN_STAFF_NUMBER,mode=IN,jdbcType=VARCHAR},#{IN_PAY_MONTH,mode=IN,jdbcType=VARCHAR},#{OUT_SALARY,mode=OUT,jdbcType=VARCHAR})}
+     {call CALC_SALARY(#{IN_STAFF_NUMBER,mode=IN,jdbcType=VARCHAR},#{IN_PAY_MONTH,mode=IN,jdbcType=VARCHAR},
+     #{OUT_SALARY,mode=OUT,jdbcType=VARCHAR},#{OUT_STATUS,mode=OUT,jdbcType=VARCHAR})}
  </select>
   
 </mapper>

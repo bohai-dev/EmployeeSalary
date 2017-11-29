@@ -493,7 +493,8 @@ function submitStaffInfo(){
        		leaveDate:$('#leaveDate2').val(),
             email:$('#email2').val(),
             remark:$('#remark2').val(),
-            probationSalary:$('#probationSalary2').val()
+            probationSalary:$('#probationSalary2').val(),
+            salaryDetails:$('#editTable').bootstrapTable('getData'),
                }
         $.ajax({
             url: 'submitUpdateStaffInfo',
@@ -624,7 +625,7 @@ function setSalaryDetail(staffNumber){
 		            field: 'salary',  
 		            title: '工资', 
 		            editable: {  
-		                type: 'text',  
+		                type: 'number',  
 		                validate: function (value) {  
 		                    if ($.trim(value) == '') {  
 		                        return '工资不能为空!';  
@@ -652,7 +653,7 @@ function setSalaryDetail(staffNumber){
 		            title: '结束时间',
 		            editable: {  
 		                type: 'date',  
-		                
+		                datepicker:{language:'zh-CN'},
 		                }  
 		          },
 		          {  

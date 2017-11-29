@@ -1,6 +1,7 @@
 package com.bohai.employeeSalary.entity;
 
 import java.util.Date;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -37,9 +38,20 @@ public class CheckMessage {
     
     private String isLeave;
     private String probationSalary;
+    private List<SalaryDetail> salaryDetails;
     
     
-    public String getProbationSalary() {
+    
+    
+    public List<SalaryDetail> getSalaryDetails() {
+		return salaryDetails;
+	}
+
+	public void setSalaryDetails(List<SalaryDetail> salaryDetails) {
+		this.salaryDetails = salaryDetails;
+	}
+
+	public String getProbationSalary() {
 		return probationSalary;
 	}
 

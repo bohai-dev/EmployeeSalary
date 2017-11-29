@@ -2,6 +2,7 @@ package com.bohai.employeeSalary.service.impl;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -11,6 +12,7 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import com.bohai.employeeSalary.dao.CheckMessageMapper;
 import com.bohai.employeeSalary.dao.SalaryDetailMapper;
@@ -157,5 +159,62 @@ public class CheckMessageServiceImpl implements CheckMessageService{
 			this.staffInfoMapper.updateByPrimaryKey(staff);
 		}
 	}
-
+	
+	//修改信息提交审核
+	@Transactional
+	@Override
+	public Map<String,String> submitUpdateStaffInfo( CheckMessage paramVO){
+		
+        Map<String,String> map=new HashMap<String,String>();		
+		List<CheckMessage> cmList=this.checkMessageMapper.selectByStaffNumber(paramVO.getStaffNumber());
+		if (cmList!=null&&cmList.size()>0) {
+			
+			     map.put("status", "false");
+			     return map;
+			
+		     }
+		
+		else {
+			//获取当前系统时间
+			long date=Calendar.getInstance().getTimeInMillis();
+			paramVO.setCreateTime(new Date(date));
+			paramVO.setUpdateTime(new Date(date));
+			//获取当前登录用户姓名
+			Subject currentUser = SecurityUtils.getSubject();
+	        String userName=((SysUser)currentUser.getSession().getAttribute("user")).getFullName();
+			paramVO.setSubmitter(userName);
+			//
+			paramVO.setSubmitTime(new Date(date));
+			paramVO.setTage("0");
+			if(paramVO.getIsLeave().equals("0")){
+				paramVO.setSubmitType("1");  //修改员工信息
+			}else if(paramVO.getIsLeave().equals("1")){
+				paramVO.setSubmitType("2");  //离职员工信息
+			}
+			 paramVO.setId(checkMessageMapper.generateCheckMessageId());
+			 this.checkMessageMapper.insert(paramVO);
+			 //插入工资变动情况
+			 List<SalaryDetail> salaryDetails=paramVO.getSalaryDetails();
+			 if(salaryDetails!=null) {
+				 for(int i=0;i<salaryDetails.size();i++) {
+					 SalaryDetail salaryDetail=salaryDetails.get(i);
+					 salaryDetail.setCheckMessageId(paramVO.getId());
+					 salaryDetail.setStaffNumber(paramVO.getStaffNumber());
+					 salaryDetail.setCheckState("0");  //状态不可用
+					 //先将该员工原来的可用状态的工资变动重置为不可用
+					 this.slaryDetailMapper.updateStateByStaffNumber(paramVO.getStaffNumber());
+					 //重新插入工资变动信息
+					 this.slaryDetailMapper.insertSelective(salaryDetail);
+				 }
+			 }
+			 
+			 StaffInfo staff=this.staffInfoMapper.selectByPrimaryKey(paramVO.getStaffNumber());
+			 staff.setSubmitStatus("0");
+			 this.staffInfoMapper.updateByPrimaryKey(staff);
+			 
+			 map.put("status", "success");
+			 return map;
+	     }
+ 
+    }
 }

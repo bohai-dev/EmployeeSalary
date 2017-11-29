@@ -19,5 +19,7 @@ public interface CheckMessageService {
 	void refuseStaffInfo(CheckMessage paramVO);
 	
 	void agreeStaffInfoList(List<CheckMessage> paramvo);
+	
+    Map<String,String> submitUpdateStaffInfo( CheckMessage paramVO);
 
 }

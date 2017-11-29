@@ -32,6 +32,7 @@ import com.bohai.employeeSalary.entity.CheckMessage;
 import com.bohai.employeeSalary.entity.SalaryDetail;
 import com.bohai.employeeSalary.entity.StaffInfo;
 import com.bohai.employeeSalary.entity.SysUser;
+import com.bohai.employeeSalary.service.CheckMessageService;
 import com.bohai.employeeSalary.service.SalaryDetailService;
 import com.bohai.employeeSalary.service.StaffInfoService;
 import com.bohai.employeeSalary.vo.QueryCheckMessageParamVO;
@@ -59,6 +60,10 @@ public class StaffInfoController {
 	
 	@Autowired
 	private SalaryDetailService salaryDetailService;
+	
+	@Autowired
+	private CheckMessageService checkMessageService;
+	
 	@RequestMapping("tochangePw")
 	public String tochangePW(){
 		return "changePw";
@@ -124,42 +129,9 @@ public class StaffInfoController {
 	@RequestMapping(value="submitUpdateStaffInfo")
 	@ResponseBody
 	public Map<String,String> submitUpdateStaffInfo(@RequestBody(required=true) CheckMessage paramVO){
-		Map<String,String> map=new HashMap<String,String>();
-		
-		List<CheckMessage> cmList=this.checkMessageMapper.selectByStaffNumber(paramVO.getStaffNumber());
-		if (cmList!=null&&cmList.size()>0) {
-			
-			map.put("status", "false");
-			return map;
-			
-		}
-		
-		else {
-			//获取当前系统时间
-			long date=Calendar.getInstance().getTimeInMillis();
-			paramVO.setCreateTime(new Date(date));
-			paramVO.setUpdateTime(new Date(date));
-			//获取当前登录用户姓名
-			Subject currentUser = SecurityUtils.getSubject();
-	        String userName=((SysUser)currentUser.getSession().getAttribute("user")).getFullName();
-			paramVO.setSubmitter(userName);
-			//
-			paramVO.setSubmitTime(new Date(date));
-			paramVO.setTage("0");
-			if(paramVO.getIsLeave().equals("0")){
-				paramVO.setSubmitType("1");  //修改员工信息
-			}else if(paramVO.getIsLeave().equals("1")){
-				paramVO.setSubmitType("2");  //离职员工信息
-			}
-			 this.checkMessageMapper.insert(paramVO);
-			 //
-			 StaffInfo staff=this.staffInfoMapper.selectByPrimaryKey(paramVO.getStaffNumber());
-			 staff.setSubmitStatus("0");
-			 this.staffInfoMapper.updateByPrimaryKey(staff);
-			 
-			 map.put("status", "success");
-			 return map;
-		}
+		Map<String,String> map=new HashMap<String,String>();		
+		map=checkMessageService.submitUpdateStaffInfo(paramVO);
+		return map;
 		
 	}
 	

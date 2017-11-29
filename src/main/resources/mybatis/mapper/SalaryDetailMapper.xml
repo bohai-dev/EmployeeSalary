@@ -126,7 +126,7 @@
  
     select  ROWNUM,<include refid="Base_Column_List" />
     from SALARY_DETAIL
-    where  STAFF_NUMBER= #{number,jdbcType=VARCHAR}
+    where  STAFF_NUMBER= #{number,jdbcType=VARCHAR} and CHECK_STATE='1'
     order by START_TIME desc
  
  </select>
@@ -157,4 +157,13 @@
  
  </update>
   
+  <update id="updateStateByStaffNumber" parameterType="java.lang.String">
+   update SALARY_DETAIL
+     <set>      
+        CHECK_STATE='0'    
+      
+     </set>   
+   where STAFF_NUMBER=#{staffNumber,jdbcType=VARCHAR} and CHECK_STATE='1'  
+ 
+ </update>
 </mapper>

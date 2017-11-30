@@ -540,8 +540,7 @@ function submitStaffInfo(){
 	  
 	
 	 //验证工资表格数据
-	 var vertifyResult=verifyTable();
-	 if(vertifyResult){
+	 
 	  	   var param = {
 	       		staffNumber:$('#staffNumber2').val(),
 	       		name:$('#name2').val(),      		
@@ -594,7 +593,6 @@ function submitStaffInfo(){
 	                $('#probationSalary2').val("")
 	            }
 	       });
-	   }	 
 	 
  	
    }
@@ -795,6 +793,12 @@ function addSalaryDetail(){
 }  
 
 function submitMod(){
+	
+	 var vertifyResult=verifyTable();
+	 if(!vertifyResult){
+		 return false;
+	 }
+	 
 	/*手动验证表单，当是普通按钮时。*/ 
 	$('#editForm').data('bootstrapValidator').validate(); 
 	if(!$('#editForm').data('bootstrapValidator').isValid()){ 

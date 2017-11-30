@@ -610,6 +610,15 @@ function submitStaffInfo(){
                alert("第"+(parseInt(row)+1)+"行生效时间不能为空");
                return false;
            }
+           if(datas[row].endTime != null && datas[row].endTime != '' &&
+                   datas[row].startTime != null && datas[row].startTime != ''){
+               
+               if(CompareDate(datas[row].startTime,datas[row].endTime)){
+                   alert("第"+(parseInt(row)+1)+"行生效日期不能大于失效日期");
+                   return false;
+               }
+               
+           }
        }
      //重新加载验证
        $("#editForm").data('bootstrapValidator').destroy();
@@ -798,6 +807,11 @@ function submitMod(){
     	}
 	
 	
+}
+
+function CompareDate(startTime,endTime)
+{
+  return ((new Date(startTime.replace(/-/g,"\/"))) > (new Date(endTime.replace(/-/g,"\/"))));
 }
 
 

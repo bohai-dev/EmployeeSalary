@@ -20,7 +20,7 @@ public class SalaryDetailController {
 	private SalaryDetailMapper salaryDetailMapper;
 	
 	/**
-	 * 根据checkMessageId查询
+	 * 根据checkMessageId查询记录
 	 * */
 	@RequestMapping(value="salaryDetail/selectByCheckMessageId/{checkMessageId}", method = RequestMethod.GET)
 	@ResponseBody

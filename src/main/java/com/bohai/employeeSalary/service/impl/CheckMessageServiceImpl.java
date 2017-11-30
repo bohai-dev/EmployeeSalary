@@ -44,6 +44,7 @@ public class CheckMessageServiceImpl implements CheckMessageService{
 		return checkMessageList;
 	}
 	
+	//审核通过单条数据
 	@Transactional
 	@Override
 	public void agreeStaffInfo(CheckMessage paramVO) {

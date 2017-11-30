@@ -257,7 +257,8 @@ function checkEditForm(){
                                      }
                                  	}
            }
-        }).on('success.form.bv', function(e) {// 点击提交之后,提交更新信息
+        });
+    /* .on('success.form.bv', function(e) {// 点击提交之后,提交更新信息
         	
            e.preventDefault();         
 	       if($('#isLeave2').val()=="1"){
@@ -270,7 +271,7 @@ function checkEditForm(){
 	       	else{
 	       		submitUpdateStaffInfo();
 	       	}
-	    });
+	    });*/
     
 }
   
@@ -344,12 +345,47 @@ function checkEditForm(){
         var html='<a id="cog'+index+'"> 查看详情 </a>'
         $("#submittercheckMessageTable").off("click", "#cog" + index);
         $("#submittercheckMessageTable").on("click", "#cog" + index, row, function(event) {
-	       alert(123);
+        	 console.log(row);
+        	 selectSalaryDetail(row.id); 
+	         $("#salaryDetailModal").modal('show');
        });
 
-      return html;
-	  
+      return html;	  
   }
+  
+  function selectSalaryDetail(id){
+		 $('#salaryRecordTable').bootstrapTable('destroy');
+		 $('#salaryRecordTable').bootstrapTable({  
+		        url: 'salaryDetail/selectByCheckMessageId/'+id,  	        
+		        method: 'get',	     
+		        striped: true,  
+		        cache: false,		       
+		        sortName: 'createTime',  
+		        sortOrder: 'desc', 	       
+		        clickToSelect: true,       
+		        
+		        columns: [
+		        	{  
+			            field: 'index',  
+			            title: '编号', 
+			            formatter: idFormatter
+			            
+			        },{  
+		            field: 'salary',  
+		            title: '工资',  
+		            
+		          }, {  
+		            field: 'startTime',  
+		            title: '开始时间',  
+		        }, {  
+		            field: 'endTime',  
+		            title: '结束时间',  
+		        }]  
+		    });  
+		   
+		
+	}
+
   function tageFormatter(vaule,row,index){
 	  var result=row.tage;
 	  if(result=="0"){
@@ -655,6 +691,7 @@ function submitStaffInfo(){
 
 function setSalaryDetail(staffNumber){
 	//console.log(staffNumber);
+	rownum=null;
 			
 	$('#editTable').bootstrapTable('destroy');
 		 $('#editTable').bootstrapTable({  
@@ -679,12 +716,7 @@ function setSalaryDetail(staffNumber){
 		            field: 'salary',  
 		            title: '工资', 
 		            editable: {  
-		                type: 'number',  
-		                validate: function (value) {  
-		                    if ($.trim(value) == '') {  
-		                        return '工资不能为空!';  
-		                        }  
-		                    }  
+		                type: 'number'
 		                }  
 		            
 		            }, 
@@ -693,12 +725,7 @@ function setSalaryDetail(staffNumber){
 		            title: '开始时间', 
 		            editable: {  
 		                type: 'date', 
-		                datepicker:{language:'zh-CN'},
-		                validate: function (value) {  
-		                    if ($.trim(value) == '') {  
-		                        return '开始时间不能为空!';  
-		                       }  
-		                   } 
+		                datepicker:{language:'zh-CN'}
 		               } ,
 		                 
 		           }, 
@@ -751,6 +778,27 @@ function addSalaryDetail(){
           }
       });   //
 }  
+
+function submitMod(){
+	/*手动验证表单，当是普通按钮时。*/ 
+	$('#editForm').data('bootstrapValidator').validate(); 
+	if(!$('#editForm').data('bootstrapValidator').isValid()){ 
+	        return ; 
+	}
+	
+	if($('#isLeave2').val()=="1"){
+    		if($('#leaveDate2').val()==""){
+    			alert("正在执行员工离职操作，请输入离职日期!");
+    		}else{
+    		     submitUpdateStaffInfo();
+    		}
+    	}
+    	else{
+    		submitUpdateStaffInfo();
+    	}
+	
+	
+}
 
 
   

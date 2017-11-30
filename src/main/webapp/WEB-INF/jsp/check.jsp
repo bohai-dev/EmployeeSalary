@@ -311,7 +311,7 @@
                     </div>    
                   </div>
                  <div class="form-group">
-                    <label for="coefficeient2" class="col-sm-3 control-label">工资变动</label>
+                    <label for="coefficeient2" class="col-sm-3 control-label">调整记录</label>
                     <div class="col-sm-8">
                       <!--  <input type="button" class="form-control" id="coefficeient2"  placeholder="" >       -->  
                       <a onclick="showSalaryDetail()">查看详情</a>

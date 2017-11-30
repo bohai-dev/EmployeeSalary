@@ -51,6 +51,10 @@
   <!-- optionally if you need translation for your language then include 
         locale file as mentioned below -->
  <script src="resources/fileInput/js/locales/zh.js"></script>
+ 
+ <link rel="stylesheet" href="resources/dist/css/bootstrapValidator.css"/>
+    <script type="text/javascript" src="resources/dist/js/bootstrapValidator.js"></script>
+    <script type="text/javascript" src="resources/dist/js/language/zh_CN.js"></script>
 
  <!-- editTable -->
     <!-- <link rel="stylesheet"	href="resources/bootstrap3-editable/css/bootstrap-editable.css"> -->
@@ -61,9 +65,6 @@
     <script src="resources/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
     <script src="resources/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js"></script>
 
-    <link rel="stylesheet" href="resources/dist/css/bootstrapValidator.css"/>
-    <script type="text/javascript" src="resources/dist/js/bootstrapValidator.js"></script>
-    <script type="text/javascript" src="resources/dist/js/language/zh_CN.js"></script>
    
     <script type="text/javascript" src="resources/js/home.js?<%=Math.random()%>"></script>
     
@@ -267,7 +268,7 @@
                     <th data-field="name" data-align="center" >员工姓名</th>
                     <th data-field="departmentName" data-align="center">所属部门</th>
                     <th data-field="positionSalary" data-align="center" >岗位工资</th>
-                    <th data-align="center" data-formatter="salaryFormatter">工资变动</th>
+                    <th data-align="center" data-formatter="salaryFormatter">调整记录</th>
                     <th data-field="skillSalary" data-align="center">技能工资</th>
                     <th data-field="workYears" data-align="center" >司龄工资</th>
                     <th data-field="isProbation" data-align="center" data-formatter="probationFormatter">员工类型</th>
@@ -659,7 +660,7 @@
                     </div>          
                   </div>
                   <div class="form-group">
-                    <label for="probationSalary2" class="col-sm-3 control-label">工资变动</label>
+                    <label  class="col-sm-3 control-label">调整记录</label>
                     <div class="col-sm-8">
                      <a onclick="showSalaryDetail()">查看详情</a>
                      <div id="addToolbar" >
@@ -711,7 +712,7 @@
                   </div>     
                   <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button type="submit" class="btn btn-primary" >提交审核</button>
+                        <button type="button" class="btn btn-primary"  onclick="submitMod();">提交审核</button>
                   </div>       
                 </form>
           </div>
@@ -740,17 +741,17 @@
 	</div>
 	
 	
-	<div class="modal fade" id="promptModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal fade" id="salaryDetailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal">
 						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
 					</button>
-					<h4 class="modal-title" id="myModalLabel">提示</h4>
+					<h4 class="modal-title">工资调整记录</h4>
 				</div>
 				<div class="modal-body">
-				      <p id="errorMessage"></p>
+				      <table id="salaryRecordTable"><table>
 				</div>
 				<div class="modal-footer">
                   <button type="button" class="btn btn-default" data-dismiss="modal">确定</button>                 

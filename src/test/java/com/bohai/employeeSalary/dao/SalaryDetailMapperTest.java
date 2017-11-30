@@ -43,7 +43,7 @@ public class SalaryDetailMapperTest extends AbstractJUnit4SpringContextTests{
         SalaryDetailMapper mapper = session.getMapper(SalaryDetailMapper.class);
          
         Map<String, String> map = new HashMap<String, String>();
-        map.put("IN_STAFF_NUMBER", "011506011");
+        map.put("IN_STAFF_NUMBER", "01160302");
         map.put("IN_PAY_MONTH", "2017-05");
         
         mapper.calcSalary(map);

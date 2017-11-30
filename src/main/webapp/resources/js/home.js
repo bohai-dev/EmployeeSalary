@@ -601,6 +601,12 @@ function submitStaffInfo(){
    //验证工资表格数据
   function verifyTable(){
   	 var datas = $('#editTable').bootstrapTable('getData');
+  	 
+      	if(datas.length == 0){
+            alert("调薪记录不能为空");
+            return false;
+        }
+      	
        for(var row in datas){
            if(datas[row].salary == null || datas[row].salary == ''){
                alert("第"+(parseInt(row)+1)+"行工资不能为空");
@@ -609,6 +615,15 @@ function submitStaffInfo(){
            if(datas[row].startTime == null ||datas[row].startTime == ''){
                alert("第"+(parseInt(row)+1)+"行生效时间不能为空");
                return false;
+           }
+           if(datas[row].endTime != null && datas[row].endTime != '' &&
+                   datas[row].startTime != null && datas[row].startTime != ''){
+               
+               if(CompareDate(datas[row].startTime,datas[row].endTime)){
+                   alert("第"+(parseInt(row)+1)+"行生效日期不能大于失效日期");
+                   return false;
+               }
+               
            }
        }
      //重新加载验证
@@ -798,6 +813,11 @@ function submitMod(){
     	}
 	
 	
+}
+
+function CompareDate(startTime,endTime)
+{
+  return ((new Date(startTime.replace(/-/g,"\/"))) > (new Date(endTime.replace(/-/g,"\/"))));
 }
 
 

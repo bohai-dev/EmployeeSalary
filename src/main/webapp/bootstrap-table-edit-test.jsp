@@ -18,6 +18,8 @@
 <link href="resources/favicon.ico" rel="shortcut icon" />
 
 
+<!-- BV -->
+<link rel="stylesheet" href="resources/dist/css/bootstrapValidator.css" />
 <!-- table -->
 <link rel="stylesheet"
 	href="resources/bootstrap-table/bootstrap-table.css">
@@ -77,7 +79,7 @@
         locale file as mentioned below -->
 <script src="resources/fileInput/js/locales/zh.js"></script>
 
-<link rel="stylesheet" href="resources/dist/css/bootstrapValidator.css" />
+
 <script type="text/javascript"
 	src="resources/dist/js/bootstrapValidator.js"></script>
 <script type="text/javascript" src="resources/dist/js/language/zh_CN.js"></script>
@@ -246,6 +248,11 @@
 	    
 	    $('#checkBtn').click(function () {
             var datas = $('#table').bootstrapTable('getData');
+            
+            if(datas.length == 0){
+                alert("调薪记录不能为空");
+            }
+            
             for(var row in datas){
                 if(datas[row].salary == null || datas[row].salary == ''){
                     alert("第"+(parseInt(row)+1)+"行工资不能为空");
@@ -255,6 +262,17 @@
                     alert("第"+(parseInt(row)+1)+"行生效时间不能为空");
                     return;
                 }
+                
+                if(datas[row].endTime != null && datas[row].endTime != '' &&
+                        datas[row].startTime != null && datas[row].startTime != ''){
+                    
+                    if(CompareDate(datas[row].startTime,datas[row].endTime)){
+                        alert("第"+(parseInt(row)+1)+"行生效日期不能大于失效日期");
+                        return;
+                    }
+                    
+                }
+                
             }
             
             
@@ -262,7 +280,10 @@
 	    
 	});  
 	
-	
+	function CompareDate(startTime,endTime)
+	{
+	  return ((new Date(startTime.replace(/-/g,"\/"))) > (new Date(endTime.replace(/-/g,"\/"))));
+	}
 </script>
 </head>
 <body>

@@ -601,6 +601,12 @@ function submitStaffInfo(){
    //验证工资表格数据
   function verifyTable(){
   	 var datas = $('#editTable').bootstrapTable('getData');
+  	 
+      	if(datas.length == 0){
+            alert("调薪记录不能为空");
+            return false;
+        }
+      	
        for(var row in datas){
            if(datas[row].salary == null || datas[row].salary == ''){
                alert("第"+(parseInt(row)+1)+"行工资不能为空");

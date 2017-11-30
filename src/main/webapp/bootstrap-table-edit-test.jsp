@@ -248,6 +248,11 @@
 	    
 	    $('#checkBtn').click(function () {
             var datas = $('#table').bootstrapTable('getData');
+            
+            if(datas.length == 0){
+                alert("调薪记录不能为空");
+            }
+            
             for(var row in datas){
                 if(datas[row].salary == null || datas[row].salary == ''){
                     alert("第"+(parseInt(row)+1)+"行工资不能为空");
@@ -267,6 +272,7 @@
                     }
                     
                 }
+                
             }
             
             

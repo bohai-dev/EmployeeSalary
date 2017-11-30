@@ -244,9 +244,13 @@ public class StaffInfoUploadServiceImpl implements FileUploadService{
 								checkMessage.setSubmitType(submitType);  //新增
 								//审核信息提交时间
 							    checkMessage.setSubmitTime(new Date());
-								
-								checkMessageMapper.insert(checkMessage);
-								salaryDetailService.insertByCheckMessage(checkMessage);
+								if("1".equals(submitType)) {
+									
+									checkMessageMapper.insert(checkMessage);
+								}else {
+									checkMessageMapper.insert(checkMessage);
+									salaryDetailService.insertByCheckMessage(checkMessage);
+								}
 							}
 					       
 					        

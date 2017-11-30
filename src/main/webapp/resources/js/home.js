@@ -718,7 +718,7 @@ function setSalaryDetail(staffNumber){
 		            editable: {  
 		                type: 'number'
 		                }  
-		            
+		               
 		            }, 
 		            {  
 		            field: 'startTime',  

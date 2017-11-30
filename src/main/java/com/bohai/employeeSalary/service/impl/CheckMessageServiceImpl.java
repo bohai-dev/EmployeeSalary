@@ -86,18 +86,24 @@ public class CheckMessageServiceImpl implements CheckMessageService{
 		}else{
 			this.staffInfoMapper.updateByPrimaryKey(staffInfo);
 		}
-		//更新工资变动
-		//先将该员工原来的可用状态的工资变动重置为不可用
-		this.slaryDetailMapper.updateStateByStaffNumber(paramVO.getStaffNumber());
-		//再重新插入
-        SalaryDetail salaryDetail=new SalaryDetail();
-        salaryDetail.setCheckMessageId(paramVO.getId());
-        salaryDetail.setCheckState("1"); //1、可用
-		slaryDetailMapper.updateByCheckMessageId(salaryDetail);
+		//更新工资变动		
+		List<SalaryDetail> salaryDetails=this.slaryDetailMapper.selectByCheckmessageId(paramVO.getId());
+		if (salaryDetails!=null&&salaryDetails.size()>0) {
+			//先将该员工原来的可用状态的工资变动重置为不可用
+			this.slaryDetailMapper.updateStateByStaffNumber(paramVO.getStaffNumber());
+			//再重新插入
+	        SalaryDetail salaryDetail=new SalaryDetail();
+	        salaryDetail.setCheckMessageId(paramVO.getId());
+	        salaryDetail.setCheckState("1"); //1、可用
+			slaryDetailMapper.updateByCheckMessageId(salaryDetail);
+			
+		}
+		
 		
 	}
 	
 	//批量审核通过
+	@Transactional
 	@Override
 	public void agreeStaffInfoList(List<CheckMessage> checkMessageList) {
 		for(int i=0;i<checkMessageList.size();i++) {
@@ -112,14 +118,17 @@ public class CheckMessageServiceImpl implements CheckMessageService{
 			this.checkMessageMapper.updateByPrimaryKeySelective(checkmessage);  //更新checkMessage表
 			//更新工资变动表
 			//先将该员工原来的可用状态的工资变动重置为不可用
-			 this.slaryDetailMapper.updateStateByStaffNumber(checkmessage.getStaffNumber());
-			
-			
-		    //再重新插入
-	        SalaryDetail salaryDetail=new SalaryDetail();
-		    salaryDetail.setCheckMessageId(checkmessage.getId());
-	        salaryDetail.setCheckState("1"); //1、可用
-			slaryDetailMapper.updateByCheckMessageId(salaryDetail);
+			List<SalaryDetail> salaryDetails=this.slaryDetailMapper.selectByCheckmessageId(checkmessage.getId());
+			if (salaryDetails!=null&&salaryDetails.size()>0) {
+				
+				this.slaryDetailMapper.updateStateByStaffNumber(checkmessage.getStaffNumber());
+				
+				//再重新插入
+				SalaryDetail salaryDetail=new SalaryDetail();
+				salaryDetail.setCheckMessageId(checkmessage.getId());
+				salaryDetail.setCheckState("1"); //1、可用
+				slaryDetailMapper.updateByCheckMessageId(salaryDetail);
+			}
 	
 			 
 			

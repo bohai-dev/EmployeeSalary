@@ -7,6 +7,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import org.apache.commons.lang.time.DateFormatUtils;
+
 import com.bohai.employeeSalary.util.CommonUtils;
 
 
@@ -43,6 +45,14 @@ public class TestClass {
 	 
 		System.out.println(CommonUtils.getMax(Arrays.asList(nums)));
 		
+		String datestr = "2017-9";
+		
+		System.out.println(datestr.substring(5));
+		
+		if(datestr.substring(5).length()<2){
+		    datestr = new StringBuffer(datestr).insert(5, "0").toString();
+		}
+		System.out.println(datestr);
 	}
 
 }

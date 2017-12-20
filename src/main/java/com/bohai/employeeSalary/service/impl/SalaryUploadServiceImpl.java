@@ -47,6 +47,11 @@ public class SalaryUploadServiceImpl implements FileUploadService {
 			Pattern p = Pattern.compile(regEx);
 			Matcher m = p.matcher(fileName);
 			String payDate = new StringBuilder(m.replaceAll("").trim()).insert(4, "-").toString();  //2017-07
+			//如果文件中的月份只有一位，前面补0
+			if(payDate.substring(5).length()<2){
+			    payDate = new StringBuffer(payDate).insert(5, "0").toString();
+			}
+			logger.info("社保公积金月份："+payDate);
 
 			String pensionPersonalPercent = Double.toString(salarySheet.getRow(5).getCell(6).getNumericCellValue());
 			String medicalPersonalPercent = Double.toString(salarySheet.getRow(5).getCell(7).getNumericCellValue());

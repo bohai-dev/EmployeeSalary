@@ -142,6 +142,9 @@ public class StaffSalary {
      */
     private String buckleUp;
     
+    /**
+     * 补扣社保公积金
+     */
     public String getBuckleUp() {
         return buckleUp;
     }

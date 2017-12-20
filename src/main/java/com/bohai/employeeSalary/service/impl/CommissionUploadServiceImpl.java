@@ -41,6 +41,7 @@ public class CommissionUploadServiceImpl implements FileUploadService{
     
     @Override
     public String upload(MultipartFile file, Object... objects) throws BohaiException {
+        
         XSSFWorkbook wb = null;
         String message="success";
         
@@ -77,9 +78,8 @@ public class CommissionUploadServiceImpl implements FileUploadService{
             
             //获取标题中的日期
             String str=commisonSheet.getRow(0).getCell(0).getStringCellValue();
-            String time=CommonUtils.filterNumber(str);
-            logger.debug("绩效工资月份："+time);
-            time = time.substring(0, 4) + "-" + time.substring(4,6);
+            String time=CommonUtils.getDateStr(str);
+            
             logger.debug("绩效工资月份："+time);
             
             for(int i=2; i<commisonSheet.getLastRowNum(); i++) {

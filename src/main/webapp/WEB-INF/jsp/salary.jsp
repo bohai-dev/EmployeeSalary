@@ -120,7 +120,7 @@
                        language: 'zh',
                         uploadAsync: true,
                         uploadUrl: "salaryFileUpload", //异步上传地址
-                        maxFileCount: 10,//最大上传文件数限制
+                        maxFileCount: 30,//最大上传文件数限制
                         showCaption: true,//是否显示标题
                         showUpload: true,//是否显示上传按钮
                         showPreview:false,//默认true
@@ -144,14 +144,20 @@
                         language: 'zh',
                         uploadAsync: true,
                         uploadUrl: "CommissionFileUpload", //异步上传地址
-                        maxFileCount: 10,//最大上传文件数限制
+                        maxFileCount: 30,//最大上传文件数限制
                         showCaption: true,//是否显示标题
                         showUpload: true,//是否显示上传按钮
                         showPreview:false,//默认true
                         allowedFileExtensions: ["xls", "xlsx"]  //接收的文件后缀 
                         
                         //previewFileIcon: "<i class='glyphicon glyphicon-king'></i>" //选择文件后缩略图
-                    }); 
+                    });
+                    
+                    $("#finput2").on("fileuploaded", function (event, data, previewId, index) {
+                        alert(data["response"]["status"]);
+                        
+                        //$('#salaryTable').bootstrapTable('refresh');
+                   });
                  </script>
 				</div>
 

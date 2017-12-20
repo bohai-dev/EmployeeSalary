@@ -1,14 +1,15 @@
 package com.bohai.employeeSalary;
 
-import java.math.BigDecimal;
+import com.bohai.employeeSalary.controller.exception.BohaiException;
+import com.bohai.employeeSalary.util.CommonUtils;
 
 public class Test {
     
-    public static void main(String[] args) {
+    public static void main(String[] args) throws BohaiException {
         
         
-        String s = null;
-        System.out.println(new BigDecimal("5000.00 ".trim()));
+        CommonUtils.getDateStr("2017年99月我的我的 ");
+        
     }
 
 }

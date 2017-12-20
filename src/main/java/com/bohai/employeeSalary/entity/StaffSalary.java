@@ -137,8 +137,19 @@ public class StaffSalary {
     
     private String  probationSalary;
     
+    /**
+     * 补扣社保公积金
+     */
+    private String buckleUp;
     
-   
+    public String getBuckleUp() {
+        return buckleUp;
+    }
+
+    public void setBuckleUp(String buckleUp) {
+        this.buckleUp = buckleUp;
+    }
+
     public String getProbationSalary() {
 		return probationSalary;
 	}

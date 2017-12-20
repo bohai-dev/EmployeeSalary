@@ -78,7 +78,7 @@ public class StaffSalaryService {
      
         int count=0;
         /*查询该部门该月份所有员工的信息*/
-        List<StaffSalary> salaryList=staffSalaryMapper.queryStaffSalaryByParams(paramVo);
+       /* List<StaffSalary> salaryList=staffSalaryMapper.queryStaffSalaryByParams(paramVo);
         
         if (salaryList==null||salaryList.size()<=0) {     //工资表中还没有该月份信息，要先生成
         	QueryStaffInfoParamVO vo=new QueryStaffInfoParamVO();
@@ -92,8 +92,29 @@ public class StaffSalaryService {
         		staffSalary.setStaffDepartmentId(paramVo.getDepNum());
         		saveOrUpdate(staffSalary);
         	}
-		}
+		}*/
+        QueryStaffInfoParamVO vo=new QueryStaffInfoParamVO();
+        vo.setDepartmentId(paramVo.getDepNum());
+    	vo.setLeaveDate(paramVo.getPayDate());
+    	//查询[x部门]所有的员工编号
+    	List<String>  staffnums=staffInfoMapper.selectByDepartmentId(vo);    
+    	for(int i=0;i<staffnums.size();i++) {
+    		//查询当月工资表中有没有该员工信息
+    		QueryStaffSalaryParamVO params=new QueryStaffSalaryParamVO();
+    		params.setStaffNum(staffnums.get(i));
+    		params.setPayDate(paramVo.getPayDate());
+    		List<StaffSalary> salaryList=staffSalaryMapper.queryStaffSalaryByParams(params);
+    		if (salaryList==null||salaryList.size()<=0) {  //工资表中没有该员工信息
+    			StaffSalary staffSalary=new StaffSalary();
+        		staffSalary.setStaffNumber(staffnums.get(i));
+        		staffSalary.setPayDate(paramVo.getPayDate());
+        		staffSalary.setStaffDepartmentId(paramVo.getDepNum());
+        		saveOrUpdate(staffSalary);
+			}
+    		
+    	}
         
+    	
         List<StaffSalary> list=staffSalaryMapper.queryStaffSalaryByParams(paramVo);
         for(int i=0;i<list.size();i++) {
         	StaffSalary salary=calculateSalary(list.get(i));   //计算工资

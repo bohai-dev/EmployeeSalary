@@ -133,8 +133,8 @@ public class SalaryUploadServiceImpl implements FileUploadService {
 
 					}
 
-					if (salarySheet.getRow(i).getCell(2) !=null && 
-							StringUtils.isNotEmpty(salarySheet.getRow(i).getCell(2).getStringCellValue())) {
+					if (houseSheet.getRow(i).getCell(2) !=null && 
+							StringUtils.isNotEmpty(houseSheet.getRow(i).getCell(2).getStringCellValue())) {
 						StaffSalary staffSalary = new StaffSalary();
 
 						staffSalary.setStaffNumber(houseSheet.getRow(i).getCell(2).getStringCellValue()); // 员工编号

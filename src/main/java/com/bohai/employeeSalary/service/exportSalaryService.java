@@ -151,7 +151,7 @@ public class exportSalaryService {
 	public XSSFWorkbook exportSalary(List<StaffSalary> salaryList,HttpServletResponse response) throws BohaiException{   //一共20列   0-19
 		 // FileOutputStream fos=new FileOutputStream("E:\\14.xls"); 
 		  String[] salaryHead1= {"序号","姓名","岗位工资","绩效工资","司龄","技能工资","应发工资","取暖补贴","扣款","实发工资","邮箱","备注"};  //length=12
-		  String[] salaryHead2= {"住房公积","养老保险","失业保险","医疗保险","补扣保险\n公积金","社保公积金\n代扣合计","计税基数","个人所得税","其他款项"};  //length=9
+		  String[] salaryHead2= {"住房公积","养老保险","失业保险","医疗保险","补缴社保\n公积金","社保公积金\n代扣合计","计税基数","个人所得税","其他款项"};  //length=9
 		  XSSFWorkbook wb = new XSSFWorkbook();
 	      XSSFSheet sheet=wb.createSheet(salaryList.get(0).getPayDate()+"工资明细表");    //表名
 	      XSSFCellStyle style = wb.createCellStyle();
@@ -263,7 +263,7 @@ public class exportSalaryService {
 	    	  sheetRow.createCell(9).setCellValue(Optional.ofNullable(salaryList.get(j).getPensionPersonal()).orElse("0.00"));
 	    	  sheetRow.createCell(10).setCellValue(Optional.ofNullable(salaryList.get(j).getUnemploymentPersonal()).orElse("0.00"));
 	    	  sheetRow.createCell(11).setCellValue(Optional.ofNullable(salaryList.get(j).getMedicalPersonal()).orElse("0.00"));
-	    	  sheetRow.createCell(12).setCellValue(0.00);   //补扣保险公积金,暂为0
+	    	  sheetRow.createCell(12).setCellValue(Optional.ofNullable(salaryList.get(j).getBuckleUp()).orElse("0.00"));    //补缴社保公积金
 	    	  sheetRow.createCell(13).setCellValue(Double.parseDouble(Optional.ofNullable(salaryList.get(j).getPersonalTotal()).orElse("0.00"))+Double.parseDouble(Optional.ofNullable((salaryList.get(j).getHousePersonalTotal())).orElse("0.00")));       //社保公积金代扣合计
 	    	  sheetRow.createCell(14).setCellValue(Optional.ofNullable(salaryList.get(j).getTaxBase()).orElse("0.00"));   //计税基数  
 	    	  sheetRow.createCell(15).setCellValue(Optional.ofNullable(salaryList.get(j).getIncomeTax()).orElse("0.00"));   //个人所得税 

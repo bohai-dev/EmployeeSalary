@@ -191,7 +191,7 @@ public class SalaryController{
           
 	      XSSFSheet salarySheet=wb.createSheet("员工工资条");
 		String[] salaryHead={"行号","员工编号","员工姓名","岗位工资","技能工资","绩效工资","司龄工资","应发工资","取暖补贴","住房公积金","养老保险",
-				"失业保险","医疗保险","计税基数","个人所得税","实发工资"};
+				"失业保险","医疗保险","补缴社保公积金","计税基数","个人所得税","实发工资"};
 		XSSFRow row=salarySheet.createRow(0);
 		
 		//初始化表头
@@ -285,14 +285,17 @@ public class SalaryController{
 				}else{
 				row2.createCell(12).setCellValue(salaryList.get(i).getMedicalPersonal());
 				}
+				//补缴社保公积金
+				row2.createCell(13).setCellValue(Optional.ofNullable(salaryList.get(i).getBuckleUp()).orElse("0.00"));
+				
 				//计税基数
-				row2.createCell(13).setCellValue(salaryList.get(i).getTaxBase());
+				row2.createCell(14).setCellValue(salaryList.get(i).getTaxBase());
 				//个人所得税
-				row2.createCell(14).setCellValue(salaryList.get(i).getIncomeTax());
+				row2.createCell(15).setCellValue(salaryList.get(i).getIncomeTax());
 				//实发工资
-				row2.createCell(15).setCellValue(salaryList.get(i).getActualSalary());
+				row2.createCell(16).setCellValue(salaryList.get(i).getActualSalary());
 			
-				for(int j=0;j<16;j++){
+				for(int j=0;j<17;j++){
 					row2.getCell(j).setCellStyle(style1);
 				}
 			}
@@ -357,7 +360,7 @@ public class SalaryController{
 						
 						XSSFSheet salarySheet=wb.createSheet("员工工资条");
 						String[] salaryHead={"行号","员工编号","员工姓名","岗位工资","技能工资","绩效工资","司龄工资","应发工资","取暖补贴","住房公积金","养老保险",
-								"失业保险","医疗保险","计税基数","个人所得税","实发工资"};
+								"失业保险","医疗保险","补缴社保公积金","计税基数","个人所得税","实发工资"};
 						XSSFRow row=salarySheet.createRow(0);
 						
 						//初始化表头
@@ -445,14 +448,16 @@ public class SalaryController{
 						}else{
 						row2.createCell(12).setCellValue(salaryList.get(i).getMedicalPersonal());
 						}
+						//补缴社保公积金
+						row2.createCell(13).setCellValue(Optional.ofNullable(salaryList.get(i).getBuckleUp()).orElse("0.00"));
 						//计税基数
-						row2.createCell(13).setCellValue(salaryList.get(i).getTaxBase());
+						row2.createCell(14).setCellValue(salaryList.get(i).getTaxBase());
 						//个人所得税
-						row2.createCell(14).setCellValue(salaryList.get(i).getIncomeTax());
+						row2.createCell(15).setCellValue(salaryList.get(i).getIncomeTax());
 						//实发工资
-						row2.createCell(15).setCellValue(salaryList.get(i).getActualSalary());
+						row2.createCell(16).setCellValue(salaryList.get(i).getActualSalary());
 						
-						for(int k=0;k<16;k++){
+						for(int k=0;k<17;k++){
 							row2.getCell(k).setCellStyle(style1);
 						}
 						

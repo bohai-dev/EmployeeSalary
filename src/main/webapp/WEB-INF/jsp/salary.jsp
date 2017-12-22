@@ -257,9 +257,10 @@
 						<th data-field="pensionPersonal" data-align="center" data-footer-formatter="tbfooter4" data-formatter="numberFormate">养老保险</th>
 						<th data-field="unemploymentPersonal" data-align="center" data-footer-formatter="tbfooter5" data-formatter="numberFormate">失业保险</th>
 						<th data-field="medicalPersonal" data-align="center" data-footer-formatter="tbfooter6" data-formatter="numberFormate">医疗保险</th>
-						<th data-field="personalTotal" data-align="center" data-footer-formatter="tbfooter7" data-formatter="numberFormate">个人社保缴费合计</th>
+						<th data-field="personalTotal" data-align="center" data-footer-formatter="tbfooter7" data-formatter="numberFormate">个人社保缴费合计</th> 
+						<th data-field="buckleUp" data-align="center" data-footer-formatter="tbfooter7" data-formatter="numberFormate">补缴社保公积金</th>
 						<th data-field="housePersonalTotal" data-align="center" data-footer-formatter="tbfooter8" data-formatter="numberFormate">个人公积金缴费合计</th>
-						 <th data-field="incomeTax" data-align="center"  data-footer-formatter="tbfooter9" data-formatter="numberFormate">个人所得税</th>
+						<th data-field="incomeTax" data-align="center"  data-footer-formatter="tbfooter9" data-formatter="numberFormate">个人所得税</th>
 						<th data-field="salaryOther" data-align="center"
 							data-footer-formatter="tbfooter10" > &nbsp;其他款项 &nbsp; &nbsp;</th>
 						<th data-field="actualSalary" data-align="right"
@@ -333,6 +334,13 @@
 								<label  class="col-sm-4 control-label">个人缴纳失业保险</label>
 								<div class="col-sm-7">
 									<input type="text" class="form-control" id="unemploymentPersonal"
+										placeholder="">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-4 control-label">补缴个人社保公积金</label>
+								<div class="col-sm-7">
+									<input type="text" class="form-control" id="buckleUp"
 										placeholder="">
 								</div>
 							</div>
@@ -430,6 +438,7 @@
 										placeholder="">
 								</div>
 							</div>
+							
 							
 							<hr/>
 							<div class="form-group">

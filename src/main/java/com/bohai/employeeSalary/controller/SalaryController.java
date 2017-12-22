@@ -117,7 +117,7 @@ public class SalaryController{
 		staffSalary.setHousePersonalTotal(String.valueOf(CommonUtils.getRound(new BigDecimal(housePersonalTotal))));
 		staffSalary.setHouseCompanyTotal(String.valueOf(CommonUtils.getRound(new BigDecimal(houseCompanyTotal))));
 		staffSalary.setHouseToatal(String.valueOf(CommonUtils.getRound(new BigDecimal(houseToatal))));
-		
+		//staffSalary.setBuckleUp(buckleUp);
 		
 		int count=StaffSalaryMapper.updateByStaffNumAndDate(staffSalary);  //更新其他款项	
 		

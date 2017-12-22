@@ -131,6 +131,7 @@ function config(row){
     $("#houseSupplyPersonal").val(row.houseSupplyPersonal);
     $("#houseBaseCompany").val(row.houseBaseCompany);
     $("#houseSupplyCompany").val(row.houseSupplyCompany);
+    $("#buckleUp").val(row.buckleUp);
     
     
     staffNum=row.staffNumber;
@@ -167,7 +168,8 @@ function updateSalary(){
 	       		houseBaseCompany:$("#houseBaseCompany").val(),
 	       		houseSupplyCompany:$("#houseSupplyCompany").val(),
 	       		warmSubsidy:$("#warmSubsidy").val(),
-	       		achiementSalary:$("#achiementSalary").val()      		
+	       		achiementSalary:$("#achiementSalary").val(),
+	       		buckleUp:$("#buckleUp").val()
 	       		
 	       	 };
 	        $.ajax({

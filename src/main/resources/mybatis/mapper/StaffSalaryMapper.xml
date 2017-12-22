@@ -51,7 +51,7 @@
     <result column="INCOME_TAX" jdbcType="VARCHAR" property="incomeTax"/>
     <result column="GROSS_SALARY" jdbcType="VARCHAR" property="grossSalary"/>
     <result column="TAX_BASE" jdbcType="VARCHAR" property="taxBase"/>
-    
+    <result column="BUCKLE_UP" jdbcType="VARCHAR" property="buckleUp"/>
      <result column="POSITIONS_SALARY" jdbcType="VARCHAR" property="postionsSalary"/>
      <result column="SKILLS_SALARY" jdbcType="VARCHAR" property="skillsSalary"/>
      <result column="YEARS_SALARY" jdbcType="VARCHAR" property="yearsSalary"/>
@@ -85,7 +85,7 @@
     HOUSE_BASE_PERSONAL, HOUSE_BASE_COMPANY, HOUSE_SUPPLY_PERSONAL, HOUSE_SUPPLY_COMPANY, 
     HOUSE_BASE_PERSONAL_PERCENT, HOUSE_BASE_COMPANY_PERCENT, HOUSE_SUPPLY_PERSONAL_PERCENT, 
     HOUSE_SUPPLY_COMPANY_PERCENT, HOUSE_PERSONAL_TOTAL, HOUSE_COMPANY_TOTAL, HOUSE_TOATAL,INCOME_TAX,
-    GROSS_SALARY,TAX_BASE
+    GROSS_SALARY,TAX_BASE,BUCKLE_UP
   </sql>
   <sql id="StaffInfo_Column_List" >
     <!--
@@ -136,7 +136,7 @@
       HOUSE_BASE_PERSONAL_PERCENT, HOUSE_BASE_COMPANY_PERCENT, 
       HOUSE_SUPPLY_PERSONAL_PERCENT, HOUSE_SUPPLY_COMPANY_PERCENT, 
       HOUSE_PERSONAL_TOTAL, HOUSE_COMPANY_TOTAL, 
-      HOUSE_TOATAL)
+      HOUSE_TOATAL,BUCKLE_UP)
     values (#{staffNumber,jdbcType=VARCHAR}, #{staffDepartmentId,jdbcType=VARCHAR}, #{achiementSalary,jdbcType=VARCHAR}, 
       #{payDate,jdbcType=VARCHAR}, #{salaryOther,jdbcType=VARCHAR}, #{otherRemark,jdbcType=VARCHAR}, 
       #{createTime,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR}, #{payBase,jdbcType=VARCHAR}, 
@@ -154,7 +154,7 @@
       #{houseBasePersonalPercent,jdbcType=VARCHAR}, #{houseBaseCompanyPercent,jdbcType=VARCHAR}, 
       #{houseSupplyPersonalPercent,jdbcType=VARCHAR}, #{houseSupplyCompanyPercent,jdbcType=VARCHAR}, 
       #{housePersonalTotal,jdbcType=VARCHAR}, #{houseCompanyTotal,jdbcType=VARCHAR}, 
-      #{houseToatal,jdbcType=VARCHAR})
+      #{houseToatal,jdbcType=VARCHAR},#{buckleUp,jdbcType=VARCHAR})
   </insert>
  
   <update id="updateByStaffNumAndDate" parameterType="com.bohai.employeeSalary.entity.StaffSalary">
@@ -314,6 +314,9 @@
        <if test="yearsSalary != null">
         YEARS_SALARY = #{yearsSalary,jdbcType=VARCHAR},
       </if>
+       <if test="buckleUp != null">
+        BUCKLE_UP = #{buckleUp,jdbcType=VARCHAR},
+      </if>
     </set>
        where STAFF_NUMBER = #{staffNumber,jdbcType=VARCHAR}
        and PAY_DATE = #{payDate,jdbcType=VARCHAR}
@@ -469,6 +472,9 @@
       <if test="yearsSalary != null">
         YEARS_SALARY,
       </if>
+       <if test="buckleUp != null">
+        BUCKLE_UP,
+      </if>
       
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -616,6 +622,9 @@
       </if>
        <if test="yearsSalary != null">
         #{yearsSalary,jdbcType=VARCHAR},
+      </if>
+       <if test="buckleUp != null">
+        #{buckleUp,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>  

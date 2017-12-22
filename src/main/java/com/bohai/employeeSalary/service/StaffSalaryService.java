@@ -139,10 +139,10 @@ public class StaffSalaryService {
           String status=map.get("OUT_STATUS");
           
           if ("SUCCESS".equals(status)) {
-			 String postionSalary=map.get("OUT_SALARY");
+			 String postionSalary=map.get("OUT_SALARY");     //计算得到岗位工资
 			 if (!StringUtils.isEmpty(postionSalary)) {
 				 posSalary=new BigDecimal(postionSalary);
-				 salary=computeSalary(salary, posSalary);
+				 salary=computeSalary(salary,posSalary);
 			  }
 			
 		  }
@@ -160,6 +160,7 @@ public class StaffSalaryService {
     public StaffSalary  computeSalary(StaffSalary salary,BigDecimal modPosSalary) {
     	String sheBao="0.00";
     	String house="0.00";
+    	
     	QueryStaffSalaryParamVO vo=new QueryStaffSalaryParamVO();
     	vo.setStaffNum(salary.getStaffNumber());
     	List<StaffSalary> salaryList=staffSalaryMapper.queryStaffSalaryByParams(vo);   //查询最近月份的工资信息
@@ -167,10 +168,13 @@ public class StaffSalaryService {
     		 if (staffSalary.getPersonalTotal()!=null) {
 				//社保
     			   sheBao=staffSalary.getPersonalTotal();  
+    			   
     			//公积金
     			   if(!StringUtils.isEmpty(staffSalary.getHousePersonalTotal())) {
     				   house=staffSalary.getHousePersonalTotal();
     			   }
+    			   
+    			
     			   
     			   salary.setPayBase(staffSalary.getPayBase());
     			   salary.setPensionPersonal(staffSalary.getPensionPersonal());
@@ -215,7 +219,7 @@ public class StaffSalaryService {
     		
     		
     	}
-        //计算 应发工资=岗位工资*系数+绩效工资+司龄工资+技能工资
+        //计算 应发工资=岗位工资+绩效工资+司龄工资+技能工资
         
         BigDecimal shouldSalary= modPosSalary                           
                                  .add(new BigDecimal(Optional.ofNullable(salary.getAchiementSalary()).orElse("0.00")))
@@ -226,15 +230,10 @@ public class StaffSalaryService {
         shouldSalary=CommonUtils.getRound(shouldSalary);
         System.out.println("应发工资："+shouldSalary);
 
-        //计算计税基数=应发工资-社保公积金代扣合计+取暖补贴-3500
-
-		/*double taxBase=shouldSalary-Optional.ofNullable(salary.getPersonalTotal()).map(i->Double.valueOf(i)).orElse((double) 0)
-				       -Optional.ofNullable(salary.getHousePersonalTotal()).map(i->Double.valueOf(i)).orElse((double) 0)
-				       +Optional.ofNullable(salary.getWarmSubsidy()).map(i->Double.valueOf(i)).orElse((double)0)-3500;*/
-        // double taxBase=shouldSalary-Double.valueOf(sheBao)-Double.valueOf(house)
-		//	       +Optional.ofNullable(salary.getWarmSubsidy()).map(i->Double.valueOf(i)).orElse((double)0)-3500;
+        //计算计税基数=应发工资-社保公积金代扣合计-补缴社保公积金+取暖补贴-3500
+        BigDecimal bukou=Optional.ofNullable(salary.getBuckleUp()).map(i->new BigDecimal(i)).orElse(new BigDecimal("0.00")); 
         BigDecimal taxBase=shouldSalary.subtract(new BigDecimal(sheBao)).subtract(new BigDecimal(house)).add(Optional.ofNullable(salary.getWarmSubsidy()).map(i->new BigDecimal(i)).orElse(new BigDecimal("0.00")))
-        		            .subtract(new BigDecimal(3500));
+        		            .subtract(new BigDecimal(3500)).subtract(bukou);
         taxBase=CommonUtils.getRound(taxBase);
 		System.out.println("计税基数："+taxBase);
 		
@@ -252,20 +251,13 @@ public class StaffSalaryService {
 		
 		BigDecimal tax=CommonUtils.getRound(CommonUtils.getMax(tempList));  //个人所得税
 		
-		//计算 实发工资=应发工资+取暖补贴-社保公积金代扣合计-个人所得税+其他款项		
-		
-		/*double actualSalary=shouldSalary+Optional.ofNullable(salary.getWarmSubsidy()).map(i->Double.valueOf(i)).orElse((double)0)
-				            -Double.valueOf(sheBao)
-			                -Double.valueOf(house)
-			                -tax
-				            +Optional.ofNullable(salary.getSalaryOther()).map(i->Double.valueOf(i)).orElse((double)0);*/
+		//计算 实发工资=应发工资+取暖补贴-社保公积金代扣合计-补缴社保公积金-个人所得税+其他款项				
+	
 		BigDecimal actualSalary=shouldSalary.add(Optional.ofNullable(salary.getWarmSubsidy()).map(i->new BigDecimal(i)).orElse(new BigDecimal("0.00")))
-				               .subtract(new BigDecimal(sheBao)).subtract(new BigDecimal(house)).subtract(tax)
+				               .subtract(new BigDecimal(sheBao)).subtract(new BigDecimal(house)).subtract(tax).subtract(bukou)
 				               .add(Optional.ofNullable(salary.getSalaryOther()).map(i->new BigDecimal(i)).orElse(new BigDecimal("0.00")));
 				               
-		salary.setActualSalary(CommonUtils.getRound(actualSalary)+"");  //设置实发工资
-		 
-		
+		salary.setActualSalary(CommonUtils.getRound(actualSalary)+"");  //设置实发工资 		
 		salary.setGrossSalary(shouldSalary.toString());  //设置应发工资
 		salary.setIncomeTax(tax.toString());  //设置个人所得税
 		salary.setTaxBase(taxBase.toString());  //设置缴费基数

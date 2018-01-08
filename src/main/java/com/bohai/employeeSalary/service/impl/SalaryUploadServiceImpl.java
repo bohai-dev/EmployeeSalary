@@ -163,9 +163,9 @@ public class SalaryUploadServiceImpl implements FileUploadService {
 						String houseTime=formater.format(houseDate);  //每一行数据的缴费月份
 						String staffNumber=houseSheet.getRow(i).getCell(2).getStringCellValue();
 						
-						if(!houseTime.equals(houseDate)) {   //与缴费日期进行比较，如果不相同则更新补缴社保公积金
+						if(!houseTime.equals(payDate)) {   //与缴费日期进行比较，如果不相同则更新补缴社保公积金
 						   //buckleUp=buckleUp.add(new BigDecimal(salarySheet.getRow(i).getCell(18).getStringCellValue()));
-							staffSalaryMapper.updateBuckleUp(staffNumber,houseTime,houseSheet.getRow(i).getCell(10).getStringCellValue());
+							staffSalaryMapper.updateBuckleUp(staffNumber,payDate,houseSheet.getRow(i).getCell(10).getStringCellValue());
 							
 						}else {
 							
